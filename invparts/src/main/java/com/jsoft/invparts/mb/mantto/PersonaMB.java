@@ -15,6 +15,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import com.jsoft.invparts.servicios.ManttoService;
+import org.apache.commons.codec.digest.DigestUtils;
 
 /**
  *
@@ -25,11 +26,15 @@ import com.jsoft.invparts.servicios.ManttoService;
 public class PersonaMB implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+
     private Boolean existeUsuario = false;
     private Boolean existeCorreoElectronico = false;
+    private String pass1;
+    private String pass2;
+
     private Persona per = new Persona();
     private Usuario usu = new Usuario();
+
     private List<Persona> lstPersonas = new ArrayList();
 
     @ManagedProperty("#{manttoService}")
@@ -79,7 +84,7 @@ public class PersonaMB implements Serializable {
     public void setManttoService(ManttoService manttoService) {
         this.manttoService = manttoService;
     }
-    
+
     public Boolean getExisteUsuario() {
         return existeUsuario;
     }
@@ -96,16 +101,57 @@ public class PersonaMB implements Serializable {
         this.existeCorreoElectronico = existeCorreoElectronico;
     }
 
+    public String getPass1() {
+        return pass1;
+    }
+
+    public void setPass1(String pass1) {
+        this.pass1 = pass1;
+    }
+
+    public String getPass2() {
+        return pass2;
+    }
+
+    public void setPass2(String pass2) {
+        this.pass2 = pass2;
+    }
+
     //</editor-fold>
     public void guardar() {
-        if (manttoService.guardar(per) == 1) {
-            lstPersonas = manttoService.listPersona();
-            per = new Persona();
-        } else {
+        if (per.getCorreoElectronico() != null) {
+            if (manttoService.guardar(per) == 1) {
+                lstPersonas = manttoService.listPersona();
+                per = new Persona();
+            } else {
+            }
+        }else{
+            System.out.println("NOOO");
         }
     }
-    
-    public void buscarCorreoElectronico(){
+
+    public void guardarNewUsuario() {
+        int valor = manttoService.guardarNuevoUsuario(per);
+        if (valor != -1) {
+            per.setIdPersona(valor);
+            usu = new Usuario();
+            usu.setCambiarClave((short) 0);
+            usu.setClaveAcceso(manttoService.encriptar(pass1));
+            usu.setFechaCaducidad(null);
+            usu.setIdPersona(per.getIdPersona());
+            usu.setIntentosFallidos((short) 0);
+            usu.setUsuarioActivo((short) 0);
+            usu.setCodigoActivacion(manttoService.encriptar(per.getCorreoElectronico().concat(per.getPrimerNombre()).concat(per.getSegundoNombre())));
+
+            if (manttoService.guardar(usu) == 1) {
+                manttoService.enviarCorreoActivacionUsuario(per, usu.getCodigoActivacion());
+            } else {
+                //error al guardar el usuario
+            }
+        }
+    }
+
+    public void buscarCorreoElectronico() {
         existeCorreoElectronico = manttoService.isExistEmailPerByEmail(per.getCorreoElectronico());
     }
 }

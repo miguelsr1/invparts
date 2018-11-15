@@ -31,13 +31,13 @@ import org.springframework.stereotype.Repository;
 public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
 
     @Autowired
-    private DataSource dataSource; 
+    private DataSource dataSource;
 
     public ManttoDaoImpl() {
     }
-    
+
     @PostConstruct
-    public void init(){
+    public void init() {
         if (dataSource == null) {
             throw new BeanCreationException("Must set mySqlDataSource on " + this.getClass().getName());
         }
@@ -52,7 +52,7 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
             @Override
             public Persona mapRow(ResultSet rs, int rowNumber) throws SQLException {
                 Persona per = new Persona();
-                per.setIdPersona(rs.getObject("id_persona", BigInteger.class));
+                per.setIdPersona(rs.getInt("id_persona"));
                 per.setPrimerNombre(rs.getString("primer_nombre"));
                 per.setSegundoNombre(rs.getString("segundo_nombre"));
                 per.setCorreoElectronico(rs.getString("correo_electronico"));
@@ -92,7 +92,7 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
             public Usuario mapRow(ResultSet rs, int rowNumber) throws SQLException {
                 Usuario usu = new Usuario();
                 usu.setUsuario(rs.getString("usuario"));
-                usu.setIdPersona(rs.getObject("id_empresa", BigInteger.class));
+                usu.setIdPersona(rs.getInt("id_empresa"));
                 usu.setClaveAcceso(rs.getString("clave_acceso"));
                 usu.setUsuarioActivo(rs.getObject("usuario_activo", Short.class));
                 usu.setCambiarClave(rs.getObject("cambiar_clave", Short.class));
@@ -131,5 +131,10 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
     @Override
     public int guardar(PersistenciaDao objeto) {
         return super.persistir(objeto);
+    }
+
+    @Override
+    public int guardarNuevoUsuario(PersistenciaDao objeto) {
+        return super.createIdString(objeto);
     }
 }

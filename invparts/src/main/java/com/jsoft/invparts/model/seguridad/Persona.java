@@ -17,7 +17,7 @@ public class Persona implements Serializable, PersistenciaDao {
 
     private static final long serialVersionUID = 1L;
 
-    private BigInteger idPersona;
+    private Integer idPersona;
     private String primerNombre;
     private String segundoNombre;
     private String correoElectronico;
@@ -26,11 +26,11 @@ public class Persona implements Serializable, PersistenciaDao {
     public Persona() {
     }
 
-    public BigInteger getIdPersona() {
+    public Integer getIdPersona() {
         return idPersona;
     }
 
-    public void setIdPersona(BigInteger idPersona) {
+    public void setIdPersona(Integer idPersona) {
         this.idPersona = idPersona;
     }
 

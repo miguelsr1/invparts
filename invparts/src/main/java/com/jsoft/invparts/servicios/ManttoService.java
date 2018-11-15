@@ -28,4 +28,10 @@ public interface ManttoService {
     public Boolean isExistEmailPerByEmail(String eMail);
 
     public int guardar(PersistenciaDao objeto);
+    
+    public int guardarNuevoUsuario(PersistenciaDao objeto);
+    
+    public void enviarCorreoActivacionUsuario(Persona per, String codAct);
+    
+    public String encriptar(String cadena);
 }

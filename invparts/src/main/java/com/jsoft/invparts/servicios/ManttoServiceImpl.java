@@ -14,10 +14,17 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import com.jsoft.invparts.dao.ManttoDao;
 import com.jsoft.invparts.model.seguridad.Usuario;
+import java.text.MessageFormat;
+import java.util.Date;
+import java.util.ResourceBundle;
+import org.apache.commons.codec.digest.DigestUtils;
 
 @Service("manttoService")
 @Component
 public class ManttoServiceImpl implements ManttoService {
+
+    private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle.getBundle("etiquetas");
+
     @Autowired
     private ManttoDao dao;
 
@@ -49,5 +56,25 @@ public class ManttoServiceImpl implements ManttoService {
     @Override
     public Boolean getUsuarioByUsu(String usuario) {
         return dao.getUsuarioByUsu(usuario);
+    }
+
+    @Override
+    public int guardarNuevoUsuario(PersistenciaDao objeto) {
+        return dao.guardarNuevoUsuario(objeto);
+    }
+
+    @Override
+    public void enviarCorreoActivacionUsuario(Persona per, String codAct) {
+        StringBuilder sb = new StringBuilder("");
+
+        sb.append(MessageFormat.format(RESOURCE_BUNDLE.getString("email.cuerpoMensajeConfirmarCuenta"), per.getPrimerNombre() + " " + per.getSegundoNombre(), "www.invparts.com", "www.invparts.com/uact="+codAct)).append("<br/>");
+        sb.append(MessageFormat.format(RESOURCE_BUNDLE.getString("email.firmaDeCorreo"), new Date()));
+        System.out.println("correo:\n"+sb.toString());
+        
+    }
+
+    @Override
+    public String encriptar(String cadena) {
+        return DigestUtils.md5Hex(cadena).toUpperCase();
     }
 }

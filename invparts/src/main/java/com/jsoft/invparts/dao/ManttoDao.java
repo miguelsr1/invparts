@@ -27,4 +27,6 @@ public interface ManttoDao {
     public Boolean isExistEmailPerByEmail(String eMail);
 
     public int guardar(PersistenciaDao objeto);
+    
+    public int guardarNuevoUsuario(PersistenciaDao objeto);
 }

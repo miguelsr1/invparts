@@ -19,12 +19,13 @@ public class Usuario implements Serializable, PersistenciaDao {
     private static final long serialVersionUID = 1L;
 
     private String usuario;
-    private BigInteger idPersona;
+    private Integer idPersona;
     private String claveAcceso;
     private Short usuarioActivo;
     private Short cambiarClave;
     private Date fechaCaducidad;
     private Short intentosFallidos;
+    private String codigoActivacion;
 
     public Usuario() {
     }
@@ -37,11 +38,11 @@ public class Usuario implements Serializable, PersistenciaDao {
         this.usuario = usuario;
     }
 
-    public BigInteger getIdPersona() {
+    public Integer getIdPersona() {
         return idPersona;
     }
 
-    public void setIdPersona(BigInteger idPersona) {
+    public void setIdPersona(Integer idPersona) {
         this.idPersona = idPersona;
     }
 
@@ -85,6 +86,14 @@ public class Usuario implements Serializable, PersistenciaDao {
         this.intentosFallidos = intentosFallidos;
     }
 
+    public String getCodigoActivacion() {
+        return codigoActivacion;
+    }
+
+    public void setCodigoActivacion(String codigoActivacion) {
+        this.codigoActivacion = codigoActivacion;
+    }
+
     @Override
     public String toString() {
         return "Usuario{" + "usuario=" + usuario + ", idPersona=" + idPersona + '}';
@@ -92,22 +101,22 @@ public class Usuario implements Serializable, PersistenciaDao {
 
     @Override
     public String generarInsertSQL() {
-        return "INSERT INTO usuario(usuario, id_persona, clave_acceso, usuario_activo, cambiar_clave, fecha_caducidad, intentos_fallidos) values(?,?,?,?,?,?,?)";
+        return "INSERT INTO usuario(usuario, id_persona, clave_acceso, usuario_activo, cambiar_clave, fecha_caducidad, intentos_fallidos, codigo_activacion) values(?,?,?,?,?,?,?,?)";
     }
 
     @Override
     public Object[] getDatosInsert() {
-        return new Object[]{usuario, idPersona, claveAcceso, usuarioActivo, cambiarClave, fechaCaducidad, intentosFallidos};
+        return new Object[]{usuario, idPersona, claveAcceso, usuarioActivo, cambiarClave, fechaCaducidad, intentosFallidos, codigoActivacion};
     }
 
     @Override
     public String generarUpdateSQL() {
-        return "UPDATE usuario SET id_persona=?, clave_acceso=?, usuario_activo=?, cambiar_clave=?, fecha_caducidad=?, intentos_fallidos=? WHERE usuario=?";
+        return "UPDATE usuario SET id_persona=?, clave_acceso=?, usuario_activo=?, cambiar_clave=?, fecha_caducidad=?, intentos_fallidos=?, codigo_activacion=? WHERE usuario=?";
     }
 
     @Override
     public Object[] getDatosUpdate() {
-        return new Object[]{idPersona, claveAcceso, usuarioActivo, cambiarClave, fechaCaducidad, intentosFallidos, usuario};
+        return new Object[]{idPersona, claveAcceso, usuarioActivo, cambiarClave, fechaCaducidad, intentosFallidos, codigoActivacion, usuario};
     }
 
     @Override
