@@ -13,7 +13,8 @@ import java.math.BigInteger;
  *
  * @author DesarrolloPc
  */
-public class Empresa implements Serializable, PersistenciaDao{
+public class Empresa implements Serializable, PersistenciaDao {
+
     private static final long serialVersionUID = 1L;
 
     private BigInteger idEmpresa;
@@ -58,9 +59,9 @@ public class Empresa implements Serializable, PersistenciaDao{
 
     @Override
     public String toString() {
-        return "Empresa{" + "idEmpresa=" + idEmpresa + ", nombreEmpresa=" + nombreEmpresa + ", telefonoEmpresa=" + telefonoEmpresa + '}';
+        return "Empresa{" + "idEmpresa=" + idEmpresa + "}";
     }
-    
+
     @Override
     public String generarInsertSQL() {
         return "INSERT INTO empresa(nombre_empresa, correo_empresa, telefono_empresa) values(?,?,?)";
@@ -85,5 +86,5 @@ public class Empresa implements Serializable, PersistenciaDao{
     public Boolean esNuevoRegistro() {
         return idEmpresa == null;
     }
-    
+
 }

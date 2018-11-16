@@ -66,7 +66,7 @@ public class CompanyMB {
     //</editor-fold >
 
     public void guardar() {
-        if (manttoService.guardar(emp) == 1) {
+        if (manttoService.guardarConIdAutogenerado(emp) == 1) {
             lstEmpresa = manttoService.listEmpresa();
             emp = new Empresa();
         } else {

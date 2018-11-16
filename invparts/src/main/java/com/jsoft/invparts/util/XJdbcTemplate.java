@@ -31,9 +31,24 @@ public class XJdbcTemplate {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public int persistir(PersistenciaDao objeto) {
+    public int persistirConIdAutogenerado(PersistenciaDao objeto) {
         int valor;
         if (objeto.esNuevoRegistro()) {
+            valor = getJdbcTemplate().update(objeto.generarInsertSQL(), objeto.getDatosInsert());
+        } else {
+            valor = getJdbcTemplate().update(objeto.generarUpdateSQL(), objeto.getDatosUpdate());
+        }
+
+        if (valor > 0) {
+            return valor;
+        } else {
+            return JsfUtil.COD_ERROR;
+        }
+    }
+    
+    public int persistirConIdString(PersistenciaDao objeto, Boolean nuevo) {
+        int valor;
+        if (nuevo) {
             valor = getJdbcTemplate().update(objeto.generarInsertSQL(), objeto.getDatosInsert());
         } else {
             valor = getJdbcTemplate().update(objeto.generarUpdateSQL(), objeto.getDatosUpdate());

@@ -24,3 +24,11 @@
 /*para tablas*/
 .colCenter{text-align: center;}
 .colNumero{text-align: right;}
+
+.centered {
+    position: absolute;
+    height: 100px;
+    top: 0;
+    bottom: 0;
+    margin:auto;
+}

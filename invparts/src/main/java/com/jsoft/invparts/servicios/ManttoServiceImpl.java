@@ -34,8 +34,8 @@ public class ManttoServiceImpl implements ManttoService {
     }
 
     @Override
-    public int guardar(PersistenciaDao objeto) {
-        return dao.guardar(objeto);
+    public int guardarConIdAutogenerado(PersistenciaDao objeto) {
+        return dao.guardarConIdAutogenerado(objeto);
     }
 
     @Override
@@ -76,5 +76,10 @@ public class ManttoServiceImpl implements ManttoService {
     @Override
     public String encriptar(String cadena) {
         return DigestUtils.md5Hex(cadena).toUpperCase();
+    }
+
+    @Override
+    public int guardarConIdString(PersistenciaDao objeto, Boolean nuevo) {
+        return dao.guardarConIdString(objeto, nuevo);
     }
 }

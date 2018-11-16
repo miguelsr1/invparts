@@ -15,6 +15,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import com.jsoft.invparts.servicios.ManttoService;
+import com.jsoft.invparts.util.JsfUtil;
 import org.apache.commons.codec.digest.DigestUtils;
 
 /**
@@ -119,14 +120,14 @@ public class PersonaMB implements Serializable {
 
     //</editor-fold>
     public void guardar() {
-        if (per.getCorreoElectronico() != null) {
-            if (manttoService.guardar(per) == 1) {
+        if (per.getCorreoElectronico() != null && !per.getCorreoElectronico().isEmpty()) {
+            if (manttoService.guardarConIdAutogenerado(per) == 1) {
                 lstPersonas = manttoService.listPersona();
                 per = new Persona();
             } else {
             }
-        }else{
-            System.out.println("NOOO");
+        } else {
+            JsfUtil.addWarningMessage("Debe de completar todos los registros");
         }
     }
 
@@ -134,7 +135,6 @@ public class PersonaMB implements Serializable {
         int valor = manttoService.guardarNuevoUsuario(per);
         if (valor != -1) {
             per.setIdPersona(valor);
-            usu = new Usuario();
             usu.setCambiarClave((short) 0);
             usu.setClaveAcceso(manttoService.encriptar(pass1));
             usu.setFechaCaducidad(null);
@@ -143,7 +143,7 @@ public class PersonaMB implements Serializable {
             usu.setUsuarioActivo((short) 0);
             usu.setCodigoActivacion(manttoService.encriptar(per.getCorreoElectronico().concat(per.getPrimerNombre()).concat(per.getSegundoNombre())));
 
-            if (manttoService.guardar(usu) == 1) {
+            if (manttoService.guardarConIdString(usu, true) == 1) {
                 manttoService.enviarCorreoActivacionUsuario(per, usu.getCodigoActivacion());
             } else {
                 //error al guardar el usuario
@@ -153,5 +153,9 @@ public class PersonaMB implements Serializable {
 
     public void buscarCorreoElectronico() {
         existeCorreoElectronico = manttoService.isExistEmailPerByEmail(per.getCorreoElectronico());
+    }
+    
+    private boolean validacionDeFormulario(){
+        return false;
     }
 }

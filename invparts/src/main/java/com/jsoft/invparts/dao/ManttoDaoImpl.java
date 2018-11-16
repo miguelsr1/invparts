@@ -129,12 +129,17 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
     }
 
     @Override
-    public int guardar(PersistenciaDao objeto) {
-        return super.persistir(objeto);
+    public int guardarConIdAutogenerado(PersistenciaDao objeto) {
+        return super.persistirConIdAutogenerado(objeto);
     }
 
     @Override
     public int guardarNuevoUsuario(PersistenciaDao objeto) {
         return super.createIdString(objeto);
+    }
+
+    @Override
+    public int guardarConIdString(PersistenciaDao objeto, Boolean nuevo) {
+        return super.persistirConIdString(objeto, nuevo);
     }
 }

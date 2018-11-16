@@ -64,7 +64,7 @@ public class UserMB {
     //</editor-fold>
 
     public void guardar() {
-        mantenimientosDao.guardar(user);
+        mantenimientosDao.guardarConIdAutogenerado(user);
     }
 
     public void findUserbyUserName() {

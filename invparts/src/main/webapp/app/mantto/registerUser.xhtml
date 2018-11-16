@@ -4,7 +4,8 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 template="#{pageContext.servletContext.contextPath}/resources/template/template.xhtml"
-                xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:jsf="http://xmlns.jcp.org/jsf">
 
     <ui:define name="head">
         <script type="text/javascript">
@@ -21,60 +22,79 @@
     <ui:define name="content">
         <div class="ui-g">
             <div class="ui-g-12">
-                <div class="card card-w-title">
+                <div class="ui-g-12 ui-lg-6">
+                    <div class="card card-w-title">
+                        <p:panelGrid id="pngDatos" columns="2" columnClasses="ui-g-12 ui-md-4,ui-g-12 ui-md-8" layout="grid" 
+                                     styleClass="ui-panelgrid-blank form-group form-elements" style="border:0px none; background-color:transparent;">
+                            <p:outputLabel value="#{msj.primerNombre}"/>
+                            <p:inputText value="#{personaMB.per.primerNombre}" style="width: 289px;" required="true" requiredMessage="#{msj.validarNombres}"/>
+                            <p:outputLabel value="#{msj.segundoNombre}"/>
+                            <p:inputText value="#{personaMB.per.segundoNombre}" style="width: 289px;" required="true" requiredMessage="#{msj.validarApellidos}"/>
+                            <p:outputLabel value="#{msj.numeroTelefono}"/>
+                            <p:outputPanel>
+                                <div class="ui-inputgroup">
+                                    <p:inputText value="#{personaMB.per.numeroTelefono}" style="width: 250px;" required="true" requiredMessage="#{msj.validarNumTelefonoPersona}"/>
+                                    <span class="ui-inputgroup-addon"><i class="fa fa-phone" aria-hidden="true"></i></span>
+                                </div>
+                            </p:outputPanel>
+                            <p:outputLabel value="#{msj.eMail}"/>
+                            <p:outputPanel id="pnlCorreo">
+                                <div class="ui-inputgroup">
+                                    <p:inputText value="#{personaMB.per.correoElectronico}" style="width: 250px;" required="true" requiredMessage="#{msj.validarCorreo}"/>
+                                    <span class="ui-inputgroup-addon" >
+                                        <i class="fa fa-check" style="display:#{(personaMB.existeCorreoElectronico)?'none':'block'};color: #0066ff;" aria-hidden="true"></i>
+                                        <i class="fa fa-times" style="display:#{(personaMB.existeCorreoElectronico)?'block':'none'};color: #ff3300;" aria-hidden="true"></i>
+                                    </span>
+                                </div>
+                                <p:outputLabel id="lblValidarCorreo" style="margin-top: 5px; display:#{(personaMB.existeCorreoElectronico)?'block':'none'};" value="${msj.msjValidarCorreo}"/>
+                            </p:outputPanel>
 
-                    <p:panelGrid id="pngDatos" columns="2" columnClasses="ui-g-12 ui-md-4,ui-g-12 ui-md-8" layout="grid" 
-                                 styleClass="ui-panelgrid-blank form-group form-elements" style="border:0px none; background-color:transparent;">
-                        <p:outputLabel value="#{msj.primerNombre}"/>
-                        <p:inputText value="#{personaMB.per.primerNombre}" style="width: 250px;"/>
-                        <p:outputLabel value="#{msj.segundoNombre}"/>
-                        <p:inputText value="#{personaMB.per.segundoNombre}" style="width: 250px;"/>
-                        <p:outputLabel value="#{msj.numeroTelefono}"/>
-                        <p:outputPanel>
-                            <div class="ui-inputgroup">
-                                <p:inputText value="#{personaMB.per.numeroTelefono}" style="width: 250px;"/>
-                                <span class="ui-inputgroup-addon"><i class="fa fa-phone" aria-hidden="true"></i></span>
-                            </div>
-                        </p:outputPanel>
-                        <p:outputLabel value="#{msj.eMail}"/>
-                        <p:outputPanel id="pnlCorreo">
-                            <div class="ui-inputgroup">
-                                <p:inputText value="#{personaMB.per.correoElectronico}" style="width: 250px;"/>
-                                <span class="ui-inputgroup-addon" style="display:#{(personaMB.existeCorreoElectronico)?'none':'block'};"><i class="fa fa-check" style="color: #0066ff;" aria-hidden="true"></i></span>
-                                <span class="ui-inputgroup-addon" style="display:#{(personaMB.existeCorreoElectronico)?'block':'none'};"><i class="fa fa-times" style="color: #ff3300;" aria-hidden="true"></i></span>
-                            </div>
-                            <p:outputLabel id="lblValidarCorreo" style="margin-top: 5px; display:#{(personaMB.existeCorreoElectronico)?'block':'none'};" value="${msj.msjValidarCorreo}"/>
-                        </p:outputPanel>
-
-                        <p:outputLabel value="#{msj.usuario}"/>
-                        <p:outputPanel>
-                            <div class="ui-inputgroup">
-                                <p:inputText value="#{personaMB.usu.usuario}" style="width: 250px;"/>
-                                <span class="ui-inputgroup-addon"><i class="fa fa-user" aria-hidden="true"></i></span>
-                            </div>
-                        </p:outputPanel>
-                        <p:outputLabel value="#{msj.claveAcceso}"/>
-                        <p:outputPanel>
-                            <div class="ui-inputgroup">
-                                <p:password id="pass1" widgetVar="pass1" value="#{personaMB.pass1}" feedback="true" style="width: 250px;" required="true"/>
-                                <span class="ui-inputgroup-addon"><i class="fa fa-eye-slash" aria-hidden="true"></i></span>
-                            </div>
-                        </p:outputPanel>
-                        <p:outputLabel value="#{msj.confirmar}"/>
-                        <p:outputPanel>
-                            <div class="ui-inputgroup">
-                                <p:password id="pass2" widgetVar="pass2" value="#{personaMB.pass2}" style="width: 250px;" required="true" />
-                                <span id="passValidado" class="ui-inputgroup-addon" style="display: none;"><i class="fa fa-check" style="color: #0066ff;" aria-hidden="true"></i></span>
-                                <span id="passError" class="ui-inputgroup-addon" style="display: none;"><i class="fa fa-times" style="color: #ff3300;" aria-hidden="true"></i></span>
-                            </div>
-                            <p:outputLabel id="lblValidarContrasena" style="margin-top: 5px; display: none;" value="${msj.msjValidarContrasenas}"/>
-                        </p:outputPanel>
-
-                        <p:commandButton id="btoGuardar" value="#{msj.guardar}" action="#{personaMB.guardar}" update="pngDatos" icon="fa fa-floppy-o" />
-                    </p:panelGrid>
+                            <p:outputLabel value="#{msj.usuario}"/>
+                            <p:outputPanel>
+                                <div class="ui-inputgroup">
+                                    <p:inputText value="#{personaMB.usu.usuario}" style="width: 250px;" required="true" requiredMessage="#{msj.validarUsuario}"/>
+                                    <span class="ui-inputgroup-addon"><i class="fa fa-user" aria-hidden="true"></i></span>
+                                </div>
+                            </p:outputPanel>
+                            <p:outputLabel value="#{msj.claveAcceso}"/>
+                            <p:outputPanel>
+                                <div class="ui-inputgroup" >
+                                    <p:password id="pass1" widgetVar="pass1" value="#{personaMB.pass1}" feedback="true" style="width: 250px;" required="true" requiredMessage="#{msj.validarClaveAcceso}"/>
+                                    <span class="ui-inputgroup-addon"><i class="fa fa-eye-slash" aria-hidden="true"></i></span>
+                                    <p:spacer width="10"/>
+                                    <span style="padding: 5px;">
+                                        <i jsf:id="lblInfoClaveAcceso" class="fa fa-info-circle" aria-hidden="true" style="color: #0066ff;" onmousemove="PF('overReglasClaveAcceso').show();"/>
+                                    </span>
+                                </div>
+                            </p:outputPanel>
+                            <p:outputLabel value="#{msj.confirmar}"/>
+                            <p:outputPanel>
+                                <div class="ui-inputgroup">
+                                    <p:password id="pass2" widgetVar="pass2" value="#{personaMB.pass2}" style="width: 250px;" required="true"  validatorMessage="#{msj.validarClaveAccesoConfirmacion}" />
+                                    <span class="ui-inputgroup-addon"><i class="fa fa-check" style="display: none; color: #0066ff;" aria-hidden="true"></i></span>
+                                </div>
+                                <p:outputLabel id="lblValidarContrasena" style="margin-top: 5px; display: none;" value="${msj.msjValidarContrasenas}"/>
+                            </p:outputPanel>
+                        </p:panelGrid>
+                        <br/>
+                        <p:commandButton id="btoGuardar" value="#{msj.guardar}" action="#{personaMB.guardarNewUsuario}" update="pngDatos" icon="fa fa-floppy-o" style="width: 100%;" />
+                        <p:messages id="messages" showDetail="true" closable="true">
+                            <p:autoUpdate />
+                        </p:messages>
+                    </div>
                 </div>
             </div>
         </div>
+
+        <p:overlayPanel id="overReglasClaveAcceso" widgetVar="overReglasClaveAcceso" for="lblInfoClaveAcceso" hideEffect="fade">
+            <p:outputLabel>
+                <ul>
+                    <li>Minimo 8 caracteres</li>
+                    <li>Distinción entre minusculas y mayusculas</li>
+                    <li>Debe de contar con al menos un caracter especial (* . $ # % &amp;)</li>
+                </ul>
+            </p:outputLabel>
+        </p:overlayPanel>
 
         <p:remoteCommand name="findEmail" update="pnlCorreo" actionListener="#{personaMB.buscarCorreoElectronico}" />
     </ui:define>

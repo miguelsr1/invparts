@@ -68,7 +68,7 @@ public class Persona implements Serializable, PersistenciaDao {
 
     @Override
     public String toString() {
-        return "Persona{" + "idPersona=" + idPersona + ", primerNombre=" + primerNombre + '}';
+        return "Persona{" + "idPersona=" + idPersona + "}";
     }
 
     @Override

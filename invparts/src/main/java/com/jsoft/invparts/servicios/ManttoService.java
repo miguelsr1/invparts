@@ -27,7 +27,9 @@ public interface ManttoService {
 
     public Boolean isExistEmailPerByEmail(String eMail);
 
-    public int guardar(PersistenciaDao objeto);
+    public int guardarConIdAutogenerado(PersistenciaDao objeto);
+    
+    public int guardarConIdString(PersistenciaDao objeto, Boolean nuevo);
     
     public int guardarNuevoUsuario(PersistenciaDao objeto);
     
