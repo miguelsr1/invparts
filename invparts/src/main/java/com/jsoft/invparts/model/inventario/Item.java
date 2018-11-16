@@ -24,6 +24,7 @@ public class Item implements Serializable, PersistenciaDao {
     public String especificaciones;
     public String urlImagen;
     public String codigoProducto;
+    public Integer idEstante;
 
     public Item() {
     }
@@ -92,6 +93,14 @@ public class Item implements Serializable, PersistenciaDao {
         this.codigoProducto = codigoProducto;
     }
 
+    public Integer getIdEstante() {
+        return idEstante;
+    }
+
+    public void setIdEstante(Integer idEstante) {
+        this.idEstante = idEstante;
+    }
+
     @Override
     public String toString() {
         return "Item{" + "idItem=" + idItem + '}';
@@ -99,22 +108,22 @@ public class Item implements Serializable, PersistenciaDao {
 
     @Override
     public String generarInsertSQL() {
-        return "INSERT INTO item (id_producto, descripcion, tamanio, peso, especificaciones, url_imagen, codigo_producto) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        return "INSERT INTO item (id_producto, descripcion, tamanio, peso, especificaciones, url_imagen, codigo_producto, id_estante) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
     }
 
     @Override
     public Object[] getDatosInsert() {
-        return new Object[]{idProducto, descripcion, tamanio, peso, especificaciones, urlImagen, codigoProducto};
+        return new Object[]{idProducto, descripcion, tamanio, peso, especificaciones, urlImagen, codigoProducto, idEstante};
     }
 
     @Override
     public String generarUpdateSQL() {
-        return "UPDATE item id_producto=?, descripcion=?, tamanio=?, peso=?, especificaciones=?, url_imagen=?, codigo_producto=? WHERE id_item=?";
+        return "UPDATE item id_producto=?, descripcion=?, tamanio=?, peso=?, especificaciones=?, url_imagen=?, codigo_producto=?, id_estante=? WHERE id_item=?";
     }
 
     @Override
     public Object[] getDatosUpdate() {
-        return new Object[]{idProducto, descripcion, tamanio, peso, especificaciones, urlImagen, codigoProducto, idItem};
+        return new Object[]{idProducto, descripcion, tamanio, peso, especificaciones, urlImagen, codigoProducto, idEstante, idItem};
     }
 
     @Override
