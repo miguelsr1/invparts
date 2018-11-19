@@ -18,6 +18,8 @@ public class Sucursal implements Serializable, PersistenciaDao {
 
     public Integer idSucursal;
     public String nombreSucursal;
+    public String direccionSucursal;
+    public String telefonoSucursal;
     public Integer idEmpresa;
 
     public Sucursal() {
@@ -47,6 +49,22 @@ public class Sucursal implements Serializable, PersistenciaDao {
         this.idEmpresa = idEmpresa;
     }
 
+    public String getDireccionSucursal() {
+        return direccionSucursal;
+    }
+
+    public void setDireccionSucursal(String direccionSucursal) {
+        this.direccionSucursal = direccionSucursal;
+    }
+
+    public String getTelefonoSucursal() {
+        return telefonoSucursal;
+    }
+
+    public void setTelefonoSucursal(String telefonoSucursal) {
+        this.telefonoSucursal = telefonoSucursal;
+    }
+
     @Override
     public String toString() {
         return "Sucursal{" + "idSucursal=" + idSucursal + ", nombreSucursal=" + nombreSucursal + '}';
@@ -54,22 +72,22 @@ public class Sucursal implements Serializable, PersistenciaDao {
 
     @Override
     public String generarInsertSQL() {
-        return "INSERT INTO sucursal (nombre_sucursal, id_empresa) VALUES (?, ?)";
+        return "INSERT INTO sucursal (nombre_sucursal, id_empresa, direccion_sucursal, telefono_sucursal) VALUES (?, ?)";
     }
 
     @Override
     public Object[] getDatosInsert() {
-        return new Object[]{nombreSucursal, idEmpresa};
+        return new Object[]{nombreSucursal, idEmpresa, direccionSucursal, telefonoSucursal};
     }
 
     @Override
     public String generarUpdateSQL() {
-        return "UPDATE sucursal SET nombre_sucursal=?, id_empresa=? WHERE id_sucursal=?";
+        return "UPDATE sucursal SET nombre_sucursal=?, id_empresa=?, direccion_sucursal=?, telefono_sucursal=? WHERE id_sucursal=?";
     }
 
     @Override
     public Object[] getDatosUpdate() {
-        return new Object[]{nombreSucursal, idEmpresa, idSucursal};
+        return new Object[]{nombreSucursal, idEmpresa, direccionSucursal, telefonoSucursal, idSucursal};
     }
 
     @Override

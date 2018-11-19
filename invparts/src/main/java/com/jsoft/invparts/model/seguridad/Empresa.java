@@ -21,6 +21,7 @@ public class Empresa implements Serializable, PersistenciaDao {
     private String nombreEmpresa;
     private String correoEmpresa;
     private String telefonoEmpresa;
+    private Integer idTipoEmpresa;
 
     public Empresa() {
     }
@@ -57,6 +58,14 @@ public class Empresa implements Serializable, PersistenciaDao {
         this.telefonoEmpresa = telefonoEmpresa;
     }
 
+    public Integer getIdTipoEmpresa() {
+        return idTipoEmpresa;
+    }
+
+    public void setIdTipoEmpresa(Integer idTipoEmpresa) {
+        this.idTipoEmpresa = idTipoEmpresa;
+    }
+
     @Override
     public String toString() {
         return "Empresa{" + "idEmpresa=" + idEmpresa + "}";
@@ -64,22 +73,22 @@ public class Empresa implements Serializable, PersistenciaDao {
 
     @Override
     public String generarInsertSQL() {
-        return "INSERT INTO empresa(nombre_empresa, correo_empresa, telefono_empresa) values(?,?,?)";
+        return "INSERT INTO empresa(nombre_empresa, correo_empresa, telefono_empresa, id_tipo_empresa) values(?,?,?,?)";
     }
 
     @Override
     public Object[] getDatosInsert() {
-        return new Object[]{nombreEmpresa, correoEmpresa, telefonoEmpresa};
+        return new Object[]{nombreEmpresa, correoEmpresa, telefonoEmpresa, idTipoEmpresa};
     }
 
     @Override
     public String generarUpdateSQL() {
-        return "UPDATE empresa SET nombre_empresa=?, correo_empresa=?, telefono_empresa=? WHERE id_empresa=?";
+        return "UPDATE empresa SET nombre_empresa=?, correo_empresa=?, telefono_empresa=?, id_tipo_empresa=? WHERE id_empresa=?";
     }
 
     @Override
     public Object[] getDatosUpdate() {
-        return new Object[]{nombreEmpresa, correoEmpresa, telefonoEmpresa, idEmpresa};
+        return new Object[]{nombreEmpresa, correoEmpresa, telefonoEmpresa, idTipoEmpresa, idEmpresa};
     }
 
     @Override

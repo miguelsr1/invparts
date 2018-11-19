@@ -5,6 +5,9 @@
  */
 package com.jsoft.invparts.dao;
 
+import com.jsoft.invparts.model.inventario.Producto;
+import com.jsoft.invparts.model.inventario.Sucursal;
+import com.jsoft.invparts.model.inventario.Vendedor;
 import com.jsoft.invparts.model.seguridad.Empresa;
 import com.jsoft.invparts.model.seguridad.Persona;
 import com.jsoft.invparts.model.seguridad.Usuario;
@@ -65,8 +68,8 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
     }
 
     @Override
-    public List<Empresa> listEmpresa() {
-        String sql = "SELECT * from empresa";
+    public List<Empresa> listEmpresa(Short idTipoEmpresa) {
+        String sql = "SELECT * from empresa where id_tipo_empresa in (" + idTipoEmpresa + ", 3) ";
         List<Empresa> listEmp = getJdbcTemplate().query(sql, new RowMapper<Empresa>() {
 
             @Override
@@ -76,6 +79,7 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
                 emp.setNombreEmpresa(rs.getString("nombre_empresa"));
                 emp.setCorreoEmpresa(rs.getString("correo_empresa"));
                 emp.setTelefonoEmpresa(rs.getString("telefono_empresa"));
+                emp.setIdTipoEmpresa(rs.getInt("id_tipo_empresa"));
                 return emp;
             }
 
@@ -103,6 +107,62 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
 
         });
         return listUser;
+    }
+
+    @Override
+    public List<Vendedor> listVendedor() {
+        String sql = "SELECT * from Vendedor";
+        List<Vendedor> listSeller = getJdbcTemplate().query(sql, new RowMapper<Vendedor>() {
+
+            @Override
+            public Vendedor mapRow(ResultSet rs, int rowNumber) throws SQLException {
+                Vendedor ven = new Vendedor();
+                ven.setIdVendedor(rs.getObject("id_vendedor", BigInteger.class));
+                ven.setNombreVendedor(rs.getString("nombre_Vendedor"));
+                ven.setApellidoVendedor(rs.getString("apellido_Vendedor"));
+                return ven;
+            }
+
+        });
+        return listSeller;
+    }
+
+    @Override
+    public List<Sucursal> listSucursal() {
+        String sql = "SELECT * from Sucursal";
+        List<Sucursal> listBranch = getJdbcTemplate().query(sql, new RowMapper<Sucursal>() {
+
+            @Override
+            public Sucursal mapRow(ResultSet rs, int rowNumber) throws SQLException {
+                Sucursal suc = new Sucursal();
+                suc.setIdSucursal(rs.getInt("id_sucursal"));
+                suc.setNombreSucursal(rs.getString("nombre_sucursal"));
+                suc.setDireccionSucursal(rs.getString("direccion_sucursal"));
+                suc.setTelefonoSucursal(rs.getString("telefono_sucursal"));
+                return suc;
+            }
+
+        });
+        return listBranch;
+    }
+
+    @Override
+    public List<Producto> listProducto() {
+        String sql = "SELECT * from Producto";
+        List<Producto> listProv = getJdbcTemplate().query(sql, new RowMapper<Producto>() {
+
+            @Override
+            public Producto mapRow(ResultSet rs, int rowNumber) throws SQLException {
+                Producto pro = new Producto();
+                pro.setIdProducto(rs.getInt("id_producto"));
+                pro.setStatus(rs.getShort("status"));
+                pro.setCodigoProducto(rs.getString("codigo_producto"));
+                pro.setNombreProducto(rs.getString("nombre_producto"));
+                return pro;
+            }
+
+        });
+        return listProv;
     }
 
     /**

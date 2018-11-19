@@ -5,6 +5,7 @@
  */
 package com.jsoft.invparts.mb.mantto;
 
+import com.jsoft.invparts.model.inventario.Sucursal;
 import com.jsoft.invparts.model.seguridad.Empresa;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +13,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import com.jsoft.invparts.servicios.ManttoService;
-import javax.annotation.PostConstruct;
 
 /**
  *
@@ -23,17 +23,15 @@ import javax.annotation.PostConstruct;
 public class CompanyMB {
 
     private Empresa emp = new Empresa();
+    private Sucursal suc = new Sucursal();
     private List<Empresa> lstEmpresa = new ArrayList();
+    private List<Empresa> lstProveedor = new ArrayList();
+    private List<Sucursal> lstSucursal = new ArrayList();
 
     @ManagedProperty("#{manttoService}")
     private ManttoService manttoService;
 
     public CompanyMB() {
-    }
-    
-    @PostConstruct
-    public void init() {
-        lstEmpresa = manttoService.listEmpresa();
     }
 
     //<editor-fold >
@@ -55,6 +53,22 @@ public class CompanyMB {
         this.lstEmpresa = lstEmpresa;
     }
 
+    public List<Empresa> getLstProveedor() {
+        return lstProveedor;
+    }
+
+    public void setLstProveedor(List<Empresa> lstProveedor) {
+        this.lstProveedor = lstProveedor;
+    }
+
+    public List<Sucursal> getLstSucursal() {
+        return lstSucursal;
+    }
+
+    public void setLstSucursal(List<Sucursal> lstSucursal) {
+        this.lstSucursal = lstSucursal;
+    }
+
     public ManttoService getManttoService() {
         return manttoService;
     }
@@ -62,14 +76,34 @@ public class CompanyMB {
     public void setManttoService(ManttoService manttoService) {
         this.manttoService = manttoService;
     }
-    
-    //</editor-fold >
 
+    public Sucursal getSuc() {
+        return suc;
+    }
+
+    public void setSuc(Sucursal suc) {
+        this.suc = suc;
+    }
+
+    //</editor-fold >
     public void guardar() {
         if (manttoService.guardarConIdAutogenerado(emp) == 1) {
-            lstEmpresa = manttoService.listEmpresa();
+            lstEmpresa = manttoService.listEmpresa((short) 4);
             emp = new Empresa();
-        } else {
+        }
+    }
+
+    public void guardarSuc() {
+        if (manttoService.guardarConIdAutogenerado(suc) == 1) {
+            lstSucursal = manttoService.listSucursal();
+            suc = new Sucursal();
+        }
+    }
+
+    public void guardarProveedor() {
+        if (manttoService.guardarConIdAutogenerado(emp) == 1) {
+            lstProveedor = manttoService.listEmpresa((short) 1);
+            emp = new Empresa();
         }
     }
 }

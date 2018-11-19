@@ -13,6 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import com.jsoft.invparts.dao.ManttoDao;
+import com.jsoft.invparts.model.inventario.Producto;
+import com.jsoft.invparts.model.inventario.Sucursal;
+import com.jsoft.invparts.model.inventario.Vendedor;
 import com.jsoft.invparts.model.seguridad.Usuario;
 import java.text.MessageFormat;
 import java.util.Date;
@@ -44,8 +47,8 @@ public class ManttoServiceImpl implements ManttoService {
     }
 
     @Override
-    public List<Empresa> listEmpresa() {
-        return dao.listEmpresa();
+    public List<Empresa> listEmpresa(Short idTipoEmpresa) {
+        return dao.listEmpresa(idTipoEmpresa);
     }
 
     @Override
@@ -67,10 +70,10 @@ public class ManttoServiceImpl implements ManttoService {
     public void enviarCorreoActivacionUsuario(Persona per, String codAct) {
         StringBuilder sb = new StringBuilder("");
 
-        sb.append(MessageFormat.format(RESOURCE_BUNDLE.getString("email.cuerpoMensajeConfirmarCuenta"), per.getPrimerNombre() + " " + per.getSegundoNombre(), "www.invparts.com", "www.invparts.com/uact="+codAct)).append("<br/>");
+        sb.append(MessageFormat.format(RESOURCE_BUNDLE.getString("email.cuerpoMensajeConfirmarCuenta"), per.getPrimerNombre() + " " + per.getSegundoNombre(), "www.invparts.com", "www.invparts.com/uact=" + codAct)).append("<br/>");
         sb.append(MessageFormat.format(RESOURCE_BUNDLE.getString("email.firmaDeCorreo"), new Date()));
-        System.out.println("correo:\n"+sb.toString());
-        
+        System.out.println("correo:\n" + sb.toString());
+
     }
 
     @Override
@@ -81,5 +84,20 @@ public class ManttoServiceImpl implements ManttoService {
     @Override
     public int guardarConIdString(PersistenciaDao objeto, Boolean nuevo) {
         return dao.guardarConIdString(objeto, nuevo);
+    }
+
+    @Override
+    public List<Vendedor> listVendedor() {
+        return dao.listVendedor();
+    }
+
+    @Override
+    public List<Sucursal> listSucursal() {
+        return dao.listSucursal();
+    }
+
+    @Override
+    public List<Producto> listProducto() {
+        return dao.listProducto();
     }
 }
