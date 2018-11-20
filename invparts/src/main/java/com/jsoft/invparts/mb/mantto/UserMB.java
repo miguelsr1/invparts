@@ -7,6 +7,7 @@ package com.jsoft.invparts.mb.mantto;
 
 import com.jsoft.invparts.dao.ManttoDaoImpl;
 import com.jsoft.invparts.model.seguridad.Usuario;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
@@ -19,7 +20,9 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 @ManagedBean
 @ViewScoped
-public class UserMB {
+public class UserMB implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private Boolean isUserExist = false;
     private Usuario user;

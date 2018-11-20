@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <f:facet name="first">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+            <meta name="apple-mobile-web-app-capable" content="yes" />
+        </f:facet>
+        <title>PrimeFaces Paradise</title>
+    </h:head>
+
+    <h:body styleClass="landing-body">
+        `<h:form>
+            <div class="ui-g ui-fluid">
+                <div class="ui-g-12">
+                    <div class="card card-w-title">
+                        <p:panelGrid id="pngDatos" columns="1" styleClass="ui-panelgrid-blank form-group form-elements" style="width: 100%">
+                            <p:outputLabel value="#{msj.categoriaProducto} :"/>
+                            <p:autoComplete value="#{categoriaMB.cadenaDeBusqueda}" completeMethod="#{categoriaMB.completeCategoriaContains}"/>
+                        </p:panelGrid>
+                        <p:panelGrid columns="2" styleClass="ui-panelgrid-blank form-group form-elements" >
+                            <p:commandButton value="#{msj.agregar}" icon="fa fa-plus" />
+                            <p:commandButton value="#{msj.nuevo}" icon="fa fa-plus-square" />
+                        </p:panelGrid>
+                    </div>
+                </div>
+            </div>
+        </h:form>
+        <h:outputStylesheet name="css/animate.css" library="paradise-layout" />
+        <h:outputStylesheet name="css/layout-#{guestPreferences.layout}.css" library="paradise-layout" />
+    </h:body>
+
+</html>

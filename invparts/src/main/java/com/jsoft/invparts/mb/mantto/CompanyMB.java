@@ -13,6 +13,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import com.jsoft.invparts.servicios.ManttoService;
+import java.io.Serializable;
 
 /**
  *
@@ -20,7 +21,9 @@ import com.jsoft.invparts.servicios.ManttoService;
  */
 @ManagedBean
 @ViewScoped
-public class CompanyMB {
+public class CompanyMB implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private Empresa emp = new Empresa();
     private Sucursal suc = new Sucursal();
@@ -34,7 +37,7 @@ public class CompanyMB {
     public CompanyMB() {
     }
 
-    //<editor-fold >
+    //<editor-fold desc="Metodos getters y setters">
     public Empresa getEmp() {
         return emp;
     }

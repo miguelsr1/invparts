@@ -46,6 +46,11 @@
                         <p:column headerText="#{msj.status}">
                             <p:outputLabel value="#{pro.status eq 1? msj.activo:msj.descontinuado}"/>
                         </p:column>
+                        <p:column headerText="#{msj.categoriaProducto}">
+                            <p:commandButton value="#{msj.ver}" icon="fa fa-eye" action="#{productoMB.openDialogCategory}">
+                                <p:ajax event="dialogReturn" />
+                            </p:commandButton>
+                        </p:column>
                     </p:dataTable>
                 </div>
             </div>

@@ -12,7 +12,11 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import com.jsoft.invparts.servicios.ManttoService;
+import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 import javax.annotation.PostConstruct;
+import org.primefaces.PrimeFaces;
 
 /**
  *
@@ -20,7 +24,9 @@ import javax.annotation.PostConstruct;
  */
 @ManagedBean
 @ViewScoped
-public class ProductoMB {
+public class ProductoMB implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private Producto pro = new Producto();
     private List<Producto> lstProducto = new ArrayList();
@@ -30,13 +36,13 @@ public class ProductoMB {
 
     public ProductoMB() {
     }
-    
+
     @PostConstruct
     public void init() {
         lstProducto = manttoService.listProducto();
     }
 
-    //<editor-fold >
+    //<editor-fold desc="Metodos getters y setters">
     public Producto getPro() {
         return pro;
     }
@@ -55,7 +61,6 @@ public class ProductoMB {
         this.lstProducto = lstProducto;
     }
 
-   
     public ManttoService getManttoService() {
         return manttoService;
     }
@@ -63,13 +68,24 @@ public class ProductoMB {
     public void setManttoService(ManttoService manttoService) {
         this.manttoService = manttoService;
     }
-    
-    //</editor-fold >
 
+    //</editor-fold >
     public void guardar() {
         if (manttoService.guardarConIdAutogenerado(pro) == 1) {
             lstProducto = manttoService.listProducto();
             pro = new Producto();
         }
+    }
+
+    public void openDialogCategory() {
+        Map<String, Object> options = new HashMap();
+        options.put("modal", true);
+        options.put("width", 640);
+        options.put("height", 340);
+        options.put("contentWidth", "100%");
+        options.put("contentHeight", "100%");
+        options.put("headerElement", "customheader");
+
+        PrimeFaces.current().dialog().openDynamic("/app/mantto/category", options, null);
     }
 }
