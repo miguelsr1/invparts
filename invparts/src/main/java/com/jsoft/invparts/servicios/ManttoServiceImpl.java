@@ -32,8 +32,8 @@ public class ManttoServiceImpl implements ManttoService {
     private ManttoDao dao;
 
     @Override
-    public List<Persona> listPersona() {
-        return dao.listPersona();
+    public List<Persona> listPersona(Persona per) {
+        return dao.listPersona(per);
     }
 
     @Override

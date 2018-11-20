@@ -16,6 +16,10 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import com.jsoft.invparts.servicios.ManttoService;
 import com.jsoft.invparts.util.JsfUtil;
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -45,7 +49,7 @@ public class PersonaMB implements Serializable {
 
     @PostConstruct
     public void init() {
-        lstPersonas = manttoService.listPersona();
+        lstPersonas = manttoService.listPersona(null);
     }
 
     //<editor-fold desc="Metodos getters y setters">
@@ -121,7 +125,7 @@ public class PersonaMB implements Serializable {
     public void guardar() {
         if (per.getCorreoElectronico() != null && !per.getCorreoElectronico().isEmpty()) {
             if (manttoService.guardarConIdAutogenerado(per) == 1) {
-                lstPersonas = manttoService.listPersona();
+                lstPersonas = manttoService.listPersona(null);
                 per = new Persona();
             } else {
             }
@@ -150,11 +154,15 @@ public class PersonaMB implements Serializable {
         }
     }
 
+    public void buscarPersona() {
+        lstPersonas = manttoService.listPersona(per);
+    }
+
     public void buscarCorreoElectronico() {
         existeCorreoElectronico = manttoService.isExistEmailPerByEmail(per.getCorreoElectronico());
     }
-    
-    private boolean validacionDeFormulario(){
+
+    private boolean validacionDeFormulario() {
         return false;
     }
 }

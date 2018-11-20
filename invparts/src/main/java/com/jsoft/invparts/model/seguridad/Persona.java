@@ -6,22 +6,22 @@
 package com.jsoft.invparts.model.seguridad;
 
 import com.jsoft.invparts.dao.PersistenciaDao;
+import com.jsoft.invparts.model.UtilWhere;
 import java.io.Serializable;
-import java.math.BigInteger;
 
 /**
  *
  * @author DesarrolloPc
  */
-public class Persona implements Serializable, PersistenciaDao {
+public class Persona extends UtilWhere implements Serializable, PersistenciaDao {
 
     private static final long serialVersionUID = 1L;
 
-    private Integer idPersona;
-    private String primerNombre;
-    private String segundoNombre;
-    private String correoElectronico;
-    private String numeroTelefono;
+    public Integer idPersona;
+    public String primerNombre;
+    public String segundoNombre;
+    public String correoElectronico;
+    public String numeroTelefono;
 
     public Persona() {
     }

@@ -20,7 +20,7 @@ import java.util.List;
  */
 public interface ManttoService {
 
-    public List<Persona> listPersona();
+    public List<Persona> listPersona(Persona per);
 
     public List<Empresa> listEmpresa(Short idTipoEmpresa);
 

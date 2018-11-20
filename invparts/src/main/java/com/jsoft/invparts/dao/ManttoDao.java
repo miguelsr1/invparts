@@ -19,7 +19,7 @@ import java.util.List;
  */
 public interface ManttoDao {
 
-    public List<Persona> listPersona();
+    public List<Persona> listPersona(Persona per);
 
     /**
      * Recupera el listado de empresa y recibe como parametro el tipo de empresa que se desea recuperar.

@@ -48,8 +48,13 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
     }
 
     @Override
-    public List<Persona> listPersona() {
+    public List<Persona> listPersona(Persona per) {
         String sql = "SELECT * from persona";
+        
+        if(per != null){
+            sql += per.getWhere();
+        }
+        
         List<Persona> listPer = getJdbcTemplate().query(sql, new RowMapper<Persona>() {
 
             @Override
