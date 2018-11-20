@@ -66,10 +66,29 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
         });
         return listPer;
     }
-
     @Override
     public List<Empresa> listEmpresa(Short idTipoEmpresa) {
         String sql = "SELECT * from empresa where id_tipo_empresa in (" + idTipoEmpresa + ", 3) ";
+        List<Empresa> listEmp = getJdbcTemplate().query(sql, new RowMapper<Empresa>() {
+
+            @Override
+            public Empresa mapRow(ResultSet rs, int rowNumber) throws SQLException {
+                Empresa emp = new Empresa();
+                emp.setIdEmpresa(rs.getObject("id_empresa", BigInteger.class));
+                emp.setNombreEmpresa(rs.getString("nombre_empresa"));
+                emp.setCorreoEmpresa(rs.getString("correo_empresa"));
+                emp.setTelefonoEmpresa(rs.getString("telefono_empresa"));
+                emp.setIdTipoEmpresa(rs.getInt("id_tipo_empresa"));
+                return emp;
+            }
+
+        });
+        return listEmp;
+    }
+
+    @Override
+    public List<Empresa> listEmpresaUsu() {
+        String sql = "SELECT * from empresa where id_tipo_empresa = 4";
         List<Empresa> listEmp = getJdbcTemplate().query(sql, new RowMapper<Empresa>() {
 
             @Override
@@ -165,6 +184,18 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
         return listProv;
     }
 
+    @Override
+    public String nombreTipoEmpresa(Integer id){
+        String nombre="";
+        switch (id) {
+            case 1: nombre="Proveedor";
+            case 2: nombre="Cliente";
+            case 3: nombre="Proveedor/Cliente";
+            case 4: nombre="Usuario Web";
+        }
+        
+        return nombre;
+    }
     /**
      * Metodo que devuelve true si el usuario buscado existe
      *
@@ -176,6 +207,7 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
         return !getJdbcTemplate().query("SELECT * FROM usuario WHERE usuario = '" + usuario + "'", new BeanPropertyRowMapper(Usuario.class)).isEmpty();
     }
 
+    
     /**
      * Metodo que devuelve true si el correo registrado a un nuevo usuario ya
      * existe
@@ -187,7 +219,8 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
     public Boolean isExistEmailPerByEmail(String eMail) {
         return !getJdbcTemplate().query("SELECT * FROM persona WHERE correo_electronico = '" + eMail + "'", new BeanPropertyRowMapper(Persona.class)).isEmpty();
     }
-
+    
+    
     @Override
     public int guardarConIdAutogenerado(PersistenciaDao objeto) {
         return super.persistirConIdAutogenerado(objeto);

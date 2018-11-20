@@ -23,6 +23,8 @@ public interface ManttoService {
     public List<Persona> listPersona();
 
     public List<Empresa> listEmpresa(Short idTipoEmpresa);
+     
+    public List<Empresa> listEmpresaUsu();
 
     public List<Usuario> listUsuario();
 
@@ -32,10 +34,13 @@ public interface ManttoService {
 
     public List<Producto> listProducto();
 
+    public String nombreTipoEmpresa(Integer id);
+    
     public Boolean getUsuarioByUsu(String usuario);
 
     public Boolean isExistEmailPerByEmail(String eMail);
 
+    
     public int guardarConIdAutogenerado(PersistenciaDao objeto);
 
     public int guardarConIdString(PersistenciaDao objeto, Boolean nuevo);

@@ -25,9 +25,11 @@ public class CompanyMB {
     private Empresa emp = new Empresa();
     private Sucursal suc = new Sucursal();
     private List<Empresa> lstEmpresa = new ArrayList();
+    private List<Empresa> lstEmpresaUsu = new ArrayList();
     private List<Empresa> lstProveedor = new ArrayList();
     private List<Sucursal> lstSucursal = new ArrayList();
-
+    
+    
     @ManagedProperty("#{manttoService}")
     private ManttoService manttoService;
 
@@ -53,6 +55,16 @@ public class CompanyMB {
         this.lstEmpresa = lstEmpresa;
     }
 
+    public List<Empresa> getLstEmpresaUsu() {
+        return lstEmpresaUsu;
+    }
+
+    public void setLstEmpresaUsu(List<Empresa> lstEmpresaUsu) {
+        this.lstEmpresaUsu = lstEmpresaUsu;
+    }
+
+   
+    
     public List<Empresa> getLstProveedor() {
         return lstProveedor;
     }
@@ -69,6 +81,8 @@ public class CompanyMB {
         this.lstSucursal = lstSucursal;
     }
 
+    
+    
     public ManttoService getManttoService() {
         return manttoService;
     }
@@ -86,13 +100,21 @@ public class CompanyMB {
     }
 
     //</editor-fold >
+    public void guardarEmpresa() {
+        if (manttoService.guardarConIdAutogenerado(emp) == 1) {
+            lstEmpresaUsu = manttoService.listEmpresaUsu();
+            emp = new Empresa();
+        }
+    }
+  
     public void guardar() {
         if (manttoService.guardarConIdAutogenerado(emp) == 1) {
             lstEmpresa = manttoService.listEmpresa((short) 4);
             emp = new Empresa();
         }
     }
-
+  
+    
     public void guardarSuc() {
         if (manttoService.guardarConIdAutogenerado(suc) == 1) {
             lstSucursal = manttoService.listSucursal();
@@ -105,5 +127,9 @@ public class CompanyMB {
             lstProveedor = manttoService.listEmpresa((short) 1);
             emp = new Empresa();
         }
+    }
+    public String tipoEmpresa(Integer id){
+        return manttoService.nombreTipoEmpresa(id);
+        
     }
 }
