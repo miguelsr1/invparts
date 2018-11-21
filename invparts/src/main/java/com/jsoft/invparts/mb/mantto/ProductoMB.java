@@ -39,7 +39,7 @@ public class ProductoMB implements Serializable {
 
     @PostConstruct
     public void init() {
-        lstProducto = manttoService.listProducto();
+        lstProducto = manttoService.listProducto(null);
     }
 
     //<editor-fold desc="Metodos getters y setters">
@@ -72,7 +72,7 @@ public class ProductoMB implements Serializable {
     //</editor-fold >
     public void guardar() {
         if (manttoService.guardarConIdAutogenerado(pro) == 1) {
-            lstProducto = manttoService.listProducto();
+            lstProducto = manttoService.listProducto(pro);
             pro = new Producto();
         }
     }

@@ -6,6 +6,7 @@
 package com.jsoft.invparts.model.inventario;
 
 import com.jsoft.invparts.dao.PersistenciaDao;
+import com.jsoft.invparts.model.UtilWhere;
 import java.io.Serializable;
 import java.math.BigInteger;
 
@@ -13,7 +14,7 @@ import java.math.BigInteger;
  *
  * @author torre
  */
-public class Vendedor implements Serializable, PersistenciaDao {
+public class Vendedor extends UtilWhere implements Serializable, PersistenciaDao {
 
     private static final long serialVersionUID = 1L;
 

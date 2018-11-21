@@ -13,7 +13,9 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import com.jsoft.invparts.servicios.ManttoService;
+import com.jsoft.invparts.util.JsfUtil;
 import java.io.Serializable;
+import javax.annotation.PostConstruct;
 
 /**
  *
@@ -38,7 +40,12 @@ public class CompanyMB implements Serializable {
 
     public CompanyMB() {
     }
-
+    
+ @PostConstruct
+    public void init() {
+        lstEmpresa = manttoService.listEmpresa(null,(short) 1);
+        lstEmpresaUsu = manttoService.listEmpresaUsu(null);
+    }
     //<editor-fold desc="Metodos getters y setters">
     public Empresa getEmp() {
         return emp;
@@ -102,18 +109,33 @@ public class CompanyMB implements Serializable {
         this.suc = suc;
     }
 
+     public void buscarEmp() {
+        lstEmpresaUsu = manttoService.listEmpresa(emp,emp.getIdTipoEmpresa().shortValue());
+    }
+      public void buscarEmpresa() {
+        lstEmpresaUsu = manttoService.listEmpresaUsu(emp);
+    }
+
     //</editor-fold >
     public void guardarEmpresa() {
+        if (emp.getNombreEmpresa()!= null && !emp.getNombreEmpresa().isEmpty()) {
         if (manttoService.guardarConIdAutogenerado(emp) == 1) {
-            lstEmpresaUsu = manttoService.listEmpresaUsu();
+            lstEmpresaUsu = manttoService.listEmpresaUsu(emp);
             emp = new Empresa();
+        }
+        }else{
+             JsfUtil.addWarningMessage("Debe de completar todos los registros");
         }
     }
   
     public void guardar() {
+         if (emp.getNombreEmpresa()!= null && !emp.getNombreEmpresa().isEmpty()) {
         if (manttoService.guardarConIdAutogenerado(emp) == 1) {
-            lstEmpresa = manttoService.listEmpresa((short) 4);
+            lstEmpresa = manttoService.listEmpresa(emp,(short) emp.getIdTipoEmpresa().shortValue());
             emp = new Empresa();
+        }
+        }else{
+             JsfUtil.addWarningMessage("Debe de completar todos los registros");
         }
     }
   
@@ -127,7 +149,7 @@ public class CompanyMB implements Serializable {
 
     public void guardarProveedor() {
         if (manttoService.guardarConIdAutogenerado(emp) == 1) {
-            lstProveedor = manttoService.listEmpresa((short) 1);
+            lstProveedor = manttoService.listEmpresaUsu(emp);
             emp = new Empresa();
         }
     }

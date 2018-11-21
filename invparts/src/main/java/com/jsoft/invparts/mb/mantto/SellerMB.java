@@ -38,7 +38,7 @@ public class SellerMB implements Serializable {
 
     @PostConstruct
     public void init() {
-        listVendedor = manttoService.listVendedor();
+        listVendedor = manttoService.listVendedor(null);
     }
 
     public Vendedor getVen() {
@@ -84,10 +84,14 @@ public class SellerMB implements Serializable {
         this.existeCorreoElectronico = existeCorreoElectronico;
     }
 
+      public void buscarVendedor() {
+        listVendedor = manttoService.listVendedor(ven);
+    }
+    
     //</editor-fold>
     public void guardar() {
         if (manttoService.guardarConIdAutogenerado(ven) == 1) {
-            listVendedor = manttoService.listVendedor();
+            listVendedor = manttoService.listVendedor(ven);
             ven = new Vendedor();
         } else {
         }

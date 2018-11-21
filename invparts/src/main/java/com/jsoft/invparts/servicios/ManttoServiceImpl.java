@@ -46,13 +46,13 @@ public class ManttoServiceImpl implements ManttoService {
         return dao.isExistEmailPerByEmail(eMail);
     }
  @Override
-    public List<Empresa> listEmpresaUsu() {
-        return dao.listEmpresaUsu();
+    public List<Empresa> listEmpresaUsu(Empresa emp) {
+        return dao.listEmpresaUsu(emp);
     }
     
-    @Override
-    public List<Empresa> listEmpresa(Short idTipoEmpresa) {
-        return dao.listEmpresa(idTipoEmpresa);
+   @Override
+    public List<Empresa> listEmpresa(Empresa emp,Short idTipoEmpresa) {
+        return dao.listEmpresa(emp,idTipoEmpresa);
     }
 
     @Override
@@ -91,8 +91,8 @@ public class ManttoServiceImpl implements ManttoService {
     }
 
     @Override
-    public List<Vendedor> listVendedor() {
-        return dao.listVendedor();
+    public List<Vendedor> listVendedor(Vendedor ven) {
+        return dao.listVendedor(ven);
     }
 
     @Override
@@ -101,8 +101,8 @@ public class ManttoServiceImpl implements ManttoService {
     }
 
     @Override
-    public List<Producto> listProducto() {
-        return dao.listProducto();
+    public List<Producto> listProducto(Producto pro) {
+        return dao.listProducto(pro);
     }
     
     @Override

@@ -27,17 +27,17 @@ public interface ManttoDao {
      * @param idTipoEmpresa
      * @return 
      */
-    public List<Empresa> listEmpresa(Short idTipoEmpresa);
+    public List<Empresa> listEmpresa(Empresa emp,Short idTipoEmpresa);
 
-    public List<Empresa> listEmpresaUsu();
+    public List<Empresa> listEmpresaUsu(Empresa emp);
     
     public List<Usuario> listUsuario();
 
-    public List<Vendedor> listVendedor();
+    public List<Vendedor> listVendedor(Vendedor ven);
 
     public List<Sucursal> listSucursal();
 
-    public List<Producto> listProducto();
+    public List<Producto> listProducto(Producto pro);
     
     public String nombreTipoEmpresa(Integer id);
     

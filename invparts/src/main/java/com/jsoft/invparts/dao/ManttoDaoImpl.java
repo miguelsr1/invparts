@@ -72,8 +72,13 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
         return listPer;
     }
     @Override
-    public List<Empresa> listEmpresa(Short idTipoEmpresa) {
+    public List<Empresa> listEmpresa(Empresa emp,Short idTipoEmpresa) {
         String sql = "SELECT * from empresa where id_tipo_empresa in (" + idTipoEmpresa + ", 3) ";
+        
+         if(emp != null){
+            sql += emp.getWhere();
+        }
+        
         List<Empresa> listEmp = getJdbcTemplate().query(sql, new RowMapper<Empresa>() {
 
             @Override
@@ -92,8 +97,13 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
     }
 
     @Override
-    public List<Empresa> listEmpresaUsu() {
+    public List<Empresa> listEmpresaUsu(Empresa emp) {
         String sql = "SELECT * from empresa where id_tipo_empresa = 4";
+                
+       if(emp != null){
+            sql += emp.getWhere();
+        }
+                
         List<Empresa> listEmp = getJdbcTemplate().query(sql, new RowMapper<Empresa>() {
 
             @Override
@@ -134,8 +144,14 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
     }
 
     @Override
-    public List<Vendedor> listVendedor() {
+    public List<Vendedor> listVendedor(Vendedor ven) {
         String sql = "SELECT * from Vendedor";
+        
+          if(ven != null){
+            sql += ven.getWhere();
+        }
+        
+        
         List<Vendedor> listSeller = getJdbcTemplate().query(sql, new RowMapper<Vendedor>() {
 
             @Override
@@ -171,8 +187,13 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
     }
 
     @Override
-    public List<Producto> listProducto() {
+    public List<Producto> listProducto(Producto pro) {
         String sql = "SELECT * from Producto";
+        
+          if(pro != null){
+            sql += pro.getWhere();
+        }
+        
         List<Producto> listProv = getJdbcTemplate().query(sql, new RowMapper<Producto>() {
 
             @Override
