@@ -45,7 +45,11 @@ public class ManttoServiceImpl implements ManttoService {
     public Boolean isExistEmailPerByEmail(String eMail) {
         return dao.isExistEmailPerByEmail(eMail);
     }
-
+ @Override
+    public List<Empresa> listEmpresaUsu() {
+        return dao.listEmpresaUsu();
+    }
+    
     @Override
     public List<Empresa> listEmpresa(Short idTipoEmpresa) {
         return dao.listEmpresa(idTipoEmpresa);
@@ -99,5 +103,10 @@ public class ManttoServiceImpl implements ManttoService {
     @Override
     public List<Producto> listProducto() {
         return dao.listProducto();
+    }
+    
+    @Override
+    public String nombreTipoEmpresa(Integer id){
+        return dao.nombreTipoEmpresa(id);
     }
 }

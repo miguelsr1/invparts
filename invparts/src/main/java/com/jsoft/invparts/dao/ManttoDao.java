@@ -29,6 +29,8 @@ public interface ManttoDao {
      */
     public List<Empresa> listEmpresa(Short idTipoEmpresa);
 
+    public List<Empresa> listEmpresaUsu();
+    
     public List<Usuario> listUsuario();
 
     public List<Vendedor> listVendedor();
@@ -36,7 +38,9 @@ public interface ManttoDao {
     public List<Sucursal> listSucursal();
 
     public List<Producto> listProducto();
-
+    
+    public String nombreTipoEmpresa(Integer id);
+    
     public Boolean getUsuarioByUsu(String usuario);
 
     public Boolean isExistEmailPerByEmail(String eMail);
