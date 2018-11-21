@@ -20,13 +20,16 @@
             <div class="ui-g ui-fluid">
                 <div class="ui-g-12">
                     <div class="card card-w-title">
-                        <p:panelGrid id="pngDatos" columns="1" styleClass="ui-panelgrid-blank form-group form-elements" style="width: 100%">
+                        <p:outputPanel id="pngDatos" style="width: 100%;">
                             <p:outputLabel value="#{msj.categoriaProducto} :"/>
-                            <p:autoComplete value="#{categoriaMB.cadenaDeBusqueda}" completeMethod="#{categoriaMB.completeCategoriaContains}"/>
-                        </p:panelGrid>
+                            <p:panelGrid columns="2" columnClasses="col11,col1" styleClass="ui-panelgrid-blank form-group form-elements">
+                                <p:autoComplete value="#{categoriaMB.cadenaDeBusqueda}" completeMethod="#{categoriaMB.completeCategoriaContains}"/>
+                                <p:commandButton value="#{msj.nuevo}" icon="fa fa-plus-square" />
+                            </p:panelGrid>
+                        </p:outputPanel>
                         <p:panelGrid columns="2" styleClass="ui-panelgrid-blank form-group form-elements" >
                             <p:commandButton value="#{msj.agregar}" icon="fa fa-plus" />
-                            <p:commandButton value="#{msj.nuevo}" icon="fa fa-plus-square" />
+
                         </p:panelGrid>
                     </div>
                 </div>
@@ -34,6 +37,7 @@
         </h:form>
         <h:outputStylesheet name="css/animate.css" library="paradise-layout" />
         <h:outputStylesheet name="css/layout-#{guestPreferences.layout}.css" library="paradise-layout" />
+        <h:outputStylesheet name="personalizadas.css" library="css"/>
     </h:body>
 
 </html>
