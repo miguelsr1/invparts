@@ -6,6 +6,7 @@
 package com.jsoft.invparts.servicios;
 
 import com.jsoft.invparts.dao.PersistenciaDao;
+import com.jsoft.invparts.model.inventario.Categoria;
 import com.jsoft.invparts.model.inventario.Producto;
 import com.jsoft.invparts.model.inventario.Sucursal;
 import com.jsoft.invparts.model.inventario.Vendedor;
@@ -50,4 +51,8 @@ public interface ManttoService {
     public void enviarCorreoActivacionUsuario(Persona per, String codAct);
 
     public String encriptar(String cadena);
+    
+    public List<Categoria> lstCategoria(Categoria categoria);
+    
+    public List<Categoria> lstSubCategoria(Categoria categoria);
 }

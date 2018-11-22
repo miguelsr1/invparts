@@ -6,13 +6,14 @@
 package com.jsoft.invparts.model.inventario;
 
 import com.jsoft.invparts.dao.PersistenciaDao;
+import com.jsoft.invparts.model.UtilWhere;
 import java.io.Serializable;
 
 /**
  *
  * @author misanchez
  */
-public class Categoria implements Serializable, PersistenciaDao {
+public class Categoria extends UtilWhere implements Serializable, PersistenciaDao {
 
     private static final long serialVersionUID = 1L;
 

@@ -15,6 +15,7 @@ import com.jsoft.invparts.servicios.ManttoService;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.ResourceBundle;
 import javax.annotation.PostConstruct;
 import org.primefaces.PrimeFaces;
 
@@ -25,6 +26,8 @@ import org.primefaces.PrimeFaces;
 @ManagedBean
 @ViewScoped
 public class ProductoMB implements Serializable {
+
+    private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle.getBundle("etiquetas");
 
     private static final long serialVersionUID = 1L;
 
@@ -84,8 +87,8 @@ public class ProductoMB implements Serializable {
         options.put("height", 340);
         options.put("contentWidth", "100%");
         options.put("contentHeight", "100%");
-        options.put("headerElement", "customheader");
+        //options.put("headerElement", RESOURCE_BUNDLE.getString("asociarCategoriaProducto"));
 
-        PrimeFaces.current().dialog().openDynamic("/app/mantto/category", options, null);
+        PrimeFaces.current().dialog().openDynamic("/app/mantto/dialog/addCategoryProduct", options, null);
     }
 }

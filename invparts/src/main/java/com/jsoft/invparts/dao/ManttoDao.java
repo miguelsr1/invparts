@@ -5,6 +5,7 @@
  */
 package com.jsoft.invparts.dao;
 
+import com.jsoft.invparts.model.inventario.Categoria;
 import com.jsoft.invparts.model.inventario.Producto;
 import com.jsoft.invparts.model.inventario.Sucursal;
 import com.jsoft.invparts.model.inventario.Vendedor;
@@ -24,6 +25,7 @@ public interface ManttoDao {
     /**
      * Recupera el listado de empresa y recibe como parametro el tipo de empresa que se desea recuperar.
      * 1 para Proveedores y 2 para Clientes
+     * @param emp
      * @param idTipoEmpresa
      * @return 
      */
@@ -50,4 +52,8 @@ public interface ManttoDao {
     public int guardarConIdString(PersistenciaDao objeto, Boolean nuevo);
 
     public int guardarNuevoUsuario(PersistenciaDao objeto);
+    
+    public List<Categoria> lstCategoria(Categoria categoria);
+    
+    public List<Categoria> lstSubCategoria(Categoria categoria);
 }

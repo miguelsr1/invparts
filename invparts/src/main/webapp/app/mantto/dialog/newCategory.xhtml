@@ -12,25 +12,31 @@
             <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
             <meta name="apple-mobile-web-app-capable" content="yes" />
         </f:facet>
-        <title>PrimeFaces Paradise</title>
+        <title>#{msj.crearCategoria}</title>
     </h:head>
 
     <h:body styleClass="landing-body">
-        `<h:form>
+        <h:form>
             <div class="ui-g ui-fluid">
                 <div class="ui-g-12">
                     <div class="card card-w-title">
-                        <p:outputPanel id="pngDatos" style="width: 100%;">
-                            <p:outputLabel value="#{msj.categoriaProducto} :"/>
-                            <p:panelGrid columns="2" columnClasses="col11,col1" styleClass="ui-panelgrid-blank form-group form-elements">
-                                <p:autoComplete value="#{categoriaMB.cadenaDeBusqueda}" completeMethod="#{categoriaMB.completeCategoriaContains}"/>
-                                <p:commandButton value="#{msj.nuevo}" icon="fa fa-plus-square" />
-                            </p:panelGrid>
-                        </p:outputPanel>
-                        <p:panelGrid columns="2" styleClass="ui-panelgrid-blank form-group form-elements" >
-                            <p:commandButton value="#{msj.agregar}" icon="fa fa-plus" />
-
+                        <p:panelGrid id="pngDatos" columns="2" columnClasses="col4,col8" 
+                                     styleClass="ui-panelgrid-blank form-group form-elements">
+                            <p:outputLabel value="Id"/>
+                            <p:inputText value="#{dlgCategoriaMB.categoria.idCategoria}"/>
+                            <p:outputLabel value="#{msj.nombreCategoria}"/>
+                            <p:inputText value="#{dlgCategoriaMB.categoria.nombreCategoria}"/>
                         </p:panelGrid>
+
+                        <p:commandButton value="#{msj.guardar}" action="#{dlgCategoriaMB.guardarCategoria}" update="tblCategorias"/>
+                        <p:dataTable id="tblCategorias" value="#{dlgCategoriaMB.lstCategorias}" var="cat" rowKey="#{cat.idCategoria}">
+                            <p:column headerText="Id">
+                                <p:outputLabel value="#{cat.idCategoria}"/>
+                            </p:column>
+                            <p:column headerText="Nombre">
+                                <p:outputLabel value="#{cat.nombreCategoria}"/>
+                            </p:column>
+                        </p:dataTable>
                     </div>
                 </div>
             </div>

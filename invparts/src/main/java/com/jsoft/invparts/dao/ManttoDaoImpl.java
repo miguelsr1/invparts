@@ -5,9 +5,11 @@
  */
 package com.jsoft.invparts.dao;
 
+import com.jsoft.invparts.model.inventario.Categoria;
 import com.jsoft.invparts.model.inventario.Producto;
 import com.jsoft.invparts.model.inventario.Sucursal;
 import com.jsoft.invparts.model.inventario.Vendedor;
+import com.jsoft.invparts.model.mapper.CategoriaRowMapper;
 import com.jsoft.invparts.model.seguridad.Empresa;
 import com.jsoft.invparts.model.seguridad.Persona;
 import com.jsoft.invparts.model.seguridad.Usuario;
@@ -50,11 +52,11 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
     @Override
     public List<Persona> listPersona(Persona per) {
         String sql = "SELECT * from persona";
-        
-        if(per != null){
+
+        if (per != null) {
             sql += per.getWhere();
         }
-        
+
         List<Persona> listPer = getJdbcTemplate().query(sql, new RowMapper<Persona>() {
 
             @Override
@@ -71,14 +73,15 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
         });
         return listPer;
     }
+
     @Override
-    public List<Empresa> listEmpresa(Empresa emp,Short idTipoEmpresa) {
+    public List<Empresa> listEmpresa(Empresa emp, Short idTipoEmpresa) {
         String sql = "SELECT * from empresa where id_tipo_empresa in (" + idTipoEmpresa + ", 3) ";
-        
-         if(emp != null){
+
+        if (emp != null) {
             sql += emp.getWhere();
         }
-        
+
         List<Empresa> listEmp = getJdbcTemplate().query(sql, new RowMapper<Empresa>() {
 
             @Override
@@ -99,11 +102,11 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
     @Override
     public List<Empresa> listEmpresaUsu(Empresa emp) {
         String sql = "SELECT * from empresa where id_tipo_empresa = 4";
-                
-       if(emp != null){
+
+        if (emp != null) {
             sql += emp.getWhere();
         }
-                
+
         List<Empresa> listEmp = getJdbcTemplate().query(sql, new RowMapper<Empresa>() {
 
             @Override
@@ -146,12 +149,11 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
     @Override
     public List<Vendedor> listVendedor(Vendedor ven) {
         String sql = "SELECT * from Vendedor";
-        
-          if(ven != null){
+
+        if (ven != null) {
             sql += ven.getWhere();
         }
-        
-        
+
         List<Vendedor> listSeller = getJdbcTemplate().query(sql, new RowMapper<Vendedor>() {
 
             @Override
@@ -189,11 +191,11 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
     @Override
     public List<Producto> listProducto(Producto pro) {
         String sql = "SELECT * from Producto";
-        
-          if(pro != null){
+
+        if (pro != null) {
             sql += pro.getWhere();
         }
-        
+
         List<Producto> listProv = getJdbcTemplate().query(sql, new RowMapper<Producto>() {
 
             @Override
@@ -211,17 +213,26 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
     }
 
     @Override
-    public String nombreTipoEmpresa(Integer id){
-        String nombre="";
+    public String nombreTipoEmpresa(Integer id) {
+        String nombre = "";
         switch (id) {
-            case 1: nombre="Proveedor";
-            case 2: nombre="Cliente";
-            case 3: nombre="Proveedor/Cliente";
-            case 4: nombre="Usuario Web";
+            case 1:
+                nombre = "Proveedor";
+                break;
+            case 2:
+                nombre = "Cliente";
+                break;
+            case 3:
+                nombre = "Proveedor/Cliente";
+                break;
+            case 4:
+                nombre = "Usuario Web";
+                break;
         }
-        
+
         return nombre;
     }
+
     /**
      * Metodo que devuelve true si el usuario buscado existe
      *
@@ -233,7 +244,6 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
         return !getJdbcTemplate().query("SELECT * FROM usuario WHERE usuario = '" + usuario + "'", new BeanPropertyRowMapper(Usuario.class)).isEmpty();
     }
 
-    
     /**
      * Metodo que devuelve true si el correo registrado a un nuevo usuario ya
      * existe
@@ -245,8 +255,7 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
     public Boolean isExistEmailPerByEmail(String eMail) {
         return !getJdbcTemplate().query("SELECT * FROM persona WHERE correo_electronico = '" + eMail + "'", new BeanPropertyRowMapper(Persona.class)).isEmpty();
     }
-    
-    
+
     @Override
     public int guardarConIdAutogenerado(PersistenciaDao objeto) {
         return super.persistirConIdAutogenerado(objeto);
@@ -260,5 +269,25 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
     @Override
     public int guardarConIdString(PersistenciaDao objeto, Boolean nuevo) {
         return super.persistirConIdString(objeto, nuevo);
+    }
+
+    @Override
+    public List<Categoria> lstCategoria(Categoria cat) {
+        String sql = "SELECT * from categoria WHERE padre_id_categoria is null";
+
+        if (cat != null) {
+            sql += cat.getWhere();
+        }
+
+        List<Categoria> lstCat = getJdbcTemplate().query(sql, new CategoriaRowMapper());
+        return lstCat;
+    }
+
+    @Override
+    public List<Categoria> lstSubCategoria(Categoria cat) {
+        String sql = "SELECT * FROM categoria WHERE padre_id_categoria = ?";
+
+        List<Categoria> lstCat = getJdbcTemplate().query(sql, new Object[]{cat.idCategoria}, new CategoriaRowMapper());
+        return lstCat;
     }
 }

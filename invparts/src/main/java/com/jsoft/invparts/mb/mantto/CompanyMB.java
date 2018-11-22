@@ -90,8 +90,6 @@ public class CompanyMB implements Serializable {
     public void setLstSucursal(List<Sucursal> lstSucursal) {
         this.lstSucursal = lstSucursal;
     }
-
-    
     
     public ManttoService getManttoService() {
         return manttoService;

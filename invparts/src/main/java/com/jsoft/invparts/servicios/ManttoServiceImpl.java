@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import com.jsoft.invparts.dao.ManttoDao;
+import com.jsoft.invparts.model.inventario.Categoria;
 import com.jsoft.invparts.model.inventario.Producto;
 import com.jsoft.invparts.model.inventario.Sucursal;
 import com.jsoft.invparts.model.inventario.Vendedor;
@@ -45,14 +46,15 @@ public class ManttoServiceImpl implements ManttoService {
     public Boolean isExistEmailPerByEmail(String eMail) {
         return dao.isExistEmailPerByEmail(eMail);
     }
- @Override
+
+    @Override
     public List<Empresa> listEmpresaUsu(Empresa emp) {
         return dao.listEmpresaUsu(emp);
     }
-    
-   @Override
-    public List<Empresa> listEmpresa(Empresa emp,Short idTipoEmpresa) {
-        return dao.listEmpresa(emp,idTipoEmpresa);
+
+    @Override
+    public List<Empresa> listEmpresa(Empresa emp, Short idTipoEmpresa) {
+        return dao.listEmpresa(emp, idTipoEmpresa);
     }
 
     @Override
@@ -104,9 +106,19 @@ public class ManttoServiceImpl implements ManttoService {
     public List<Producto> listProducto(Producto pro) {
         return dao.listProducto(pro);
     }
-    
+
     @Override
-    public String nombreTipoEmpresa(Integer id){
+    public String nombreTipoEmpresa(Integer id) {
         return dao.nombreTipoEmpresa(id);
+    }
+
+    @Override
+    public List<Categoria> lstCategoria(Categoria categoria) {
+        return dao.lstCategoria(categoria);
+    }
+
+    @Override
+    public List<Categoria> lstSubCategoria(Categoria categoria) {
+        return dao.lstSubCategoria(categoria);
     }
 }
