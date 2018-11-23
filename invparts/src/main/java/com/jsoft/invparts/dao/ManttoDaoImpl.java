@@ -11,6 +11,8 @@ import com.jsoft.invparts.model.inventario.Sucursal;
 import com.jsoft.invparts.model.inventario.Vendedor;
 import com.jsoft.invparts.model.mapper.CategoriaRowMapper;
 import com.jsoft.invparts.model.seguridad.Empresa;
+import com.jsoft.invparts.model.seguridad.Modulo;
+import com.jsoft.invparts.model.seguridad.Perfil;
 import com.jsoft.invparts.model.seguridad.Persona;
 import com.jsoft.invparts.model.seguridad.Usuario;
 import com.jsoft.invparts.util.XJdbcTemplate;
@@ -68,6 +70,28 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
                 per.setCorreoElectronico(rs.getString("correo_electronico"));
                 per.setNumeroTelefono(rs.getString("numero_telefono"));
                 return per;
+            }
+
+        });
+        return listPer;
+    }
+
+      @Override
+    public List<Perfil> listPerfil(Perfil per) {
+        String sql = "SELECT * from perfil";
+
+        if (per != null) {
+            sql += per.getWhere();
+        }
+
+        List<Perfil> listPer = getJdbcTemplate().query(sql, new RowMapper<Perfil>() {
+
+            @Override
+            public Perfil mapRow(ResultSet rs, int rowNumber) throws SQLException {
+                Perfil per = new Perfil();
+                per.setIdPerfil(rs.getInt("id_perfil"));
+                per.setNombrePerfil(rs.getString("nombre_perfil"));
+               return per;
             }
 
         });
@@ -212,6 +236,30 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
         return listProv;
     }
 
+      @Override
+    public List<Modulo> listModulo(Modulo mod) {
+        String sql = "SELECT * from Modulo";
+
+        if (mod != null) {
+            sql += mod.getWhere();
+        }
+
+        List<Modulo> listMod = getJdbcTemplate().query(sql, new RowMapper<Modulo>() {
+
+            @Override
+            public Modulo mapRow(ResultSet rs, int rowNumber) throws SQLException {
+                Modulo mod = new Modulo();
+                mod.setIdModulo(rs.getInt("id_modulo"));
+                mod.setNombreModulo(rs.getString("nombre_modulo"));
+                mod.setIconoModulo(rs.getString("icono_modulo"));
+                return mod;
+            }
+
+        });
+        return listMod;
+    }
+
+    
     @Override
     public String nombreTipoEmpresa(Integer id) {
         String nombre = "";
