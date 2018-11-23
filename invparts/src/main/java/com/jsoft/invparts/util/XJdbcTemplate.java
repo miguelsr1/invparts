@@ -32,20 +32,37 @@ public class XJdbcTemplate {
     }
 
     public int persistirConIdAutogenerado(PersistenciaDao objeto) {
-        int valor;
-        if (objeto.esNuevoRegistro()) {
-            valor = getJdbcTemplate().update(objeto.generarInsertSQL(), objeto.getDatosInsert());
-        } else {
-            valor = getJdbcTemplate().update(objeto.generarUpdateSQL(), objeto.getDatosUpdate());
-        }
+        this.objeto = objeto;
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+
+        int valor = getJdbcTemplate().update(new PreparedStatementCreator() {
+            @Override
+            public PreparedStatement createPreparedStatement(Connection cnctn) throws SQLException {
+                PreparedStatement ps = cnctn.prepareStatement(getObjeto().generarInsertSQL(), Statement.RETURN_GENERATED_KEYS);
+                ps = JsfUtil.setValuesPreparedStatement(ps, getObjeto().getDatosInsert());
+                return ps;
+            }
+        }, keyHolder);
 
         if (valor > 0) {
-            return valor;
+            return keyHolder.getKey().intValue();
         } else {
             return JsfUtil.COD_ERROR;
         }
+//        int valor;
+//        if (objeto.esNuevoRegistro()) {
+//            valor = getJdbcTemplate().update(objeto.generarInsertSQL(), objeto.getDatosInsert());
+//        } else {
+//            valor = getJdbcTemplate().update(objeto.generarUpdateSQL(), objeto.getDatosUpdate());
+//        }
+//
+//        if (valor > 0) {
+//            return valor;
+//        } else {
+//            return JsfUtil.COD_ERROR;
+//        }
     }
-    
+
     public int persistirConIdString(PersistenciaDao objeto, Boolean nuevo) {
         int valor;
         if (nuevo) {
@@ -62,13 +79,16 @@ public class XJdbcTemplate {
     }
 
     /**
-     * Devuelve el id generado por el gestor de base de datos, al momento de ejecutar la sentencia de inserción
-     * @param objeto Objeto a persistir (implementa de la interfaz PersistenciaDao)
+     * Devuelve el id generado por el gestor de base de datos, al momento de
+     * ejecutar la sentencia de inserción
+     *
+     * @param objeto Objeto a persistir (implementa de la interfaz
+     * PersistenciaDao)
      * @return id generado
      */
     public int createIdString(PersistenciaDao objeto) {
         this.objeto = objeto;
-         KeyHolder keyHolder = new GeneratedKeyHolder();
+        KeyHolder keyHolder = new GeneratedKeyHolder();
 
         int valor = getJdbcTemplate().update(new PreparedStatementCreator() {
             @Override

@@ -23,6 +23,10 @@ public class Categoria extends UtilWhere implements Serializable, PersistenciaDa
 
     public Categoria() {
     }
+    
+    public Categoria(String nombreCategoria) {
+        this.nombreCategoria = nombreCategoria;
+    }
 
     public Integer getIdCategoria() {
         return idCategoria;

@@ -20,23 +20,26 @@
             <div class="ui-g ui-fluid">
                 <div class="ui-g-12">
                     <div class="card card-w-title">
-                        <p:panelGrid id="pngDatos" columns="2" columnClasses="col4,col8" 
+                        <p:panelGrid id="pngDatos" columns="2" columnClasses="col3,col9" style="width: 100%;"
                                      styleClass="ui-panelgrid-blank form-group form-elements">
                             <p:outputLabel value="Id"/>
-                            <p:inputText value="#{dlgCategoriaMB.categoria.idCategoria}"/>
+                            <p:inputText value="#{dlgCategoriaMB.categoria.idCategoria}" style="width: 80px;"/>
                             <p:outputLabel value="#{msj.nombreCategoria}"/>
-                            <p:inputText value="#{dlgCategoriaMB.categoria.nombreCategoria}"/>
+                            <h:panelGrid columns="2" style="width: 100%;" columnClasses="col10,col2" >
+                                <p:inputText value="#{dlgCategoriaMB.categoria.nombreCategoria}"/>
+                                <p:commandButton value="#{msj.guardar}" action="#{dlgCategoriaMB.guardarCategoria}" update="tblCategorias" icon="fa fa-save"/>
+                            </h:panelGrid>
                         </p:panelGrid>
 
-                        <p:commandButton value="#{msj.guardar}" action="#{dlgCategoriaMB.guardarCategoria}" update="tblCategorias"/>
-                        <p:dataTable id="tblCategorias" value="#{dlgCategoriaMB.lstCategorias}" var="cat" rowKey="#{cat.idCategoria}">
-                            <p:column headerText="Id">
-                                <p:outputLabel value="#{cat.idCategoria}"/>
-                            </p:column>
-                            <p:column headerText="Nombre">
-                                <p:outputLabel value="#{cat.nombreCategoria}"/>
-                            </p:column>
-                        </p:dataTable>
+                        <p:tree id="tblCategorias" value="#{dlgCategoriaMB.rootCategoria}" var="cat" selectionMode="single" selection="#{dlgCategoriaMB.selectedNode}" >
+                            <p:treeNode expandedIcon="pi pi-folder-open" collapsedIcon="pi pi-folder">
+                                <h:outputText value="#{cat.nombreCategoria}"/>
+                            </p:treeNode>
+                        </p:tree>
+
+                        <!--p:multiSelectListbox id="tblCategorias" value="{dlgCategoriaMB.categoriaSelected}" effect="slide" header="Categories" showHeaders="true">
+                            <f:selectItems value="{dlgCategoriaMB.lstCategoria}" />
+                        </p:multiSelectListbox-->
                     </div>
                 </div>
             </div>
