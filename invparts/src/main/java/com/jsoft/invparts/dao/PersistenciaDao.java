@@ -10,6 +10,11 @@ package com.jsoft.invparts.dao;
  */
 public interface PersistenciaDao {
 
+    /**
+     *
+     */
+    public Boolean nuevo = false;
+
     public String generarInsertSQL();
 
     public Object[] getDatosInsert();

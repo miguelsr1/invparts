@@ -32,35 +32,32 @@ public class XJdbcTemplate {
     }
 
     public int persistirConIdAutogenerado(PersistenciaDao objeto) {
+        int valor;
         this.objeto = objeto;
         KeyHolder keyHolder = new GeneratedKeyHolder();
 
-        int valor = getJdbcTemplate().update(new PreparedStatementCreator() {
-            @Override
-            public PreparedStatement createPreparedStatement(Connection cnctn) throws SQLException {
-                PreparedStatement ps = cnctn.prepareStatement(getObjeto().generarInsertSQL(), Statement.RETURN_GENERATED_KEYS);
-                ps = JsfUtil.setValuesPreparedStatement(ps, getObjeto().getDatosInsert());
-                return ps;
-            }
-        }, keyHolder);
+        if (objeto.esNuevoRegistro()) {
+            valor = getJdbcTemplate().update(new PreparedStatementCreator() {
+                @Override
+                public PreparedStatement createPreparedStatement(Connection cnctn) throws SQLException {
+                    PreparedStatement ps = cnctn.prepareStatement(getObjeto().generarInsertSQL(), Statement.RETURN_GENERATED_KEYS);
+                    ps = JsfUtil.setValuesPreparedStatement(ps, getObjeto().getDatosInsert());
+                    return ps;
+                }
+            }, keyHolder);
+        } else {
+            valor = getJdbcTemplate().update(objeto.generarUpdateSQL(), objeto.getDatosUpdate());
+        }
 
-        if (valor > 0) {
-            return keyHolder.getKey().intValue();
+        if (valor > JsfUtil.COD_ERROR) {
+            if (objeto.esNuevoRegistro()) {
+                return keyHolder.getKey().intValue();
+            } else {
+                return 0;
+            }
         } else {
             return JsfUtil.COD_ERROR;
         }
-//        int valor;
-//        if (objeto.esNuevoRegistro()) {
-//            valor = getJdbcTemplate().update(objeto.generarInsertSQL(), objeto.getDatosInsert());
-//        } else {
-//            valor = getJdbcTemplate().update(objeto.generarUpdateSQL(), objeto.getDatosUpdate());
-//        }
-//
-//        if (valor > 0) {
-//            return valor;
-//        } else {
-//            return JsfUtil.COD_ERROR;
-//        }
     }
 
     public int persistirConIdString(PersistenciaDao objeto, Boolean nuevo) {
@@ -71,7 +68,7 @@ public class XJdbcTemplate {
             valor = getJdbcTemplate().update(objeto.generarUpdateSQL(), objeto.getDatosUpdate());
         }
 
-        if (valor > 0) {
+        if (valor > JsfUtil.COD_ERROR) {
             return valor;
         } else {
             return JsfUtil.COD_ERROR;
@@ -99,7 +96,7 @@ public class XJdbcTemplate {
             }
         }, keyHolder);
 
-        if (valor > 0) {
+        if (valor > JsfUtil.COD_ERROR) {
             return keyHolder.getKey().intValue();
         } else {
             return JsfUtil.COD_ERROR;

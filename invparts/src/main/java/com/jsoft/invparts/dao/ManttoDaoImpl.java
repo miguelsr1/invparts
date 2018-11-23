@@ -21,6 +21,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
+import java.util.ResourceBundle;
 import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
 import org.springframework.beans.factory.BeanCreationException;
@@ -37,6 +38,8 @@ import org.springframework.stereotype.Repository;
 @Repository("manttoDao")
 public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
 
+    private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle.getBundle("etiquetas");
+    
     @Autowired
     private DataSource dataSource;
 
@@ -265,7 +268,7 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
         String nombre = "";
         switch (id) {
             case 1:
-                nombre = "Proveedor";
+                nombre = RESOURCE_BUNDLE.getString("KEY");
                 break;
             case 2:
                 nombre = "Cliente";

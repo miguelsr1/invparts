@@ -5,7 +5,6 @@
  */
 package com.jsoft.invparts.mb.mantto;
 
-
 import com.jsoft.invparts.model.seguridad.Perfil;
 import com.jsoft.invparts.servicios.ManttoService;
 import com.jsoft.invparts.util.JsfUtil;
@@ -23,14 +22,14 @@ import javax.faces.bean.ViewScoped;
  */
 @ManagedBean
 @ViewScoped
-public class PerfilMB implements Serializable{
+public class PerfilMB implements Serializable {
 
-      private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
     private Perfil per = new Perfil();
     private List<Perfil> lstPerfil = new ArrayList();
-   
-     @ManagedProperty("#{manttoService}")
+
+    @ManagedProperty("#{manttoService}")
     private ManttoService manttoService;
 
     /**
@@ -38,25 +37,29 @@ public class PerfilMB implements Serializable{
      */
     public PerfilMB() {
     }
-     @PostConstruct
+
+    @PostConstruct
     public void init() {
         lstPerfil = manttoService.listPerfil(null);
-        
+
     }
 
-     public ManttoService getManttoService() {
+    public ManttoService getManttoService() {
         return manttoService;
     }
 
     public void setManttoService(ManttoService manttoService) {
         this.manttoService = manttoService;
     }
+
     public Perfil getPer() {
         return per;
     }
 
     public void setPer(Perfil per) {
-        this.per = per;
+        if (per != null) {
+            this.per = per;
+        }
     }
 
     public List<Perfil> getLstPerfil() {
@@ -66,23 +69,25 @@ public class PerfilMB implements Serializable{
     public void setLstPerfil(List<Perfil> lstPerfil) {
         this.lstPerfil = lstPerfil;
     }
-    
-     public void buscarPerfil() {
+
+    public void buscarPerfil() {
         lstPerfil = manttoService.listPerfil(per);
     }
-    
-      public void guardar() {
-        if (per.getNombrePerfil()!= null && !per.getNombrePerfil().isEmpty()) {
-            if (manttoService.guardarConIdAutogenerado(per) == 1) {
-                lstPerfil = manttoService.listPerfil(null);
+
+    public void guardar() {
+        if (per.getNombrePerfil() != null && !per.getNombrePerfil().isEmpty()) {
+            int valor = manttoService.guardarConIdAutogenerado(per);
+            if (valor > 0) {
+                per.setIdPerfil(valor);
+                lstPerfil.add(per);
                 per = new Perfil();
-            } 
+            }
         } else {
             JsfUtil.addWarningMessage("Debe de completar todos los registros");
         }
     }
-    
-      public void limpiar(){
-          per = new Perfil();
-      }
+
+    public void limpiar() {
+        per = new Perfil();
+    }
 }
