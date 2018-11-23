@@ -120,6 +120,10 @@ public class DlgCategoriaMB implements Serializable {
         this.lstCategoria = lstCategoria;
     }
 
+    public void crearNuevaCategoria(){
+        categoria = new Categoria();
+    }
+    
     public void guardarCategoria() {
         if (selectedNode != null && ((Categoria) selectedNode.getData()).getIdCategoria() != null) {
             categoria.setPadreIdCategoria(((Categoria) selectedNode.getData()).getIdCategoria());

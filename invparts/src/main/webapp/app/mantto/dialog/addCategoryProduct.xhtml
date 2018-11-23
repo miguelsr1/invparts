@@ -19,16 +19,15 @@
             <div class="ui-g ui-fluid">
                 <div class="ui-g-12">
                     <div class="card card-w-title">
-                        <p:outputPanel id="pngDatos" style="width: 100%;">
+                        <p:panelGrid columns="1" styleClass="ui-panelgrid-blank form-group form-elements">
                             <p:outputLabel value="#{msj.categoriaProducto} :"/>
-                            <p:panelGrid columns="2" columnClasses="col11,col1" styleClass="ui-panelgrid-blank form-group form-elements">
-                                <p:autoComplete value="#{dlgCategoriaProductoMB.cadenaDeBusqueda}" completeMethod="#{dlgCategoriaProductoMB.completeCategoriaContains}"/>
-                                <p:commandButton value="#{msj.nuevo}" icon="fa fa-plus-square" action="#{dlgCategoriaProductoMB.openDialogCategory}" />
-                            </p:panelGrid>
-                        </p:outputPanel>
+                        </p:panelGrid>
+                        <p:panelGrid id="pngDatos" columns="2" columnClasses="col11,col1" styleClass="ui-panelgrid-blank form-group form-elements">
+                            <p:autoComplete value="#{dlgCategoriaProductoMB.cadenaDeBusqueda}" completeMethod="#{dlgCategoriaProductoMB.completeCategoriaContains}"/>
+                            <p:commandButton value="#{msj.nuevo}" icon="fa fa-plus-square" action="#{dlgCategoriaProductoMB.openDialogCategory}" />
+                        </p:panelGrid> 
                         <p:panelGrid columns="2" styleClass="ui-panelgrid-blank form-group form-elements" >
                             <p:commandButton value="#{msj.agregar}" icon="fa fa-plus" />
-
                         </p:panelGrid>
                     </div>
                 </div>

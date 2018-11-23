@@ -56,11 +56,10 @@ public class DlgCategoriaProductoMB implements Serializable {
     public void openDialogCategory() {
         Map<String, Object> options = new HashMap();
         options.put("modal", true);
-        options.put("width", 640);
-        options.put("height", 340);
+        options.put("width", 1000);
+        options.put("height", 320);
         options.put("contentWidth", "100%");
         options.put("contentHeight", "100%");
-        //options.put("headerElement", RESOURCE_BUNDLE.getString("asociarCategoriaProducto"));
 
         PrimeFaces.current().dialog().openDynamic("/app/mantto/dialog/newCategory", options, null);
     }

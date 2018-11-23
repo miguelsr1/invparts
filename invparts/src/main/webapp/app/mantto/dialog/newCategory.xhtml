@@ -15,27 +15,42 @@
         <title>#{msj.crearCategoria}</title>
     </h:head>
 
-    <h:body styleClass="landing-body">
-        <h:form>
+    <h:body >
+        <h:form id="frmPrincipal">
             <div class="ui-g ui-fluid">
-                <div class="ui-g-12">
+                <div class="ui-g-12 ui-md-6">
                     <div class="card card-w-title">
-                        <p:panelGrid id="pngDatos" columns="2" columnClasses="col3,col9" style="width: 100%;"
-                                     styleClass="ui-panelgrid-blank form-group form-elements">
+                        <p:panelGrid id="pnlDatos" columns="1" styleClass="ui-panelgrid-blank form-group form-elements" style="width: 100%;">
                             <p:outputLabel value="Id"/>
-                            <p:inputText value="#{dlgCategoriaMB.categoria.idCategoria}" style="width: 80px;"/>
-                            <p:outputLabel value="#{msj.nombreCategoria}"/>
-                            <h:panelGrid columns="2" style="width: 100%;" columnClasses="col10,col2" >
-                                <p:inputText value="#{dlgCategoriaMB.categoria.nombreCategoria}"/>
-                                <p:commandButton value="#{msj.guardar}" action="#{dlgCategoriaMB.guardarCategoria}" update="tblCategorias" icon="fa fa-save"/>
-                            </h:panelGrid>
-                        </p:panelGrid>
+                            <p:inputText value="#{dlgCategoriaMB.categoria.idCategoria}" style="width: 80px;" disabled="true"/>
 
-                        <p:tree id="tblCategorias" value="#{dlgCategoriaMB.rootCategoria}" var="cat" selectionMode="single" selection="#{dlgCategoriaMB.selectedNode}" >
-                            <p:treeNode expandedIcon="pi pi-folder-open" collapsedIcon="pi pi-folder">
-                                <h:outputText value="#{cat.nombreCategoria}"/>
-                            </p:treeNode>
-                        </p:tree>
+                            <p:outputLabel value="Padre"/>
+                            <p:inputText id="txtPadre" value="#{dlgCategoriaMB.selectedNode.data.nombreCategoria}"/>
+
+                            <p:outputLabel value="#{msj.nombreCategoria}"/>
+                            <p:inputText value="#{dlgCategoriaMB.categoria.nombreCategoria}"/>
+                        </p:panelGrid>
+                        <br/>
+                        <h:panelGrid columns="2">
+                            <p:commandButton value="#{msj.nuevo}" action="#{dlgCategoriaMB.crearNuevaCategoria}" update="pnlDatos" icon="fa fa-save"/>
+                            <p:commandButton value="#{msj.guardar}" action="#{dlgCategoriaMB.guardarCategoria}" update="tblCategorias" icon="fa fa-save"/>
+                        </h:panelGrid>
+                    </div>
+                </div>
+
+                <div class="ui-g-12 ui-md-6">
+                    <div class="card card-w-title">
+                        <p:outputPanel style="width: 100%;height: 240px;overflow: auto;display: block">
+                            <p:outputPanel>
+                                <p:tree id="tblCategorias" value="#{dlgCategoriaMB.rootCategoria}" var="cat" selectionMode="single" selection="#{dlgCategoriaMB.selectedNode}" >
+                                    <p:ajax event="select" update="frmPrincipal:txtPadre" />
+
+                                    <p:treeNode expandedIcon="pi pi-folder-open" collapsedIcon="pi pi-folder">
+                                        <h:outputText value="#{cat.nombreCategoria}"/>
+                                    </p:treeNode>
+                                </p:tree>
+                            </p:outputPanel>
+                        </p:outputPanel>
 
                         <!--p:multiSelectListbox id="tblCategorias" value="{dlgCategoriaMB.categoriaSelected}" effect="slide" header="Categories" showHeaders="true">
                             <f:selectItems value="{dlgCategoriaMB.lstCategoria}" />
@@ -43,6 +58,7 @@
                     </div>
                 </div>
             </div>
+
         </h:form>
         <h:outputStylesheet name="css/animate.css" library="paradise-layout" />
         <h:outputStylesheet name="css/layout-#{guestPreferences.layout}.css" library="paradise-layout" />
