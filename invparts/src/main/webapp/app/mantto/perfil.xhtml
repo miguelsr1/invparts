@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                template="#{pageContext.servletContext.contextPath}/resources/template/template.xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <ui:define name="content">
+        <div class="ui-g">
+            <div class="ui-g-12">
+                <div class="card card-w-title">
+                    <p:menubar id="mbar">
+                        <p:menuitem id="mitGuardar" value="#{msj.guardar}" action="#{perfilMB.guardar}" icon="fa fa-floppy-o" update="pngDatos tblDatos"/>
+                        <p:menuitem id="mitBuscar" value="#{msj.buscar}" action="#{perfilMB.buscarPerfil}" icon="fa fa-search" update="pngDatos tblDatos"/>
+                        <p:menuitem id="mitNuevo" value="#{msj.limpiar}" action="#{perfilMB.limpiar}" icon="fa fa-eraser" update="pngDatos tblDatos"/>
+                    </p:menubar>
+
+                    <p:panelGrid id="pngDatos" columns="2" columnClasses="col4_label,col8" 
+                                 styleClass="ui-panelgrid-blank form-group form-elements">
+                        <p:outputLabel value="Id"/>
+                        <p:inputText value="#{perfilMB.per.idPerfil}" readonly="true" style="width: 60px;"/>
+                        <p:outputLabel value="#{msj.nombrePerfil}"/>
+                        <p:inputText value="#{perfilMB.per.nombrePerfil}" style="width: 250px;" />
+                                                
+                    </p:panelGrid>
+
+                    <br/>
+                    <p:dataTable id="tblDatos" value="#{perfilMB.lstPerfil}" var="per" rowIndexVar="rowId" rowKey="#{per.idPerfil}"
+                                 selectionMode="single" selection="#{perfilMB.per}">
+                        <p:ajax event="rowSelect" update="pngDatos"/>
+                        <p:column headerText="#Id" width="70" styleClass="colCenter">
+                            <p:outputLabel value="#{per.idPerfil}"/>
+                        </p:column>
+                        <p:column headerText="#{msj.nombrePerfil}">
+                            <p:outputLabel value="#{per.nombrePerfil}"/>
+                        </p:column>
+                        
+                    </p:dataTable>
+                </div>
+            </div>
+        </div>
+    </ui:define>
+</ui:composition>

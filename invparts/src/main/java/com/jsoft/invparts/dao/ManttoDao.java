@@ -10,6 +10,8 @@ import com.jsoft.invparts.model.inventario.Producto;
 import com.jsoft.invparts.model.inventario.Sucursal;
 import com.jsoft.invparts.model.inventario.Vendedor;
 import com.jsoft.invparts.model.seguridad.Empresa;
+import com.jsoft.invparts.model.seguridad.Modulo;
+import com.jsoft.invparts.model.seguridad.Perfil;
 import com.jsoft.invparts.model.seguridad.Persona;
 import com.jsoft.invparts.model.seguridad.Usuario;
 import java.util.List;
@@ -34,7 +36,11 @@ public interface ManttoDao {
     public List<Empresa> listEmpresaUsu(Empresa emp);
     
     public List<Usuario> listUsuario();
+    
+    public List<Perfil> listPerfil(Perfil per);
 
+    public List<Modulo> listModulo(Modulo mod);
+    
     public List<Vendedor> listVendedor(Vendedor ven);
 
     public List<Sucursal> listSucursal();
