@@ -7,6 +7,8 @@ package com.jsoft.invparts.servicios;
 
 import com.jsoft.invparts.dao.PersistenciaDao;
 import com.jsoft.invparts.model.inventario.Categoria;
+import com.jsoft.invparts.model.inventario.Marca;
+import com.jsoft.invparts.model.inventario.Modelo;
 import com.jsoft.invparts.model.inventario.Producto;
 import com.jsoft.invparts.model.inventario.Sucursal;
 import com.jsoft.invparts.model.inventario.Vendedor;
@@ -42,6 +44,10 @@ public interface ManttoService {
     public List<Producto> listProducto(Producto pro);
 
     public String nombreTipoEmpresa(Integer id);
+    
+    public List<Modelo> listModelo(Modelo mod);
+    
+    public List<Marca> listMarca(Marca mar);
     
     public Boolean getUsuarioByUsu(String usuario);
 

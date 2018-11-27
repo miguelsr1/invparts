@@ -14,6 +14,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import com.jsoft.invparts.dao.ManttoDao;
 import com.jsoft.invparts.model.inventario.Categoria;
+import com.jsoft.invparts.model.inventario.Marca;
+import com.jsoft.invparts.model.inventario.Modelo;
 import com.jsoft.invparts.model.inventario.Producto;
 import com.jsoft.invparts.model.inventario.Sucursal;
 import com.jsoft.invparts.model.inventario.Vendedor;
@@ -132,5 +134,14 @@ public class ManttoServiceImpl implements ManttoService {
     @Override
     public List<Categoria> lstSubCategoria(Categoria categoria) {
         return dao.lstSubCategoria(categoria);
+    }
+    
+     @Override
+    public List<Modelo> listModelo(Modelo mod) {
+        return dao.listModelo(mod);
+    }
+      @Override
+    public List<Marca> listMarca(Marca mar) {
+        return dao.listMarca(mar);
     }
 }

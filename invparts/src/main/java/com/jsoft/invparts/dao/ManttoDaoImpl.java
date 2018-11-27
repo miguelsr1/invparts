@@ -6,6 +6,8 @@
 package com.jsoft.invparts.dao;
 
 import com.jsoft.invparts.model.inventario.Categoria;
+import com.jsoft.invparts.model.inventario.Marca;
+import com.jsoft.invparts.model.inventario.Modelo;
 import com.jsoft.invparts.model.inventario.Producto;
 import com.jsoft.invparts.model.inventario.Sucursal;
 import com.jsoft.invparts.model.inventario.Vendedor;
@@ -268,16 +270,16 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
         String nombre = "";
         switch (id) {
             case 1:
-                nombre = RESOURCE_BUNDLE.getString("KEY");
+                nombre = RESOURCE_BUNDLE.getString("tipoEmpresa1");
                 break;
             case 2:
-                nombre = "Cliente";
+                nombre = RESOURCE_BUNDLE.getString("tipoEmpresa2");
                 break;
             case 3:
-                nombre = "Proveedor/Cliente";
+                nombre = RESOURCE_BUNDLE.getString("tipoEmpresa3");
                 break;
             case 4:
-                nombre = "Usuario Web";
+                nombre = RESOURCE_BUNDLE.getString("tipoEmpresa4");
                 break;
         }
 
@@ -341,4 +343,52 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
         List<Categoria> lstCat = getJdbcTemplate().query(sql, new Object[]{cat.idCategoria}, new CategoriaRowMapper());
         return lstCat;
     }
+
+ @Override
+    public List<Modelo> listModelo(Modelo mod) {
+        String sql = "SELECT * FROM modelo";
+
+        if (mod != null) {
+            sql += mod.getWhere();
+        }
+
+        List<Modelo> listMod = getJdbcTemplate().query(sql, new RowMapper<Modelo>() {
+
+            @Override
+            public Modelo mapRow(ResultSet rs, int rowNumber) throws SQLException {
+                Modelo mod = new Modelo();
+                mod.setIdModelo(rs.getInt("id_modelo"));
+                mod.setNombreModelo(rs.getString("nombre_Modelo"));
+                mod.setCodigoModelo(rs.getString("codigo_Modelo"));
+                mod.setIdMarca(rs.getInt("id_marca"));
+                return mod;
+            }
+
+        });
+        return listMod;
+      }
+    
+    @Override
+    public List<Marca> listMarca(Marca mar) {
+        String sql = "SELECT * FROM marca";
+
+        if (mar != null) {
+            sql += mar.getWhere();
+        }
+
+        List<Marca> listMar = getJdbcTemplate().query(sql, new RowMapper<Marca>() {
+
+            @Override
+            public Marca mapRow(ResultSet rs, int rowNumber) throws SQLException {
+                Marca mar = new Marca();
+                mar.setIdMarca(rs.getInt("id_marca"));
+                mar.setNombreMarca(rs.getString("nombre_Marca"));
+                mar.setMarcaActiva(rs.getShort("marca_activa"));
+                
+                return mar;
+            }
+
+        });
+        return listMar;
+      }
 }

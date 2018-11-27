@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                template="#{pageContext.servletContext.contextPath}/resources/template/template.xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <ui:define name="content">
+        <div class="ui-g">
+            <div class="ui-g-12">
+                <div class="card card-w-title">
+                    <p:menubar id="mbar">
+                        <p:menuitem id="mitGuardar" value="#{msj.guardar}" action="#{marcaMB.guardar}" icon="fa fa-floppy-o" update="pngDatos tblDatos"/>
+                        <p:menuitem id="mitBuscar" value="#{msj.buscar}" action="#{marcaMB.buscarMarca}" icon="fa fa-search" update="pngDatos tblDatos"/>
+                        <p:menuitem id="mitNuevo" value="#{msj.limpiar}" action="#{marcaMB.limpiar}" icon="fa fa-eraser" update="pngDatos tblDatos"/>
+                    </p:menubar>
+
+                    <p:panelGrid id="pngDatos" columns="2" columnClasses="col4_label,col8" 
+                                 styleClass="ui-panelgrid-blank form-group form-elements">
+                        <p:outputLabel value="Id"/>
+                        <p:inputText value="#{marcaMB.mar.idMarca}" readonly="true" style="width: 60px;"/>
+                        <p:outputLabel value="#{msj.nombreMarca}"/>
+                        <p:inputText value="#{marcaMB.mar.nombreMarca}" style="width: 250px;" />
+                        <p:outputLabel value="#{msj.marcaActiva}"/>
+                        <p:selectOneMenu id="console" value="#{marcaMB.mar.marcaActiva}" style="width:125px">
+                            <f:selectItem itemLabel="#{msj.seleccioneUnValor}" itemValue="" />
+                            <f:selectItem itemLabel="#{msj.labelActiva}" itemValue="1" />
+                            <f:selectItem itemLabel="#{msj.labelDesactiva}" itemValue="0" /> 
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+
+                    <br/>
+                    <p:dataTable id="tblDatos" value="#{marcaMB.lstMarca}" var="mar" rowIndexVar="rowId" rowKey="#{mar.idMarca}"
+                                 selectionMode="single" selection="#{marcaMB.mar}">
+                        <p:ajax event="rowSelect" update="pngDatos"/>
+                        <p:column headerText="#Id" width="70" styleClass="colCenter">
+                            <p:outputLabel value="#{mar.idMarca}"/>
+                        </p:column>
+                        <p:column headerText="#{msj.nombreMarca}">
+                            <p:outputLabel value="#{mar.nombreMarca}"/>
+                        </p:column>
+                        <p:column headerText="#{msj.marcaActiva}">
+                            <p:outputLabel value="#{mar.marcaActiva eq 1? msj.labelActiva:msjLabelDesactiva}"/>
+                        </p:column>
+                    </p:dataTable>
+                </div>
+            </div>
+        </div>
+    </ui:define>
+</ui:composition>
