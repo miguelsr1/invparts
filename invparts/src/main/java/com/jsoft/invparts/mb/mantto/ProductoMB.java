@@ -89,6 +89,11 @@ public class ProductoMB implements Serializable {
         options.put("contentHeight", "100%");
         //options.put("headerElement", RESOURCE_BUNDLE.getString("asociarCategoriaProducto"));
 
-        PrimeFaces.current().dialog().openDynamic("/app/mantto/dialog/addCategoryProduct", options, null);
+        Map<String, List<String>> params = new HashMap();
+        List<String> values = new ArrayList();
+        values.add(String.valueOf(pro.getIdProducto()));
+        params.put("idProducto", values);
+
+        PrimeFaces.current().dialog().openDynamic("/app/mantto/dialog/addCategoryProduct", options, params);
     }
 }

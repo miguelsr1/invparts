@@ -20,16 +20,29 @@
                 <div class="ui-g ui-fluid">
                     <div class="ui-g-12">
                         <div class="card card-w-title">
-                            <p:panelGrid columns="1" styleClass="ui-panelgrid-blank form-group form-elements">
+                            <f:metadata>
+                                <f:viewParam name="idProducto" value="#{dlgCategoriaProductoMB.idProducto}"/>
+                            </f:metadata>
+                            <p:outputLabel value="#{dlgCategoriaProductoMB.idProducto}"/>
+                            <p:panelGrid columns="1" styleClass="ui-panelgrid-blank form-group form-elements" layout="grid" >
                                 <p:outputLabel value="#{msj.categoriaProducto} :"/>
                             </p:panelGrid>
-                            <p:panelGrid id="pngDatos" columns="2" columnClasses="col11,col1" styleClass="ui-panelgrid-blank form-group form-elements">
-                                <p:autoComplete value="#{dlgCategoriaProductoMB.cadenaDeBusqueda}" completeMethod="#{dlgCategoriaProductoMB.completeCategoriaContains}"/>
+                            <p:panelGrid columns="2" styleClass="ui-panelgrid-blank form-group form-elements" layout="grid" columnClasses="col10,col2" >
+                                <p:autoComplete value="#{dlgCategoriaProductoMB.cadenaDeBusqueda}" completeMethod="#{dlgCategoriaProductoMB.completeCategoriaContains}" var="cat" itemLabel="#{cat.nombreCategoria}"/>
                                 <p:commandButton value="#{msj['agregar']}" icon="fa fa-plus-square" action="#{dlgCategoriaProductoMB.openDialogCategory}" />
-                            </p:panelGrid> 
-                            <p:panelGrid columns="2" styleClass="ui-panelgrid-blank form-group form-elements" >
+                            </p:panelGrid>
+                            <p:panelGrid columns="1" styleClass="ui-panelgrid-blank form-group form-elements" >
                                 <p:commandButton value="#{msj['asociarCategoriaProducto']}" icon="fa fa-plus" />
                             </p:panelGrid>
+
+                            <p:dataTable value="#{dlgCategoriaProductoMB.lstCategoriasPorProducto}" var="catp">
+                                <p:column headerText="Id">
+                                    <p:outputLabel value="#{catp.idCategoria}"/>
+                                </p:column>
+                                <p:column headerText="#{msj.nombreCategoria}">
+                                    <p:outputLabel value="#{catp.nombreCategoria}"/>
+                                </p:column>
+                            </p:dataTable>
                         </div>
                     </div>
                 </div>

@@ -11,6 +11,7 @@ import com.jsoft.invparts.model.inventario.Modelo;
 import com.jsoft.invparts.model.inventario.Producto;
 import com.jsoft.invparts.model.inventario.Sucursal;
 import com.jsoft.invparts.model.inventario.Vendedor;
+import com.jsoft.invparts.model.inventario.dto.ProductoCategoriaDto;
 import com.jsoft.invparts.model.mapper.CategoriaRowMapper;
 import com.jsoft.invparts.model.seguridad.Empresa;
 import com.jsoft.invparts.model.seguridad.Modulo;
@@ -28,6 +29,7 @@ import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
 import org.springframework.beans.factory.BeanCreationException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -44,6 +46,9 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
 
     @Autowired
     private DataSource dataSource;
+
+    @Autowired
+    Environment env;
 
     public ManttoDaoImpl() {
     }
@@ -405,7 +410,27 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
     public List<Categoria> getLstCategoriaByLikeNombre(String nombreCategoria) {
         String sql = "SELECT * FROM categoria WHERE nombre_categoria like ?";
 
-        List<Categoria> lstCat = getJdbcTemplate().query(sql, new Object[]{"%"+nombreCategoria+"%"}, new CategoriaRowMapper());
+        List<Categoria> lstCat = getJdbcTemplate().query(sql, new Object[]{"%" + nombreCategoria + "%"}, new CategoriaRowMapper());
+        return lstCat;
+    }
+
+    @Override
+    public List<ProductoCategoriaDto> getLstCategoriasByProducto(Integer idProducto) {
+        String sql = env.getProperty("lstCategoriasByIdProducto");
+
+        List<ProductoCategoriaDto> lstCat = getJdbcTemplate().query(sql, new Object[]{idProducto}, new RowMapper<ProductoCategoriaDto>() {
+
+            @Override
+            public ProductoCategoriaDto mapRow(ResultSet rs, int rowNumber) throws SQLException {
+                ProductoCategoriaDto proCatDto = new ProductoCategoriaDto();
+                proCatDto.setIdProducto(rs.getInt("id_producto"));
+                proCatDto.setIdCategoria(rs.getInt("id_categoria"));
+                proCatDto.setNombreCategoria(rs.getString("nombre_categoria"));
+
+                return proCatDto;
+            }
+
+        });
         return lstCat;
     }
 }

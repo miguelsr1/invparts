@@ -7,15 +7,17 @@ package com.jsoft.invparts.mb.mantto.dialog;
 
 import com.jsoft.invparts.model.inventario.Categoria;
 import com.jsoft.invparts.model.inventario.ProductoCategoria;
+import com.jsoft.invparts.model.inventario.dto.ProductoCategoriaDto;
 import com.jsoft.invparts.servicios.ManttoService;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
 import org.primefaces.PrimeFaces;
 
 /**
@@ -23,17 +25,26 @@ import org.primefaces.PrimeFaces;
  * @author DesarrolloPc
  */
 @ManagedBean
-@ViewScoped
+@RequestScoped
 public class DlgCategoriaProductoMB implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    private String idProducto;
     private String cadenaDeBusqueda;
     private ProductoCategoria productoCategoria = new ProductoCategoria();
-    
+
     @ManagedProperty("#{manttoService}")
     private ManttoService manttoService;
 
     public DlgCategoriaProductoMB() {
+    }
+
+    public String getIdProducto() {
+        return idProducto;
+    }
+
+    public void setIdProducto(String idProducto) {
+        this.idProducto = idProducto;
     }
 
     public ManttoService getManttoService() {
@@ -65,7 +76,11 @@ public class DlgCategoriaProductoMB implements Serializable {
 
         return lstCategoria;
     }
-    
+
+    public List<ProductoCategoriaDto> getLstCategoriasPorProducto() {
+        return manttoService.getLstCategoriasByProducto(Integer.parseInt(idProducto));
+    }
+
     public void openDialogCategory() {
         Map<String, Object> options = new HashMap();
         options.put("modal", true);

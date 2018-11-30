@@ -19,6 +19,7 @@ import com.jsoft.invparts.model.inventario.Modelo;
 import com.jsoft.invparts.model.inventario.Producto;
 import com.jsoft.invparts.model.inventario.Sucursal;
 import com.jsoft.invparts.model.inventario.Vendedor;
+import com.jsoft.invparts.model.inventario.dto.ProductoCategoriaDto;
 import com.jsoft.invparts.model.seguridad.Modulo;
 import com.jsoft.invparts.model.seguridad.Usuario;
 import com.jsoft.invparts.model.seguridad.Perfil;
@@ -153,5 +154,10 @@ public class ManttoServiceImpl implements ManttoService {
     @Override
     public List<Categoria> getLstCategoriaByLikeNombre(String nombreCategoria) {
         return dao.getLstCategoriaByLikeNombre(nombreCategoria);
+    }
+
+    @Override
+    public List<ProductoCategoriaDto> getLstCategoriasByProducto(Integer idProducto) {
+        return dao.getLstCategoriasByProducto(idProducto);
     }
 }
