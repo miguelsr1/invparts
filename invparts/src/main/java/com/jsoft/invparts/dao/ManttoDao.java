@@ -68,4 +68,8 @@ public interface ManttoDao {
     public List<Categoria> lstCategoria(Categoria categoria);
     
     public List<Categoria> lstSubCategoria(Categoria categoria);
+    
+    public Boolean removerCategoria(Integer idCategoria);
+    
+    public List<Categoria> getLstCategoriaByLikeNombre(String nombre);
 }

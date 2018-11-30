@@ -41,7 +41,7 @@ import org.springframework.stereotype.Repository;
 public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
 
     private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle.getBundle("etiquetas");
-    
+
     @Autowired
     private DataSource dataSource;
 
@@ -81,7 +81,7 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
         return listPer;
     }
 
-      @Override
+    @Override
     public List<Perfil> listPerfil(Perfil per) {
         String sql = "SELECT * from perfil";
 
@@ -96,7 +96,7 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
                 Perfil per = new Perfil();
                 per.setIdPerfil(rs.getInt("id_perfil"));
                 per.setNombrePerfil(rs.getString("nombre_perfil"));
-               return per;
+                return per;
             }
 
         });
@@ -105,10 +105,14 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
 
     @Override
     public List<Empresa> listEmpresa(Empresa emp, Short idTipoEmpresa) {
-        String sql = "SELECT * from empresa where id_tipo_empresa in (" + idTipoEmpresa + ", 3) ";
+        String sql = "SELECT * from empresa ";
 
         if (emp != null) {
-            sql += emp.getWhere();
+            if (idTipoEmpresa != null) {
+                sql += "where id_tipo_empresa in (" + idTipoEmpresa + ", 3) ";
+            } else {
+                sql += emp.getWhere();
+            }
         }
 
         List<Empresa> listEmp = getJdbcTemplate().query(sql, new RowMapper<Empresa>() {
@@ -241,7 +245,7 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
         return listProv;
     }
 
-      @Override
+    @Override
     public List<Modulo> listModulo(Modulo mod) {
         String sql = "SELECT * from Modulo";
 
@@ -264,7 +268,6 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
         return listMod;
     }
 
-    
     @Override
     public String nombreTipoEmpresa(Integer id) {
         String nombre = "";
@@ -344,7 +347,7 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
         return lstCat;
     }
 
- @Override
+    @Override
     public List<Modelo> listModelo(Modelo mod) {
         String sql = "SELECT * FROM modelo";
 
@@ -366,8 +369,8 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
 
         });
         return listMod;
-      }
-    
+    }
+
     @Override
     public List<Marca> listMarca(Marca mar) {
         String sql = "SELECT * FROM marca";
@@ -384,11 +387,25 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
                 mar.setIdMarca(rs.getInt("id_marca"));
                 mar.setNombreMarca(rs.getString("nombre_Marca"));
                 mar.setMarcaActiva(rs.getShort("marca_activa"));
-                
+
                 return mar;
             }
 
         });
         return listMar;
-      }
+    }
+
+    @Override
+    public Boolean removerCategoria(Integer idCategoria) {
+        String deleteQuery = "delete from categoria where id_categoria = ?";
+        return getJdbcTemplate().update(deleteQuery, idCategoria) > 0;
+    }
+
+    @Override
+    public List<Categoria> getLstCategoriaByLikeNombre(String nombreCategoria) {
+        String sql = "SELECT * FROM categoria WHERE nombre_categoria like ?";
+
+        List<Categoria> lstCat = getJdbcTemplate().query(sql, new Object[]{"%"+nombreCategoria+"%"}, new CategoriaRowMapper());
+        return lstCat;
+    }
 }

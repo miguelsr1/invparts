@@ -7,12 +7,14 @@ package com.jsoft.invparts.mb.mantto.dialog;
 
 import com.jsoft.invparts.model.inventario.Categoria;
 import com.jsoft.invparts.model.inventario.ProductoCategoria;
+import com.jsoft.invparts.servicios.ManttoService;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import org.primefaces.PrimeFaces;
 
@@ -27,8 +29,19 @@ public class DlgCategoriaProductoMB implements Serializable {
     private static final long serialVersionUID = 1L;
     private String cadenaDeBusqueda;
     private ProductoCategoria productoCategoria = new ProductoCategoria();
+    
+    @ManagedProperty("#{manttoService}")
+    private ManttoService manttoService;
 
     public DlgCategoriaProductoMB() {
+    }
+
+    public ManttoService getManttoService() {
+        return manttoService;
+    }
+
+    public void setManttoService(ManttoService manttoService) {
+        this.manttoService = manttoService;
     }
 
     public ProductoCategoria getProductoCategoria() {
@@ -48,7 +61,7 @@ public class DlgCategoriaProductoMB implements Serializable {
     }
 
     public List<Categoria> completeCategoriaContains(String query) {
-        List<Categoria> lstCategoria = new ArrayList();
+        List<Categoria> lstCategoria = manttoService.getLstCategoriaByLikeNombre(query);
 
         return lstCategoria;
     }

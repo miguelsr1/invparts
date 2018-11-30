@@ -15,27 +15,29 @@
     </h:head>
 
     <h:body styleClass="landing-body">
-        <h:form>
-            <div class="ui-g ui-fluid">
-                <div class="ui-g-12">
-                    <div class="card card-w-title">
-                        <p:panelGrid columns="1" styleClass="ui-panelgrid-blank form-group form-elements">
-                            <p:outputLabel value="#{msj.categoriaProducto} :"/>
-                        </p:panelGrid>
-                        <p:panelGrid id="pngDatos" columns="2" columnClasses="col11,col1" styleClass="ui-panelgrid-blank form-group form-elements">
-                            <p:autoComplete value="#{dlgCategoriaProductoMB.cadenaDeBusqueda}" completeMethod="#{dlgCategoriaProductoMB.completeCategoriaContains}"/>
-                            <p:commandButton value="#{msj.nuevo}" icon="fa fa-plus-square" action="#{dlgCategoriaProductoMB.openDialogCategory}" />
-                        </p:panelGrid> 
-                        <p:panelGrid columns="2" styleClass="ui-panelgrid-blank form-group form-elements" >
-                            <p:commandButton value="#{msj.agregar}" icon="fa fa-plus" />
-                        </p:panelGrid>
+        <f:view locale="#{facesContext.externalContext.requestLocale}">
+            <h:form>
+                <div class="ui-g ui-fluid">
+                    <div class="ui-g-12">
+                        <div class="card card-w-title">
+                            <p:panelGrid columns="1" styleClass="ui-panelgrid-blank form-group form-elements">
+                                <p:outputLabel value="#{msj.categoriaProducto} :"/>
+                            </p:panelGrid>
+                            <p:panelGrid id="pngDatos" columns="2" columnClasses="col11,col1" styleClass="ui-panelgrid-blank form-group form-elements">
+                                <p:autoComplete value="#{dlgCategoriaProductoMB.cadenaDeBusqueda}" completeMethod="#{dlgCategoriaProductoMB.completeCategoriaContains}"/>
+                                <p:commandButton value="#{msj['agregar']}" icon="fa fa-plus-square" action="#{dlgCategoriaProductoMB.openDialogCategory}" />
+                            </p:panelGrid> 
+                            <p:panelGrid columns="2" styleClass="ui-panelgrid-blank form-group form-elements" >
+                                <p:commandButton value="#{msj['asociarCategoriaProducto']}" icon="fa fa-plus" />
+                            </p:panelGrid>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </h:form>
-        <h:outputStylesheet name="css/animate.css" library="paradise-layout" />
-        <h:outputStylesheet name="css/layout-#{guestPreferences.layout}.css" library="paradise-layout" />
-        <h:outputStylesheet name="personalizadas.css" library="css"/>
+            </h:form>
+            <h:outputStylesheet name="css/animate.css" library="paradise-layout" />
+            <h:outputStylesheet name="css/layout-#{guestPreferences.layout}.css" library="paradise-layout" />
+            <h:outputStylesheet name="personalizadas.css" library="css"/>
+        </f:view>
     </h:body>
 
 </html>

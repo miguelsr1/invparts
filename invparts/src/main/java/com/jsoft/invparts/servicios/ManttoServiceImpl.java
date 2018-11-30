@@ -144,4 +144,14 @@ public class ManttoServiceImpl implements ManttoService {
     public List<Marca> listMarca(Marca mar) {
         return dao.listMarca(mar);
     }
+
+    @Override
+    public Boolean removerCategoria(Integer idCategoria) {
+        return dao.removerCategoria(idCategoria);
+    }
+
+    @Override
+    public List<Categoria> getLstCategoriaByLikeNombre(String nombreCategoria) {
+        return dao.getLstCategoriaByLikeNombre(nombreCategoria);
+    }
 }

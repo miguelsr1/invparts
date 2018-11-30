@@ -1,15 +1,11 @@
 package com.jsoft.invparts.util;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -60,7 +56,7 @@ public class JsfUtil {
     }
 
     public static void addSuccessMessage(String msg) {
-        FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Informaci&oacute;n", msg);
+        FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", msg);
         FacesContext.getCurrentInstance().addMessage("successInfo", facesMsg);
     }
 
@@ -100,50 +96,5 @@ public class JsfUtil {
             col++;
         }
         return ps;
-    }
-
-    public static Boolean addErrorStyle(String frm, String idComponente, Class tipoComponente, Object valor) {
-        Boolean valido = true;
-        if (valor != null) {
-            if (valor instanceof Integer) {
-                if ((Integer) valor == 0) {
-                    valido = false;
-                }
-            } else if (valor instanceof String) {
-                if (valor.toString().isEmpty()) {
-                    valido = false;
-                }
-            } else if (valor instanceof BigDecimal) {
-                if (((BigDecimal) valor).compareTo(BigDecimal.ZERO) == 0) {
-                    valido = false;
-                }
-            }
-        } else {
-            valido = false;
-        }
-
-        Class noParams[] = {};
-        Class[] paramString = new Class[1];
-        paramString[0] = String.class;
-
-        Object componente = tipoComponente.cast(FacesContext.getCurrentInstance().getViewRoot().findComponent(frm).findComponent(idComponente));
-        try {
-            Method getStyleClass = tipoComponente.getMethod("getStyleClass", noParams);
-            Method setStyleClass = tipoComponente.getMethod("setStyleClass", paramString);
-            Object objEstilo = getStyleClass.invoke(componente, (Object) noParams);
-            String estilos = ((objEstilo == null) ? "" : objEstilo.toString());
-
-            if (valido) {
-                setStyleClass.invoke(componente, estilos.replace("ui-state-error", ""));
-            } else {
-                setStyleClass.invoke(componente, estilos.concat(" ").concat("ui-state-error"));
-            }
-
-            //RequestContext.getCurrentInstance().update(frm + ":" + idComponente);
-        } catch (NoSuchMethodException | SecurityException | IllegalAccessException | InvocationTargetException ex) {
-            Logger.getLogger(JsfUtil.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        return valido;
     }
 }

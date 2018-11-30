@@ -7,14 +7,18 @@ package com.jsoft.invparts.mb.mantto.dialog;
 
 import com.jsoft.invparts.model.inventario.Categoria;
 import com.jsoft.invparts.servicios.ManttoService;
+import com.jsoft.invparts.util.JsfUtil;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.model.SelectItem;
+import org.primefaces.PrimeFaces;
+import org.primefaces.event.NodeSelectEvent;
 import org.primefaces.model.DefaultTreeNode;
 import org.primefaces.model.TreeNode;
 
@@ -27,14 +31,15 @@ import org.primefaces.model.TreeNode;
 public class DlgCategoriaMB implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle.getBundle("etiquetas");
+
+    private String nombreCategoriaPadre = "";
 
     private Categoria categoria = new Categoria();
-    private Categoria categoriaSelected = new Categoria();
     private List<Categoria> lstCategorias = new ArrayList();
     private List<SelectItem> lstCategoria = new ArrayList();
 
-    private TreeNode rootCategoria, selectedNode;
-    ;
+    private TreeNode rootCategoria, nodoCategoriaPadre;
 
     @ManagedProperty("#{manttoService}")
     private ManttoService manttoService;
@@ -80,14 +85,6 @@ public class DlgCategoriaMB implements Serializable {
         this.categoria = categoria;
     }
 
-    public Categoria getCategoriaSelected() {
-        return categoriaSelected;
-    }
-
-    public void setCategoriaSelected(Categoria categoriaSelected) {
-        this.categoriaSelected = categoriaSelected;
-    }
-
     public TreeNode getRootCategoria() {
         return rootCategoria;
     }
@@ -96,14 +93,14 @@ public class DlgCategoriaMB implements Serializable {
         this.rootCategoria = rootCategoria;
     }
 
-    public TreeNode getSelectedNode() {
-        return selectedNode;
+    public TreeNode getNodoCategoriaPadre() {
+        return nodoCategoriaPadre;
     }
 
-    public void setSelectedNode(TreeNode selectedNode) {
-        this.selectedNode = selectedNode;
+    public void setNodoCategoriaPadre(TreeNode nodoCategoriaPadre) {
+        this.nodoCategoriaPadre = nodoCategoriaPadre;
     }
-
+    
     public List<Categoria> getLstCategorias() {
         return lstCategorias;
     }
@@ -120,22 +117,55 @@ public class DlgCategoriaMB implements Serializable {
         this.lstCategoria = lstCategoria;
     }
 
-    public void crearNuevaCategoria(){
+    public String getNombreCategoriaPadre() {
+        return nombreCategoriaPadre;
+    }
+
+    public void setNombreCategoriaPadre(String nombreCategoriaPadre) {
+        this.nombreCategoriaPadre = nombreCategoriaPadre;
+    }
+
+    public void crearNuevaCategoria() {
         categoria = new Categoria();
     }
-    
+
     public void guardarCategoria() {
-        if (selectedNode != null && ((Categoria) selectedNode.getData()).getIdCategoria() != null) {
-            categoria.setPadreIdCategoria(((Categoria) selectedNode.getData()).getIdCategoria());
+        if (nodoCategoriaPadre != null && ((Categoria) nodoCategoriaPadre.getData()).getIdCategoria() != null) {
+            categoria.setPadreIdCategoria(((Categoria) nodoCategoriaPadre.getData()).getIdCategoria());
         }
 
         categoria.setIdCategoria(manttoService.guardarConIdAutogenerado(categoria));
+        nodoCategoriaPadre.getChildren().add(new DefaultTreeNode(categoria, nodoCategoriaPadre));
 
-        selectedNode.getChildren().add(new DefaultTreeNode(categoria, selectedNode));
-        /*if (categoria.getIdCategoria() > 0) {
-            lstCategorias.add(categoria);
-            lstCategoria.add(new SelectItem(categoria, categoria.getNombreCategoria()));
-            categoria = new Categoria();
-        }*/
+        categoria = new Categoria();
+        nodoCategoriaPadre = new DefaultTreeNode();
+        nombreCategoriaPadre = "";
+    }
+
+    public void limpiarForm() {
+        nodoCategoriaPadre = null;
+        nombreCategoriaPadre = "";
+    }
+
+    public void onCategoriaSelect(NodeSelectEvent event) {
+        nodoCategoriaPadre = event.getTreeNode();
+        nombreCategoriaPadre = ((Categoria) nodoCategoriaPadre.getData()).getNombreCategoria();
+    }
+
+    public void dlgCerrar() {
+        PrimeFaces.current().dialog().closeDynamic(this);
+    }
+
+    public void eliminarCategoria() {
+        /**
+         * Considerar el caso de que la categoria tiene asociaciones a productos existentes.
+         */
+        if (nodoCategoriaPadre != null) {
+            if (manttoService.removerCategoria(((Categoria) nodoCategoriaPadre.getData()).getIdCategoria())) {
+                JsfUtil.addSuccessMessage(RESOURCE_BUNDLE.getString("datoEliminadoOk"));
+            } else {
+                JsfUtil.addErrorMessage(RESOURCE_BUNDLE.getString("datoEliminadoFail"));
+            }
+        }
     }
 }

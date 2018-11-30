@@ -2,7 +2,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui">
 
     <h:head>
@@ -16,53 +15,62 @@
     </h:head>
 
     <h:body >
-        <h:form id="frmPrincipal">
-            <div class="ui-g ui-fluid">
-                <div class="ui-g-12 ui-md-6">
-                    <div class="card card-w-title">
-                        <p:panelGrid id="pnlDatos" columns="1" styleClass="ui-panelgrid-blank form-group form-elements" style="width: 100%;">
-                            <p:outputLabel value="Id"/>
-                            <p:inputText value="#{dlgCategoriaMB.categoria.idCategoria}" style="width: 80px;" disabled="true"/>
+        <f:view locale="#{facesContext.externalContext.requestLocale}">
+            <h:form id="frmPrincipal">
+                <p:growl id="growl" showDetail="true" escape="false">
+                    <p:autoUpdate />
+                </p:growl>
+                <div class="ui-g ui-fluid">
+                    <div class="ui-g-12 ui-md-6">
+                        <div class="card card-w-title">
+                            <p:panelGrid id="pnlDatos" columns="1" styleClass="ui-panelgrid-blank form-group form-elements" style="width: 100%;">
+                                <p:outputLabel value="Id"/>
+                                <p:inputText value="#{dlgCategoriaMB.categoria.idCategoria}" style="width: 80px;" disabled="true"/>
 
-                            <p:outputLabel value="Padre"/>
-                            <p:inputText id="txtPadre" value="#{dlgCategoriaMB.selectedNode.data.nombreCategoria}"/>
+                                <p:outputLabel value="#{msj['padre']}"/>
+                                <p:inputText id="txtPadre" value="#{dlgCategoriaMB.nombreCategoriaPadre}"/>
 
-                            <p:outputLabel value="#{msj.nombreCategoria}"/>
-                            <p:inputText value="#{dlgCategoriaMB.categoria.nombreCategoria}"/>
-                        </p:panelGrid>
-                        <br/>
-                        <h:panelGrid columns="2">
-                            <p:commandButton value="#{msj.nuevo}" action="#{dlgCategoriaMB.crearNuevaCategoria}" update="pnlDatos" icon="fa fa-save"/>
-                            <p:commandButton value="#{msj.guardar}" action="#{dlgCategoriaMB.guardarCategoria}" update="tblCategorias" icon="fa fa-save"/>
-                        </h:panelGrid>
+                                <p:outputLabel id="lblNombreCategoria" value="#{msj['nombreCategoria']}"/>
+                                <p:inputText label="lblNombreCategoria" value="#{dlgCategoriaMB.categoria.nombreCategoria}" required="true" requiredMessage="#{msj['validar.categoria.nombreCategoria']}"/>
+                            </p:panelGrid>
+                            <br/>
+                            <p:panelGrid columns="4" columnClasses="col3,col3,col3,col3" styleClass="ui-panelgrid-blank form-group form-elements" style="width: 100%">
+                                <p:commandButton value="#{msj['nuevo']}" action="#{dlgCategoriaMB.crearNuevaCategoria}" update="pnlDatos" icon="fa fa-file-o" rendered="false"/>
+                                <p:commandButton value="#{msj['guardar']}" action="#{dlgCategoriaMB.guardarCategoria}" update="pnlDatos treeCategorias" icon="fa fa-save"/>
+                                <p:commandButton value="#{msj['limpiar']}" action="#{dlgCategoriaMB.limpiarForm}" process="@this" update="frmPrincipal" icon="fa fa-eraser">
+                                    <p:resetInput target="frmPrincipal" />
+                                </p:commandButton>
+                                <p:commandButton value="#{msj['cerrar']}" action="#{dlgCategoriaMB.dlgCerrar}" process="@this" icon="fa fa-window-close-o"/>
+                            </p:panelGrid>
+                        </div>
                     </div>
-                </div>
 
-                <div class="ui-g-12 ui-md-6">
-                    <div class="card card-w-title">
-                        <p:outputPanel style="width: 100%;height: 240px;overflow: auto;display: block">
-                            <p:outputPanel>
-                                <p:tree id="tblCategorias" value="#{dlgCategoriaMB.rootCategoria}" var="cat" selectionMode="single" selection="#{dlgCategoriaMB.selectedNode}" >
-                                    <p:ajax event="select" update="frmPrincipal:txtPadre" />
+                    <div class="ui-g-12 ui-md-6">
+                        <div class="card card-w-title">
+                            <p:outputPanel style="width: 100%;height: 240px;overflow: auto;display: block">
+                                <p:outputPanel>
+                                    <p:tree id="treeCategorias" value="#{dlgCategoriaMB.rootCategoria}" var="cat" selectionMode="single" selection="#{dlgCategoriaMB.nodoCategoriaPadre}" dynamic="true" >
+                                        <p:ajax event="select" listener="#{dlgCategoriaMB.onCategoriaSelect}" update="frmPrincipal:pnlDatos" />
 
-                                    <p:treeNode expandedIcon="pi pi-folder-open" collapsedIcon="pi pi-folder">
-                                        <h:outputText value="#{cat.nombreCategoria}"/>
-                                    </p:treeNode>
-                                </p:tree>
+                                        <p:treeNode expandedIcon="fa fa-tag" collapsedIcon="fa fa-tag">
+                                            <h:outputText value="#{cat.nombreCategoria}"/>
+                                        </p:treeNode>
+                                    </p:tree>
+
+                                    <p:contextMenu for="treeCategorias">
+                                        <p:menuitem value="#{msj['eliminar']}" update="treeCategorias" process="@this, treeCategorias" action="#{dlgCategoriaMB.eliminarCategoria}" icon="fa fa-trash-o"/>
+                                    </p:contextMenu>
+                                </p:outputPanel>
                             </p:outputPanel>
-                        </p:outputPanel>
-
-                        <!--p:multiSelectListbox id="tblCategorias" value="{dlgCategoriaMB.categoriaSelected}" effect="slide" header="Categories" showHeaders="true">
-                            <f:selectItems value="{dlgCategoriaMB.lstCategoria}" />
-                        </p:multiSelectListbox-->
+                        </div>
                     </div>
                 </div>
-            </div>
 
-        </h:form>
-        <h:outputStylesheet name="css/animate.css" library="paradise-layout" />
-        <h:outputStylesheet name="css/layout-#{guestPreferences.layout}.css" library="paradise-layout" />
-        <h:outputStylesheet name="personalizadas.css" library="css"/>
+            </h:form>
+            <h:outputStylesheet name="css/animate.css" library="paradise-layout" />
+            <h:outputStylesheet name="css/layout-#{guestPreferences.layout}.css" library="paradise-layout" />
+            <h:outputStylesheet name="personalizadas.css" library="css"/>
+        </f:view>
     </h:body>
 
 </html>

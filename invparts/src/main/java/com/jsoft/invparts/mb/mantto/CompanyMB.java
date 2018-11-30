@@ -43,7 +43,7 @@ public class CompanyMB implements Serializable {
     
  @PostConstruct
     public void init() {
-        lstEmpresa = manttoService.listEmpresa(null,(short) 1);
+        lstEmpresa = manttoService.listEmpresa(emp,(short) 1);
         lstEmpresaUsu = manttoService.listEmpresaUsu(null);
     }
     //<editor-fold desc="Metodos getters y setters">
