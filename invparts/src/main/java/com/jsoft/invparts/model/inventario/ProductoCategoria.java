@@ -54,12 +54,12 @@ public class ProductoCategoria implements Serializable, PersistenciaDao {
 
     @Override
     public String generarInsertSQL() {
-        return "INSERT INTO producto_categoria (id_producto, id_categoria) VALUES (?, ?,)";
+        return "INSERT INTO producto_categoria (id_producto, id_categoria) VALUES (?, ?)";
     }
 
     @Override
     public Object[] getDatosInsert() {
-        return new Object[]{idProducto, idProducto};
+        return new Object[]{idProducto, idCategoria};
     }
 
     @Override
@@ -69,12 +69,17 @@ public class ProductoCategoria implements Serializable, PersistenciaDao {
 
     @Override
     public Object[] getDatosUpdate() {
-        return new Object[]{idProducto, idProducto, idProductoCategoria};
+        return new Object[]{idProducto, idCategoria, idProductoCategoria};
     }
 
     @Override
     public Boolean esNuevoRegistro() {
         return idProductoCategoria == null;
+    }
+
+    @Override
+    public void setIdGenerado(Integer id) {
+        idProductoCategoria = id;
     }
 
 }

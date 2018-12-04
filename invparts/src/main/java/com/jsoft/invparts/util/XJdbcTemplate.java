@@ -51,7 +51,8 @@ public class XJdbcTemplate {
 
         if (valor > JsfUtil.COD_ERROR) {
             if (objeto.esNuevoRegistro()) {
-                return keyHolder.getKey().intValue();
+                getObjeto().setIdGenerado(keyHolder.getKey().intValue());
+                return valor;
             } else {
                 return 0;
             }
@@ -82,7 +83,7 @@ public class XJdbcTemplate {
      * @param objeto Objeto a persistir (implementa de la interfaz
      * PersistenciaDao)
      * @return id generado
-     */
+     
     public int createIdString(PersistenciaDao objeto) {
         this.objeto = objeto;
         KeyHolder keyHolder = new GeneratedKeyHolder();
@@ -101,7 +102,7 @@ public class XJdbcTemplate {
         } else {
             return JsfUtil.COD_ERROR;
         }
-    }
+    }*/
 
     public PersistenciaDao getObjeto() {
         return objeto;

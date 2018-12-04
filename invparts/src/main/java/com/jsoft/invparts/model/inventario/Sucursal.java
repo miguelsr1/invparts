@@ -95,4 +95,9 @@ public class Sucursal implements Serializable, PersistenciaDao {
         return idSucursal == null;
     }
 
+    @Override
+    public void setIdGenerado(Integer id) {
+        idSucursal = id;
+    }
+
 }

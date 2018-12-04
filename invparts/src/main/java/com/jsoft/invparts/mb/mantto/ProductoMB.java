@@ -84,7 +84,7 @@ public class ProductoMB implements Serializable {
         Map<String, Object> options = new HashMap();
         options.put("modal", true);
         options.put("width", 640);
-        options.put("height", 340);
+        options.put("height", 360);
         options.put("contentWidth", "100%");
         options.put("contentHeight", "100%");
         //options.put("headerElement", RESOURCE_BUNDLE.getString("asociarCategoriaProducto"));

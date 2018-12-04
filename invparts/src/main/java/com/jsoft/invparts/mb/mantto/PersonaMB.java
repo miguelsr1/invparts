@@ -131,7 +131,7 @@ public class PersonaMB implements Serializable {
     }
 
     public void guardarNewUsuario() {
-        int valor = manttoService.guardarNuevoUsuario(per);
+        int valor = manttoService.guardarConIdString(per, true);
         if (valor != -1) {
             per.setIdPersona(valor);
             usu.setCambiarClave((short) 0);

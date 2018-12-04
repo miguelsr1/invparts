@@ -14,10 +14,10 @@ import java.util.Date;
  *
  * @author misanchez
  */
-public class Compra  implements Serializable, PersistenciaDao {
+public class Compra implements Serializable, PersistenciaDao {
 
     private static final long serialVersionUID = 1L;
-    
+
     public Integer idCompra;
     public Date fechaCompra;
     public Date fechaRecibido;
@@ -95,5 +95,10 @@ public class Compra  implements Serializable, PersistenciaDao {
     @Override
     public Boolean esNuevoRegistro() {
         return idCompra == null;
+    }
+
+    @Override
+    public void setIdGenerado(Integer id) {
+        idCompra = id;
     }
 }

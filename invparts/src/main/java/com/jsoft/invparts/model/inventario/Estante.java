@@ -76,4 +76,9 @@ public class Estante implements Serializable, PersistenciaDao {
     public Boolean esNuevoRegistro() {
         return idEstante == null;
     }
+
+    @Override
+    public void setIdGenerado(Integer id) {
+        idEstante = id;
+    }
 }

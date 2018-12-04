@@ -59,11 +59,11 @@ public interface ManttoService {
 
     public int guardarConIdString(PersistenciaDao objeto, Boolean nuevo);
 
-    public int guardarNuevoUsuario(PersistenciaDao objeto);
-
     public void enviarCorreoActivacionUsuario(Persona per, String codAct);
 
     public String encriptar(String cadena);
+    
+    public Categoria findCategoriaById(Integer idCategoria);
 
     public List<Categoria> lstCategoria(Categoria categoria);
 
@@ -71,7 +71,7 @@ public interface ManttoService {
 
     public Boolean removerCategoria(Integer idCategoria);
 
-    public List<Categoria> getLstCategoriaByLikeNombre(String nombreCategoria);
+    public List<Categoria> getLstCategoriaByLikeNombre(String nombreCategoria, Integer idProducto);
     
     public List<ProductoCategoriaDto> getLstCategoriasByProducto(Integer idProducto);
 }

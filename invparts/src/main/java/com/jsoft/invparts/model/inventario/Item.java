@@ -130,4 +130,9 @@ public class Item implements Serializable, PersistenciaDao {
     public Boolean esNuevoRegistro() {
         return idItem == null;
     }
+
+    @Override
+    public void setIdGenerado(Integer id) {
+        idItem = id;
+    }
 }

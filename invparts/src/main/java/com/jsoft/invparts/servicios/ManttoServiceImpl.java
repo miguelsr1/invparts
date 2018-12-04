@@ -73,11 +73,6 @@ public class ManttoServiceImpl implements ManttoService {
     }
 
     @Override
-    public int guardarNuevoUsuario(PersistenciaDao objeto) {
-        return dao.guardarNuevoUsuario(objeto);
-    }
-
-    @Override
     public void enviarCorreoActivacionUsuario(Persona per, String codAct) {
         StringBuilder sb = new StringBuilder("");
 
@@ -111,17 +106,17 @@ public class ManttoServiceImpl implements ManttoService {
     public List<Producto> listProducto(Producto pro) {
         return dao.listProducto(pro);
     }
-    
+
     @Override
-    public List<Perfil> listPerfil(Perfil per){
+    public List<Perfil> listPerfil(Perfil per) {
         return dao.listPerfil(per);
     }
-    
+
     @Override
-    public List<Modulo> listModulo(Modulo mod){
+    public List<Modulo> listModulo(Modulo mod) {
         return dao.listModulo(mod);
     }
-    
+
     @Override
     public String nombreTipoEmpresa(Integer id) {
         return dao.nombreTipoEmpresa(id);
@@ -136,12 +131,13 @@ public class ManttoServiceImpl implements ManttoService {
     public List<Categoria> lstSubCategoria(Categoria categoria) {
         return dao.lstSubCategoria(categoria);
     }
-    
-     @Override
+
+    @Override
     public List<Modelo> listModelo(Modelo mod) {
         return dao.listModelo(mod);
     }
-      @Override
+
+    @Override
     public List<Marca> listMarca(Marca mar) {
         return dao.listMarca(mar);
     }
@@ -152,12 +148,17 @@ public class ManttoServiceImpl implements ManttoService {
     }
 
     @Override
-    public List<Categoria> getLstCategoriaByLikeNombre(String nombreCategoria) {
-        return dao.getLstCategoriaByLikeNombre(nombreCategoria);
+    public List<Categoria> getLstCategoriaByLikeNombre(String nombreCategoria, Integer idProducto) {
+        return dao.getLstCategoriaByLikeNombre(nombreCategoria, idProducto);
     }
 
     @Override
     public List<ProductoCategoriaDto> getLstCategoriasByProducto(Integer idProducto) {
         return dao.getLstCategoriasByProducto(idProducto);
+    }
+
+    @Override
+    public Categoria findCategoriaById(Integer idCategoria) {
+        return dao.findCategoriaById(idCategoria);
     }
 }

@@ -7,7 +7,6 @@ package com.jsoft.invparts.model.seguridad;
 
 import com.jsoft.invparts.dao.PersistenciaDao;
 import java.io.Serializable;
-import java.math.BigInteger;
 import java.util.Date;
 
 /**
@@ -122,6 +121,10 @@ public class Usuario implements Serializable, PersistenciaDao {
     @Override
     public Boolean esNuevoRegistro() {
         return (usuario == null) || usuario.trim().isEmpty();
+    }
+
+    @Override
+    public void setIdGenerado(Integer id) {
     }
 
 }

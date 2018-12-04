@@ -15,7 +15,7 @@ import java.io.Serializable;
 public class DetalleCompra implements Serializable, PersistenciaDao {
 
     private static final long serialVersionUID = 1L;
-    
+
     private Integer idDetalleCompra;
     private Integer idCompra;
     private Integer idItem;
@@ -94,5 +94,10 @@ public class DetalleCompra implements Serializable, PersistenciaDao {
     public Boolean esNuevoRegistro() {
         return idDetalleCompra == null;
     }
-    
+
+    @Override
+    public void setIdGenerado(Integer id) {
+        idDetalleCompra = id;
+    }
+
 }

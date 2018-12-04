@@ -8,7 +8,6 @@ package com.jsoft.invparts.model.inventario;
 import com.jsoft.invparts.dao.PersistenciaDao;
 import com.jsoft.invparts.model.UtilWhere;
 import java.io.Serializable;
-import java.math.BigInteger;
 
 /**
  *
@@ -18,18 +17,18 @@ public class Vendedor extends UtilWhere implements Serializable, PersistenciaDao
 
     private static final long serialVersionUID = 1L;
 
-    private BigInteger idVendedor;
+    private Integer idVendedor;
     private String nombreVendedor;
     private String apellidoVendedor;
 
     public Vendedor() {
     }
 
-    public BigInteger getIdVendedor() {
+    public Integer getIdVendedor() {
         return idVendedor;
     }
 
-    public void setIdVendedor(BigInteger idVendedor) {
+    public void setIdVendedor(Integer idVendedor) {
         this.idVendedor = idVendedor;
     }
 
@@ -77,5 +76,10 @@ public class Vendedor extends UtilWhere implements Serializable, PersistenciaDao
     @Override
     public Boolean esNuevoRegistro() {
         return idVendedor == null;
+    }
+
+    @Override
+    public void setIdGenerado(Integer id) {
+        idVendedor = id;
     }
 }

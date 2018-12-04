@@ -14,6 +14,7 @@ import java.io.Serializable;
 public class ProductoCategoriaDto implements Serializable{
     private static final long serialVersionUID = 1L;
     
+    private Integer idProductoCategoria;
     private Integer idProducto;
     private Integer idCategoria;
     private String nombreCategoria;
@@ -43,5 +44,13 @@ public class ProductoCategoriaDto implements Serializable{
 
     public void setNombreCategoria(String nombreCategoria) {
         this.nombreCategoria = nombreCategoria;
+    }
+
+    public Integer getIdProductoCategoria() {
+        return idProductoCategoria;
+    }
+
+    public void setIdProductoCategoria(Integer idProductoCategoria) {
+        this.idProductoCategoria = idProductoCategoria;
     }
 }

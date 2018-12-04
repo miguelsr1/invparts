@@ -85,4 +85,9 @@ public class Compatibilidad implements Serializable, PersistenciaDao {
     public Boolean esNuevoRegistro() {
         return idCompatibilidad == null;
     }
+
+    @Override
+    public void setIdGenerado(Integer id) {
+        idCompatibilidad = id;
+    }
 }

@@ -69,4 +69,9 @@ public class Perfil extends UtilWhere implements Serializable, PersistenciaDao {
     public Boolean esNuevoRegistro() {
         return idPerfil == null;
     }
+
+    @Override
+    public void setIdGenerado(Integer id) {
+        idPerfil = id;
+    }
 }

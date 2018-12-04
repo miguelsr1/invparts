@@ -95,4 +95,9 @@ public class Persona extends UtilWhere implements Serializable, PersistenciaDao 
     public Boolean esNuevoRegistro() {
         return idPersona == null;
     }
+
+    @Override
+    public void setIdGenerado(Integer id) {
+        idPersona = id;
+    }
 }

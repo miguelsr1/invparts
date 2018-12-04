@@ -19,7 +19,6 @@ import com.jsoft.invparts.model.seguridad.Perfil;
 import com.jsoft.invparts.model.seguridad.Persona;
 import com.jsoft.invparts.model.seguridad.Usuario;
 import com.jsoft.invparts.util.XJdbcTemplate;
-import java.math.BigInteger;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
@@ -125,7 +124,7 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
             @Override
             public Empresa mapRow(ResultSet rs, int rowNumber) throws SQLException {
                 Empresa emp = new Empresa();
-                emp.setIdEmpresa(rs.getObject("id_empresa", BigInteger.class));
+                emp.setIdEmpresa(rs.getInt("id_empresa"));
                 emp.setNombreEmpresa(rs.getString("nombre_empresa"));
                 emp.setCorreoEmpresa(rs.getString("correo_empresa"));
                 emp.setTelefonoEmpresa(rs.getString("telefono_empresa"));
@@ -150,7 +149,7 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
             @Override
             public Empresa mapRow(ResultSet rs, int rowNumber) throws SQLException {
                 Empresa emp = new Empresa();
-                emp.setIdEmpresa(rs.getObject("id_empresa", BigInteger.class));
+                emp.setIdEmpresa(rs.getInt("id_empresa"));
                 emp.setNombreEmpresa(rs.getString("nombre_empresa"));
                 emp.setCorreoEmpresa(rs.getString("correo_empresa"));
                 emp.setTelefonoEmpresa(rs.getString("telefono_empresa"));
@@ -197,7 +196,7 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
             @Override
             public Vendedor mapRow(ResultSet rs, int rowNumber) throws SQLException {
                 Vendedor ven = new Vendedor();
-                ven.setIdVendedor(rs.getObject("id_vendedor", BigInteger.class));
+                ven.setIdVendedor(rs.getInt("id_vendedor"));
                 ven.setNombreVendedor(rs.getString("nombre_Vendedor"));
                 ven.setApellidoVendedor(rs.getString("apellido_Vendedor"));
                 return ven;
@@ -323,11 +322,6 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
     }
 
     @Override
-    public int guardarNuevoUsuario(PersistenciaDao objeto) {
-        return super.createIdString(objeto);
-    }
-
-    @Override
     public int guardarConIdString(PersistenciaDao objeto, Boolean nuevo) {
         return super.persistirConIdString(objeto, nuevo);
     }
@@ -407,10 +401,10 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
     }
 
     @Override
-    public List<Categoria> getLstCategoriaByLikeNombre(String nombreCategoria) {
-        String sql = "SELECT * FROM categoria WHERE nombre_categoria like ?";
+    public List<Categoria> getLstCategoriaByLikeNombre(String nombreCategoria, Integer idProducto) {
+        String sql = env.getProperty("lstCategoriasByNombreAndProducto");
 
-        List<Categoria> lstCat = getJdbcTemplate().query(sql, new Object[]{"%" + nombreCategoria + "%"}, new CategoriaRowMapper());
+        List<Categoria> lstCat = getJdbcTemplate().query(sql, new Object[]{idProducto, "%" + nombreCategoria + "%"}, new CategoriaRowMapper());
         return lstCat;
     }
 
@@ -432,5 +426,16 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
 
         });
         return lstCat;
+    }
+
+    @Override
+    public Categoria findCategoriaById(Integer idCategoria) {
+        String sql = "SELECT * FROM categoria WHERE id_categoria = ?";
+
+        Categoria customer = (Categoria) getJdbcTemplate().queryForObject(
+                sql, new Object[]{idCategoria},
+                new BeanPropertyRowMapper(Categoria.class));
+
+        return customer;
     }
 }

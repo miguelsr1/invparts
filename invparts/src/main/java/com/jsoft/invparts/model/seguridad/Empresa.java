@@ -8,7 +8,6 @@ package com.jsoft.invparts.model.seguridad;
 import com.jsoft.invparts.dao.PersistenciaDao;
 import com.jsoft.invparts.model.UtilWhere;
 import java.io.Serializable;
-import java.math.BigInteger;
 
 /**
  *
@@ -18,7 +17,7 @@ public class Empresa extends UtilWhere implements Serializable, PersistenciaDao 
 
     private static final long serialVersionUID = 1L;
 
-    private BigInteger idEmpresa;
+    private Integer idEmpresa;
     private String nombreEmpresa;
     private String correoEmpresa;
     private String telefonoEmpresa;
@@ -27,11 +26,11 @@ public class Empresa extends UtilWhere implements Serializable, PersistenciaDao 
     public Empresa() {
     }
 
-    public BigInteger getIdEmpresa() {
+    public Integer getIdEmpresa() {
         return idEmpresa;
     }
 
-    public void setIdEmpresa(BigInteger idEmpresa) {
+    public void setIdEmpresa(Integer idEmpresa) {
         this.idEmpresa = idEmpresa;
     }
 
@@ -95,6 +94,11 @@ public class Empresa extends UtilWhere implements Serializable, PersistenciaDao 
     @Override
     public Boolean esNuevoRegistro() {
         return idEmpresa == null;
+    }
+
+    @Override
+    public void setIdGenerado(Integer id) {
+        idEmpresa = id;
     }
 
 }

@@ -24,4 +24,6 @@ public interface PersistenciaDao {
     public Object[] getDatosUpdate();
 
     public Boolean esNuevoRegistro();
+    
+    public void setIdGenerado(Integer id);
 }
