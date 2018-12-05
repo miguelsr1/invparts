@@ -55,6 +55,8 @@ public interface ManttoDao {
      
     public String nombreTipoEmpresa(Integer id);
     
+     public String findNombreMarca(Integer id);
+        
     public Boolean getUsuarioByUsu(String usuario);
 
     public Boolean isExistEmailPerByEmail(String eMail);

@@ -70,4 +70,6 @@ public interface ManttoService {
     public Boolean removerCategoria(Integer idCategoria);
 
     public List<Categoria> getLstCategoriaByLikeNombre(String nombreCategoria);
+    
+    public String findNombreMarca(Integer id);
 }

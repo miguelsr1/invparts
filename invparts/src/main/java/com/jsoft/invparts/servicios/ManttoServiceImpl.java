@@ -154,4 +154,9 @@ public class ManttoServiceImpl implements ManttoService {
     public List<Categoria> getLstCategoriaByLikeNombre(String nombreCategoria) {
         return dao.getLstCategoriaByLikeNombre(nombreCategoria);
     }
+    
+     @Override
+    public String findNombreMarca(Integer id) {
+        return dao.findNombreMarca(id);
+    }
 }

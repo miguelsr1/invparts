@@ -408,4 +408,13 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
         List<Categoria> lstCat = getJdbcTemplate().query(sql, new Object[]{"%"+nombreCategoria+"%"}, new CategoriaRowMapper());
         return lstCat;
     }
+    
+    @Override
+    public String findNombreMarca(Integer id){
+        String sql = "SELECT NOMBRE_MARCA FROM MARCA WHERE ID_MARCA=?";
+        
+        String name = getJdbcTemplate().queryForObject(sql, new Object[] {id},String.class);
+        
+        return name;
+    } 
 }
