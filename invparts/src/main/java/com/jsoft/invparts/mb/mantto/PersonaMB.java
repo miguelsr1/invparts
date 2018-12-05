@@ -138,7 +138,8 @@ public class PersonaMB implements Serializable {
             usu.setClaveAcceso(manttoService.encriptar(pass1));
             usu.setFechaCaducidad(null);
             usu.setIdPersona(per.getIdPersona());
-            usu.setIntentosFallidos((short) 0);
+            usu.setIntentosFallidos((short) 0); 
+            
             usu.setUsuarioActivo((short) 0);
             usu.setCodigoActivacion(manttoService.encriptar(per.getCorreoElectronico().concat(per.getPrimerNombre()).concat(per.getSegundoNombre())));
 
