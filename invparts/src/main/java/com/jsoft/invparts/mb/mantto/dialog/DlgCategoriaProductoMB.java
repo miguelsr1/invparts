@@ -136,13 +136,15 @@ public class DlgCategoriaProductoMB implements Serializable {
             }
             DlgCategoriaProductoMB controller = (DlgCategoriaProductoMB) facesContext.getApplication().getELResolver().
                     getValue(facesContext.getELContext(), null, "dlgCategoriaProductoMB");
-            return controller.getManttoService().findCategoriaById(getKey(value));
+            if (value.isEmpty() || !value.equals("null")) {
+                return controller.getManttoService().findCategoriaById(getKey(value));
+            } else {
+                return new Categoria();
+            }
         }
 
         java.lang.Integer getKey(String value) {
-            java.lang.Integer key;
-            key = Integer.valueOf(value);
-            return key;
+            return Integer.valueOf(value);
         }
 
         String getStringKey(java.lang.Integer value) {
