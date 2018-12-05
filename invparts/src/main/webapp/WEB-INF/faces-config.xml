@@ -37,6 +37,12 @@
     
     <application>
         <message-bundle>etiquetas</message-bundle>
+        
+        <locale-config>
+            <default-locale>es</default-locale>
+            <supported-locale>en</supported-locale>
+        </locale-config>
+        
          <resource-bundle>
             <base-name>etiquetas</base-name>
             <var>msj</var>

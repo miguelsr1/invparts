@@ -5,8 +5,6 @@ package com.jsoft.invparts.mb.mantto;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
-
 import java.io.Serializable;
 import java.util.LinkedHashMap;
 import java.util.Locale;
@@ -51,8 +49,8 @@ public class LocaleMB implements Serializable {
     public void localeCodeChanged(ValueChangeEvent e) {
         String newLocaleValue = e.getNewValue().toString();
         for (Map.Entry<String, Object> entry : countries.entrySet()) {
-            if(entry.getValue().toString().equals(newLocaleValue)){
-                FacesContext.getCurrentInstance().getViewRoot().setLocale((Locale)entry.getValue());
+            if (entry.getValue().toString().equals(newLocaleValue)) {
+                FacesContext.getCurrentInstance().getViewRoot().setLocale((Locale) entry.getValue());
             }
         }
     }
