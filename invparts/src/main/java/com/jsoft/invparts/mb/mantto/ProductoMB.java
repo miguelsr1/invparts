@@ -96,4 +96,7 @@ public class ProductoMB implements Serializable {
 
         PrimeFaces.current().dialog().openDynamic("/app/mantto/dialog/addCategoryProduct", options, params);
     }
+    
+    public void buscarProducto(){
+    }
 }

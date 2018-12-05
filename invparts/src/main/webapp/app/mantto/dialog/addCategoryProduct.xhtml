@@ -15,42 +15,40 @@
     </h:head>
 
     <h:body styleClass="landing-body">
-        <f:view locale="#{facesContext.externalContext.requestLocale}">
-            <h:form id="frmDlg">
-                <div class="ui-g ui-fluid">
-                    <div class="ui-g-12">
-                        <div class="card card-w-title">
-                            <f:metadata>
-                                <f:viewParam name="idProducto" value="#{dlgCategoriaProductoMB.idProducto}"/>
-                            </f:metadata>
-                            <p:panelGrid columns="1" styleClass="ui-panelgrid-blank form-group form-elements" layout="grid" >
-                                <p:outputLabel value="#{msj.categoriaProducto} :"/>
-                            </p:panelGrid>
-                            <p:panelGrid columns="2" styleClass="ui-panelgrid-blank form-group form-elements" layout="grid" columnClasses="col10,col2" >
-                                <p:autoComplete id="autoCategoria" value="#{dlgCategoriaProductoMB.categoria}" completeMethod="#{dlgCategoriaProductoMB.completeCategoriaContains}" var="cat" itemValue="#{cat}" itemLabel="#{cat.nombreCategoria}" required="true" requiredMessage="Se necesita un valor de busqueda"/>
-                                <p:commandButton value="#{msj['agregar']}" icon="fa fa-plus-square" action="#{dlgCategoriaProductoMB.openDialogCategory}"/>
-                            </p:panelGrid>
-                            <p:panelGrid columns="1" styleClass="ui-panelgrid-blank form-group form-elements">
-                                <p:commandButton value="#{msj['asociarCategoriaProducto']}" icon="fa fa-plus" action="#{dlgCategoriaProductoMB.addCategoriaAProducto}" update="frmDlg:tblProductoCategoria frmDlg:autoCategoria"/>
-                            </p:panelGrid>
+        <h:form id="frmDlg">
+            <div class="ui-g ui-fluid">
+                <div class="ui-g-12">
+                    <div class="card card-w-title">
+                        <f:metadata>
+                            <f:viewParam name="idProducto" value="#{dlgCategoriaProductoMB.idProducto}"/>
+                        </f:metadata>
+                        <p:panelGrid columns="1" styleClass="ui-panelgrid-blank form-group form-elements" layout="grid" >
+                            <p:outputLabel value="#{msj.categoriaProducto} :"/>
+                        </p:panelGrid>
+                        <p:panelGrid columns="2" styleClass="ui-panelgrid-blank form-group form-elements" layout="grid" columnClasses="col10,col2" >
+                            <p:autoComplete id="autoCategoria" value="#{dlgCategoriaProductoMB.categoria}" completeMethod="#{dlgCategoriaProductoMB.completeCategoriaContains}" var="cat" itemValue="#{cat}" itemLabel="#{cat.nombreCategoria}" required="true" requiredMessage="Se necesita un valor de busqueda"/>
+                            <p:commandButton value="#{msj['agregar']}" icon="fa fa-plus-square" action="#{dlgCategoriaProductoMB.openDialogCategory}"/>
+                        </p:panelGrid>
+                        <p:panelGrid columns="1" styleClass="ui-panelgrid-blank form-group form-elements">
+                            <p:commandButton value="#{msj['asociarCategoriaProducto']}" icon="fa fa-plus" action="#{dlgCategoriaProductoMB.addCategoriaAProducto}" update="frmDlg:tblProductoCategoria frmDlg:autoCategoria"/>
+                        </p:panelGrid>
 
-                            <p:dataTable id="tblProductoCategoria" value="#{dlgCategoriaProductoMB.lstCategoriasPorProducto}" var="catp" rowIndexVar="idRow" rowKey="#{catp.idProductoCategoria}" 
-                                         scrollable="true" scrollHeight="150">
-                                <p:column headerText="Id" width="40" style="text-align: center;">
-                                    <p:outputLabel value="#{idRow+1}"/>
-                                </p:column>
-                                <p:column headerText="#{msj.nombreCategoria}">
-                                    <p:outputLabel value="#{catp.nombreCategoria}"/>
-                                </p:column>
-                            </p:dataTable>
-                        </div>
+                        <p:dataTable id="tblProductoCategoria" value="#{dlgCategoriaProductoMB.lstCategoriasPorProducto}" var="catp" rowIndexVar="idRow" rowKey="#{catp.idProductoCategoria}" 
+                                     scrollable="true" scrollHeight="150">
+                            <p:column headerText="Id" width="40" style="text-align: center;">
+                                <p:outputLabel value="#{idRow+1}"/>
+                            </p:column>
+                            <p:column headerText="#{msj.nombreCategoria}">
+                                <p:outputLabel value="#{catp.nombreCategoria}"/>
+                            </p:column>
+                        </p:dataTable>
                     </div>
                 </div>
-            </h:form>
-            <h:outputStylesheet name="css/animate.css" library="paradise-layout" />
-            <h:outputStylesheet name="css/layout-#{guestPreferences.layout}.css" library="paradise-layout" />
-            <h:outputStylesheet name="personalizadas.css" library="css"/>
-        </f:view>
+            </div>
+        </h:form>
+        <h:outputStylesheet name="css/animate.css" library="paradise-layout" />
+        <h:outputStylesheet name="css/layout-#{guestPreferences.layout}.css" library="paradise-layout" />
+        <h:outputStylesheet name="personalizadas.css" library="css"/>
     </h:body>
 
 </html>
