@@ -11,6 +11,7 @@ import com.jsoft.invparts.model.inventario.Modelo;
 import com.jsoft.invparts.model.inventario.Producto;
 import com.jsoft.invparts.model.inventario.Sucursal;
 import com.jsoft.invparts.model.inventario.Vendedor;
+import com.jsoft.invparts.model.inventario.dto.ProductoCategoriaDto;
 import com.jsoft.invparts.model.seguridad.Empresa;
 import com.jsoft.invparts.model.seguridad.Modulo;
 import com.jsoft.invparts.model.seguridad.Perfil;
@@ -27,32 +28,33 @@ public interface ManttoDao {
     public List<Persona> listPersona(Persona per);
 
     /**
-     * Recupera el listado de empresa y recibe como parametro el tipo de empresa que se desea recuperar.
-     * 1 para Proveedores y 2 para Clientes
+     * Recupera el listado de empresa y recibe como parametro el tipo de empresa
+     * que se desea recuperar. 1 para Proveedores y 2 para Clientes
+     *
      * @param emp
      * @param idTipoEmpresa
-     * @return 
+     * @return
      */
-    public List<Empresa> listEmpresa(Empresa emp,Short idTipoEmpresa);
+    public List<Empresa> listEmpresa(Empresa emp, Short idTipoEmpresa);
 
     public List<Empresa> listEmpresaUsu(Empresa emp);
-    
+
     public List<Usuario> listUsuario();
-    
+
     public List<Perfil> listPerfil(Perfil per);
 
     public List<Modulo> listModulo(Modulo mod);
-    
+
     public List<Vendedor> listVendedor(Vendedor ven);
 
-    public List<Sucursal> listSucursal();
+    public List<Sucursal> listSucursal(Sucursal suc,Integer idEmp);
 
     public List<Producto> listProducto(Producto pro);
-    
+
     public List<Modelo> listModelo(Modelo mod);
-    
-     public List<Marca> listMarca(Marca mar);
-     
+
+    public List<Marca> listMarca(Marca mar);
+
     public String nombreTipoEmpresa(Integer id);
     
      public String findNombreMarca(Integer id);
@@ -65,13 +67,15 @@ public interface ManttoDao {
 
     public int guardarConIdString(PersistenciaDao objeto, Boolean nuevo);
 
-    public int guardarNuevoUsuario(PersistenciaDao objeto);
-    
+    public Categoria findCategoriaById(Integer idCategoria);
+
     public List<Categoria> lstCategoria(Categoria categoria);
-    
+
     public List<Categoria> lstSubCategoria(Categoria categoria);
-    
+
     public Boolean removerCategoria(Integer idCategoria);
-    
-    public List<Categoria> getLstCategoriaByLikeNombre(String nombre);
+
+    public List<Categoria> getLstCategoriaByLikeNombre(String nombre, Integer idProducto);
+
+    public List<ProductoCategoriaDto> getLstCategoriasByProducto(Integer idProducto);
 }
