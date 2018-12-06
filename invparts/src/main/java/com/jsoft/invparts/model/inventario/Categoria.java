@@ -54,7 +54,7 @@ public class Categoria extends UtilWhere implements Serializable, PersistenciaDa
 
     @Override
     public String toString() {
-        return "Categoria{" + "idCategoria=" + idCategoria + ", padreIdCategoria=" + padreIdCategoria + '}';
+        return nombreCategoria;
     }
 
     @Override
@@ -80,6 +80,11 @@ public class Categoria extends UtilWhere implements Serializable, PersistenciaDa
     @Override
     public Boolean esNuevoRegistro() {
         return idCategoria == null;
+    }
+
+    @Override
+    public void setIdGenerado(Integer id) {
+        idCategoria = id;
     }
 
 }

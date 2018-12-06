@@ -19,6 +19,7 @@ import com.jsoft.invparts.model.inventario.Modelo;
 import com.jsoft.invparts.model.inventario.Producto;
 import com.jsoft.invparts.model.inventario.Sucursal;
 import com.jsoft.invparts.model.inventario.Vendedor;
+import com.jsoft.invparts.model.inventario.dto.ProductoCategoriaDto;
 import com.jsoft.invparts.model.seguridad.Modulo;
 import com.jsoft.invparts.model.seguridad.Usuario;
 import com.jsoft.invparts.model.seguridad.Perfil;
@@ -72,11 +73,6 @@ public class ManttoServiceImpl implements ManttoService {
     }
 
     @Override
-    public int guardarNuevoUsuario(PersistenciaDao objeto) {
-        return dao.guardarNuevoUsuario(objeto);
-    }
-
-    @Override
     public void enviarCorreoActivacionUsuario(Persona per, String codAct) {
         StringBuilder sb = new StringBuilder("");
 
@@ -102,25 +98,25 @@ public class ManttoServiceImpl implements ManttoService {
     }
 
     @Override
-    public List<Sucursal> listSucursal() {
-        return dao.listSucursal();
+    public List<Sucursal> listSucursal(Sucursal suc,Integer idEmp) {
+        return dao.listSucursal(suc,idEmp);
     }
 
     @Override
     public List<Producto> listProducto(Producto pro) {
         return dao.listProducto(pro);
     }
-    
+
     @Override
-    public List<Perfil> listPerfil(Perfil per){
+    public List<Perfil> listPerfil(Perfil per) {
         return dao.listPerfil(per);
     }
-    
+
     @Override
-    public List<Modulo> listModulo(Modulo mod){
+    public List<Modulo> listModulo(Modulo mod) {
         return dao.listModulo(mod);
     }
-    
+
     @Override
     public String nombreTipoEmpresa(Integer id) {
         return dao.nombreTipoEmpresa(id);
@@ -135,12 +131,13 @@ public class ManttoServiceImpl implements ManttoService {
     public List<Categoria> lstSubCategoria(Categoria categoria) {
         return dao.lstSubCategoria(categoria);
     }
-    
-     @Override
+
+    @Override
     public List<Modelo> listModelo(Modelo mod) {
         return dao.listModelo(mod);
     }
-      @Override
+
+    @Override
     public List<Marca> listMarca(Marca mar) {
         return dao.listMarca(mar);
     }
@@ -151,12 +148,17 @@ public class ManttoServiceImpl implements ManttoService {
     }
 
     @Override
-    public List<Categoria> getLstCategoriaByLikeNombre(String nombreCategoria) {
-        return dao.getLstCategoriaByLikeNombre(nombreCategoria);
+    public List<Categoria> getLstCategoriaByLikeNombre(String nombreCategoria, Integer idProducto) {
+        return dao.getLstCategoriaByLikeNombre(nombreCategoria, idProducto);
     }
-    
-     @Override
-    public String findNombreMarca(Integer id) {
-        return dao.findNombreMarca(id);
+
+    @Override
+    public List<ProductoCategoriaDto> getLstCategoriasByProducto(Integer idProducto) {
+        return dao.getLstCategoriasByProducto(idProducto);
+    }
+
+    @Override
+    public Categoria findCategoriaById(Integer idCategoria) {
+        return dao.findCategoriaById(idCategoria);
     }
 }

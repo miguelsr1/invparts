@@ -3,33 +3,45 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui">
+    <f:view locale="#{localeMB.localeCode}">
+        <h:head>
+            <f:facet name="first">
+                <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+                <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+                <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+                <meta name="apple-mobile-web-app-capable" content="yes" />
+            </f:facet>
+            <title>#{msj.asociarCategoriaProducto}</title>
+        </h:head>
 
-    <h:head>
-        <f:facet name="first">
-            <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-            <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
-            <meta name="apple-mobile-web-app-capable" content="yes" />
-        </f:facet>
-        <title>#{msj.asociarCategoriaProducto}</title>
-    </h:head>
-
-    <h:body styleClass="landing-body">
-        <f:view locale="#{facesContext.externalContext.requestLocale}">
-            <h:form>
+        <h:body styleClass="landing-body">
+            <h:form id="frmDlg">
                 <div class="ui-g ui-fluid">
                     <div class="ui-g-12">
                         <div class="card card-w-title">
-                            <p:panelGrid columns="1" styleClass="ui-panelgrid-blank form-group form-elements">
+                            <f:metadata>
+                                <f:viewParam name="idProducto" value="#{dlgCategoriaProductoMB.idProducto}"/>
+                            </f:metadata>
+                            <p:panelGrid columns="1" styleClass="ui-panelgrid-blank form-group form-elements" layout="grid" >
                                 <p:outputLabel value="#{msj.categoriaProducto} :"/>
                             </p:panelGrid>
-                            <p:panelGrid id="pngDatos" columns="2" columnClasses="col11,col1" styleClass="ui-panelgrid-blank form-group form-elements">
-                                <p:autoComplete value="#{dlgCategoriaProductoMB.cadenaDeBusqueda}" completeMethod="#{dlgCategoriaProductoMB.completeCategoriaContains}"/>
-                                <p:commandButton value="#{msj['agregar']}" icon="fa fa-plus-square" action="#{dlgCategoriaProductoMB.openDialogCategory}" />
-                            </p:panelGrid> 
-                            <p:panelGrid columns="2" styleClass="ui-panelgrid-blank form-group form-elements" >
-                                <p:commandButton value="#{msj['asociarCategoriaProducto']}" icon="fa fa-plus" />
+                            <p:panelGrid columns="2" styleClass="ui-panelgrid-blank form-group form-elements" layout="grid" columnClasses="col10,col2" >
+                                <p:autoComplete id="autoCategoria" value="#{dlgCategoriaProductoMB.categoria}" completeMethod="#{dlgCategoriaProductoMB.completeCategoriaContains}" var="cat" itemValue="#{cat}" itemLabel="#{cat.nombreCategoria}" required="true" requiredMessage="Se necesita un valor de busqueda"/>
+                                <p:commandButton value="#{msj['agregar']}" icon="fa fa-plus-square" action="#{dlgCategoriaProductoMB.openDialogCategory}"/>
                             </p:panelGrid>
+                            <p:panelGrid columns="1" styleClass="ui-panelgrid-blank form-group form-elements">
+                                <p:commandButton value="#{msj['asociarCategoriaProducto']}" icon="fa fa-plus" action="#{dlgCategoriaProductoMB.addCategoriaAProducto}" update="frmDlg:tblProductoCategoria frmDlg:autoCategoria"/>
+                            </p:panelGrid>
+
+                            <p:dataTable id="tblProductoCategoria" value="#{dlgCategoriaProductoMB.lstCategoriasPorProducto}" var="catp" rowIndexVar="idRow" rowKey="#{catp.idProductoCategoria}" 
+                                         scrollable="true" scrollHeight="150">
+                                <p:column headerText="Id" width="40" style="text-align: center;">
+                                    <p:outputLabel value="#{idRow+1}"/>
+                                </p:column>
+                                <p:column headerText="#{msj.nombreCategoria}">
+                                    <p:outputLabel value="#{catp.nombreCategoria}"/>
+                                </p:column>
+                            </p:dataTable>
                         </div>
                     </div>
                 </div>
@@ -37,7 +49,6 @@
             <h:outputStylesheet name="css/animate.css" library="paradise-layout" />
             <h:outputStylesheet name="css/layout-#{guestPreferences.layout}.css" library="paradise-layout" />
             <h:outputStylesheet name="personalizadas.css" library="css"/>
-        </f:view>
-    </h:body>
-
+        </h:body>
+    </f:view>
 </html>

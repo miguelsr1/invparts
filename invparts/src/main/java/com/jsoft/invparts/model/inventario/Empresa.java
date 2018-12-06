@@ -94,4 +94,9 @@ public class Empresa implements Serializable, PersistenciaDao {
     public Boolean esNuevoRegistro() {
         return idEmpresa == null;
     }
+
+    @Override
+    public void setIdGenerado(Integer id) {
+        idEmpresa = id;
+    }
 }

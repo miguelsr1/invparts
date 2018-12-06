@@ -86,4 +86,9 @@ public class Producto extends UtilWhere implements Serializable, PersistenciaDao
     public Boolean esNuevoRegistro() {
         return idProducto == null;
     }
+
+    @Override
+    public void setIdGenerado(Integer id) {
+        idProducto = id;
+    }
 }

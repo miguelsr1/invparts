@@ -33,19 +33,19 @@ public class CompanyMB implements Serializable {
     private List<Empresa> lstEmpresaUsu = new ArrayList();
     private List<Empresa> lstProveedor = new ArrayList();
     private List<Sucursal> lstSucursal = new ArrayList();
-    
-    
+
     @ManagedProperty("#{manttoService}")
     private ManttoService manttoService;
 
     public CompanyMB() {
     }
-    
- @PostConstruct
+
+    @PostConstruct
     public void init() {
-        lstEmpresa = manttoService.listEmpresa(emp,(short) 1);
+        lstEmpresa = manttoService.listEmpresa(emp, (short) 1);
         lstEmpresaUsu = manttoService.listEmpresaUsu(null);
     }
+
     //<editor-fold desc="Metodos getters y setters">
     public Empresa getEmp() {
         return emp;
@@ -73,8 +73,6 @@ public class CompanyMB implements Serializable {
         this.lstEmpresaUsu = lstEmpresaUsu;
     }
 
-   
-    
     public List<Empresa> getLstProveedor() {
         return lstProveedor;
     }
@@ -90,7 +88,7 @@ public class CompanyMB implements Serializable {
     public void setLstSucursal(List<Sucursal> lstSucursal) {
         this.lstSucursal = lstSucursal;
     }
-    
+
     public ManttoService getManttoService() {
         return manttoService;
     }
@@ -107,41 +105,47 @@ public class CompanyMB implements Serializable {
         this.suc = suc;
     }
 
-     public void buscarEmp() {
-        lstEmpresaUsu = manttoService.listEmpresa(emp,emp.getIdTipoEmpresa().shortValue());
+    public void buscarEmp() {
+        lstEmpresaUsu = manttoService.listEmpresa(emp, emp.getIdTipoEmpresa().shortValue());
     }
-      public void buscarEmpresa() {
+
+    public void buscarEmpresa() {
         lstEmpresaUsu = manttoService.listEmpresaUsu(emp);
+    }
+
+    public void buscarSucursal() {
+        lstSucursal = manttoService.listSucursal(suc, suc.getIdEmpresa());
     }
 
     //</editor-fold >
     public void guardarEmpresa() {
-        if (emp.getNombreEmpresa()!= null && !emp.getNombreEmpresa().isEmpty()) {
-        if (manttoService.guardarConIdAutogenerado(emp) == 1) {
-            lstEmpresaUsu = manttoService.listEmpresaUsu(emp);
-            emp = new Empresa();
-        }
-        }else{
-             JsfUtil.addWarningMessage("Debe de completar todos los registros");
+        if (emp.getNombreEmpresa() != null && !emp.getNombreEmpresa().isEmpty()) {
+            if (manttoService.guardarConIdAutogenerado(emp) == 1) {
+                lstEmpresaUsu = manttoService.listEmpresaUsu(emp);
+                emp = new Empresa();
+            }
+        } else {
+            JsfUtil.addWarningMessage("Debe de completar todos los registros");
         }
     }
-  
+
     public void guardar() {
-         if (emp.getNombreEmpresa()!= null && !emp.getNombreEmpresa().isEmpty()) {
-        if (manttoService.guardarConIdAutogenerado(emp) == 1) {
-            lstEmpresa = manttoService.listEmpresa(emp,(short) emp.getIdTipoEmpresa().shortValue());
-            emp = new Empresa();
-        }
-        }else{
-             JsfUtil.addWarningMessage("Debe de completar todos los registros");
+        if (emp.getNombreEmpresa() != null && !emp.getNombreEmpresa().isEmpty()) {
+            if (manttoService.guardarConIdAutogenerado(emp) == 1) {
+                lstEmpresa = manttoService.listEmpresa(emp, (short) emp.getIdTipoEmpresa().shortValue());
+                emp = new Empresa();
+            }
+        } else {
+            JsfUtil.addWarningMessage("Debe de completar todos los registros");
         }
     }
-  
-    
+
     public void guardarSuc() {
-        if (manttoService.guardarConIdAutogenerado(suc) == 1) {
-            lstSucursal = manttoService.listSucursal();
-            suc = new Sucursal();
+        if (emp != null) {
+            if (manttoService.guardarConIdAutogenerado(suc) == 1) {
+                lstSucursal = manttoService.listSucursal(suc, emp.getIdEmpresa());
+                suc = new Sucursal();
+            }
         }
     }
 
@@ -151,8 +155,13 @@ public class CompanyMB implements Serializable {
             emp = new Empresa();
         }
     }
-    public String tipoEmpresa(Integer id){
+
+    public String tipoEmpresa(Integer id) {
         return manttoService.nombreTipoEmpresa(id);
-        
+
+    }
+
+    public void limpiarSuc() {
+        suc = new Sucursal();
     }
 }

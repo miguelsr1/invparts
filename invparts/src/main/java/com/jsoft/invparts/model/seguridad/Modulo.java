@@ -79,4 +79,9 @@ public class Modulo extends UtilWhere implements Serializable, PersistenciaDao {
     public Boolean esNuevoRegistro() {
         return idModulo == null;
     }
+
+    @Override
+    public void setIdGenerado(Integer id) {
+        idModulo = id;
+    }
 }

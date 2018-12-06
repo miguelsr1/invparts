@@ -6,13 +6,14 @@
 package com.jsoft.invparts.model.inventario;
 
 import com.jsoft.invparts.dao.PersistenciaDao;
+import com.jsoft.invparts.model.UtilWhere;
 import java.io.Serializable;
 
 /**
  *
  * @author misanchez
  */
-public class Sucursal implements Serializable, PersistenciaDao {
+public class Sucursal extends UtilWhere implements Serializable, PersistenciaDao {
 
     private static final long serialVersionUID = 1L;
 
@@ -93,6 +94,11 @@ public class Sucursal implements Serializable, PersistenciaDao {
     @Override
     public Boolean esNuevoRegistro() {
         return idSucursal == null;
+    }
+
+    @Override
+    public void setIdGenerado(Integer id) {
+        idSucursal = id;
     }
 
 }

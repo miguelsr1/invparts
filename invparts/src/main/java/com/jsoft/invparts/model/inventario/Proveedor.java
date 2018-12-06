@@ -86,4 +86,9 @@ public class Proveedor implements Serializable, PersistenciaDao {
         return idProveedor == null;
     }
 
+    @Override
+    public void setIdGenerado(Integer id) {
+        idProveedor = id;
+    }
+
 }

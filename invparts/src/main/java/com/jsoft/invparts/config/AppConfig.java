@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableMBeanExport;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.jdbc.datasource.lookup.JndiDataSourceLookup;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -26,8 +27,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
     @ComponentScan.Filter(Configuration.class)})
 @EnableTransactionManagement
 @EnableMBeanExport
-//@EnableWebMvc
-//@PropertySource(value = {"classpath:application.properties"})
+@PropertySource(value = {"classpath:queries.properties"})
 public class AppConfig {
 
     @Bean(name = "dataSource")
