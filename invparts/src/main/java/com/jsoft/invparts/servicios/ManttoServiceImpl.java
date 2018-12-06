@@ -98,8 +98,8 @@ public class ManttoServiceImpl implements ManttoService {
     }
 
     @Override
-    public List<Sucursal> listSucursal() {
-        return dao.listSucursal();
+    public List<Sucursal> listSucursal(Sucursal suc,Integer idEmp) {
+        return dao.listSucursal(suc,idEmp);
     }
 
     @Override

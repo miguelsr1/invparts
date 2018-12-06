@@ -41,7 +41,7 @@ public interface ManttoService {
 
     public List<Vendedor> listVendedor(Vendedor ven);
 
-    public List<Sucursal> listSucursal();
+    public List<Sucursal> listSucursal(Sucursal suc,Integer idEmp);
 
     public List<Producto> listProducto(Producto pro);
 

@@ -47,7 +47,7 @@ public interface ManttoDao {
 
     public List<Vendedor> listVendedor(Vendedor ven);
 
-    public List<Sucursal> listSucursal();
+    public List<Sucursal> listSucursal(Sucursal suc, Integer idEmpresa);
 
     public List<Producto> listProducto(Producto pro);
 
@@ -74,6 +74,8 @@ public interface ManttoDao {
     public Boolean removerCategoria(Integer idCategoria);
 
     public List<Categoria> getLstCategoriaByLikeNombre(String nombre, Integer idProducto);
+
+    public String findNombreMarca(Integer id);
 
     public List<ProductoCategoriaDto> getLstCategoriasByProducto(Integer idProducto);
 }

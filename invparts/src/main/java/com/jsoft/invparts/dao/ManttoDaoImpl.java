@@ -207,8 +207,16 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
     }
 
     @Override
-    public List<Sucursal> listSucursal() {
+    public List<Sucursal> listSucursal(Sucursal suc,Integer idEmpresa) {
         String sql = "SELECT * from Sucursal";
+        if (suc != null) {
+            if (idEmpresa != null) {
+                sql += "where id_empresa = " + idEmpresa ;
+            } else {
+                sql += suc.getWhere();
+            }
+        }
+        
         List<Sucursal> listBranch = getJdbcTemplate().query(sql, new RowMapper<Sucursal>() {
 
             @Override
@@ -406,6 +414,15 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
 
         List<Categoria> lstCat = getJdbcTemplate().query(sql, new Object[]{idProducto, "%" + nombreCategoria + "%"}, new CategoriaRowMapper());
         return lstCat;
+    }
+    
+    @Override
+    public String findNombreMarca(Integer id){
+        String sql = "SELECT NOMBRE_MARCA FROM MARCA WHERE ID_MARCA=?";
+        
+        String name = getJdbcTemplate().queryForObject(sql, new Object[] {id},String.class);
+        
+        return name;
     }
 
     @Override
