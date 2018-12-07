@@ -102,7 +102,9 @@ public class CompanyMB implements Serializable {
     }
 
     public void setSuc(Sucursal suc) {
-        this.suc = suc;
+           if (suc != null) {
+            this.suc = suc;
+        }
     }
 
     public void buscarEmp() {
@@ -163,5 +165,9 @@ public class CompanyMB implements Serializable {
 
     public void limpiarSuc() {
         suc = new Sucursal();
+    }
+    
+    public void limpiarCom() {
+        emp = new Empresa();
     }
 }

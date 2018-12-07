@@ -73,7 +73,7 @@ public class Sucursal extends UtilWhere implements Serializable, PersistenciaDao
 
     @Override
     public String generarInsertSQL() {
-        return "INSERT INTO sucursal (nombre_sucursal, id_empresa, direccion_sucursal, telefono_sucursal) VALUES (?, ?)";
+        return "INSERT INTO sucursal (nombre_sucursal, id_empresa, direccion_sucursal, telefono_sucursal) VALUES (?, ?, ?, ?)";
     }
 
     @Override

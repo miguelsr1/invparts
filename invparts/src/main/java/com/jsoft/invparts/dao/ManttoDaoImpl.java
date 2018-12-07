@@ -193,7 +193,7 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
 
     @Override
     public List<Sucursal> listSucursal(Sucursal suc,Integer idEmpresa) {
-        String sql = "SELECT * from Sucursal";
+        String sql = "SELECT * from Sucursal ";
         if (suc != null) {
             if (idEmpresa != null) {
                 sql += "where id_empresa = " + idEmpresa ;

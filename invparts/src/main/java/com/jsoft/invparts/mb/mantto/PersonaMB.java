@@ -162,4 +162,8 @@ public class PersonaMB implements Serializable {
     private boolean validacionDeFormulario() {
         return false;
     }
+    
+    public void limpiarPer(){
+        per = new Persona();
+    }
 }
