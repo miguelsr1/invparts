@@ -24,18 +24,17 @@ public class LocaleMB implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private String localeCode;
-    private static Map<String, Object> countries;
+    private String localeCode = Locale.ENGLISH.getLanguage();
+    private final static Map<String, Object> COUNTRIES = new LinkedHashMap();
 
     static {
-        countries = new LinkedHashMap();
         Locale espanol = new Locale("es");
-        countries.put("Español", espanol);
-        countries.put("English", Locale.ENGLISH);
+        COUNTRIES.put("Español", espanol);
+        COUNTRIES.put("English", Locale.ENGLISH);
     }
 
     public Map<String, Object> getLenguajes() {
-        return countries;
+        return COUNTRIES;
     }
 
     public String getLocaleCode() {
@@ -48,7 +47,7 @@ public class LocaleMB implements Serializable {
 
     public void localeCodeChanged(ValueChangeEvent e) {
         String newLocaleValue = e.getNewValue().toString();
-        for (Map.Entry<String, Object> entry : countries.entrySet()) {
+        for (Map.Entry<String, Object> entry : COUNTRIES.entrySet()) {
             if (entry.getValue().toString().equals(newLocaleValue)) {
                 FacesContext.getCurrentInstance().getViewRoot().setLocale((Locale) entry.getValue());
             }
