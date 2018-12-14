@@ -43,7 +43,7 @@
             <supported-locale>en</supported-locale>
         </locale-config>
         
-         <resource-bundle>
+        <resource-bundle>
             <base-name>etiquetas</base-name>
             <var>msj</var>
         </resource-bundle>

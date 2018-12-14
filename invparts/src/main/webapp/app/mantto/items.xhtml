@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                template="#{pageContext.servletContext.contextPath}/resources/template/template.xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <ui:define name="content">
+        <div class="ui-g">
+            <div class="ui-g-12">
+                <div class="card card-w-title">
+                    <p:menubar id="mbar">
+                        <p:menuitem id="mitGuardar" value="#{msj.guardar}" action="#{itemMB.guardar}" icon="fa fa-floppy-o" update="pngDatos"/>
+                        <p:menuitem id="mitNuevo" value="#{msj.nuevo}" action="#{itemMB.nuevo}" icon="fa fa-file-o" update="pngDatos"/>
+                        <p:menuitem id="mitBuscar" value="#{msj.buscar}" icon="fa fa-search" update="pngDatos"/>
+                    </p:menubar>
+
+                    <p:panel header="Datos generales">
+                        <p:panelGrid id="pngDatos" columns="4" columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+                            <p:outputLabel value="Producto"/>
+                            <p:selectOneMenu value="#{itemMB.item.codigoProducto}">
+                                <f:selectItem itemValue="0" itemLabel="#{msj.seleccioneUnValor}"/>
+                                <f:selectItems value="#{itemMB.lstProductos}" var="item" itemValue="#{item.idProducto}" itemLabel="#{item.nombreProducto}"/>
+                            </p:selectOneMenu>
+                            <p:outputLabel value="Codigo"/>
+                            <p:inputText value="#{itemMB.item.codigoProducto}"/>
+
+                            <p:outputLabel value="Medidas"/>
+                            <p:inputText value="#{itemMB.item.tamanio}"/>
+                            <p:outputLabel value="Peso"/>
+                            <p:inputText value="#{itemMB.item.peso}"/> 
+                            <p:outputLabel value="Estante"/>
+                            <p:selectOneMenu value="#{itemMB.item.idItem}">
+                                <f:selectItem itemLabel="Seleccione un valor"/>
+                            </p:selectOneMenu>
+                        </p:panelGrid>
+                        <p:panelGrid columns="2" style="width: 100%" 
+                                     columnClasses="ui-grid-col-6,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+                            <p:outputLabel value="Descripcion"/>
+                            <p:outputLabel value="Especificaciones"/>
+                            <p:textEditor  value="#{itemMB.item.descripcion}" height="200"/>
+                            <p:textEditor   value="#{itemMB.item.especificaciones}" height="200"/>
+                        </p:panelGrid>
+                    </p:panel>
+                    <br/>
+
+                    <p:panel header="Detalle de Fotos">
+                        <h:form enctype="multipart/form-data">
+                            <p:fileUpload fileUploadListener="#{fotosItemMB.handleFileUpload}" auto="true"  value="Cargar" multiple="true" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" sizeLimit="2000000" previewWidth="50"/>
+                            <br />
+                        <p:galleria value="#{fotosItemMB.imagenesDeProducto}" var="image">
+                            <p:graphicImage value="/DynamicImageServlet?file=#{image}" styleClass="content" />
+                            <div class="caption">#{image}</div>
+                        </p:galleria>
+                        </h:form>
+                        
+                    </p:panel>
+
+
+                </div>
+            </div>
+        </div>
+    </ui:define>
+</ui:composition>

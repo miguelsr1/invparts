@@ -12,7 +12,8 @@
                 <div class="card card-w-title">
                     <p:menubar id="mbar">
                         <p:menuitem id="mitGuardar" value="#{msj.guardar}" action="#{productoMB.guardar}" icon="fa fa-floppy-o" update="pngDatos tblDatos"/>
-                        <p:menuitem id="mitBuscar" value="#{msj.buscar}" action="#{productoMB.buscarProducto}" icon="fa fa-search" update="pngDatos tblDatos"/>
+                        <p:menuitem id="mitNuevo" value="#{msj.nuevo}" action="#{productoMB.nuevo}" icon="fa fa-file-o" update="pngDatos tblDatos"/>
+                        <p:menuitem id="mitBuscar" value="#{msj.buscar}" icon="fa fa-search" update="pngDatos tblDatos"/>
                     </p:menubar>
                     <p:panelGrid id="pngDatos" columns="2" columnClasses="col4_label,col8" 
                                  styleClass="ui-panelgrid-blank form-group form-elements">
@@ -24,16 +25,14 @@
                         <p:inputText value="#{productoMB.pro.codigoProducto}" style="width: 250px;"/>
                         <p:outputLabel value="#{msj.status}"/>
                         <p:selectOneMenu value="#{productoMB.pro.status}">
-                            <f:selectItem itemValue="null" itemLabel="#{msj.seleccioneUnValor}"/>
+                            <f:selectItem itemValue="0" itemLabel="#{msj.seleccioneUnValor}"/>
                             <f:selectItem itemValue="1" itemLabel="#{msj.activo}"/>
                             <f:selectItem itemValue="2" itemLabel="#{msj.descontinuado}"/>
                         </p:selectOneMenu>
                     </p:panelGrid>
 
                     <br/>
-                    <p:dataTable id="tblDatos" value="#{productoMB.lstProducto}" var="pro" rowIndexVar="rowId" rowKey="#{pro.idProducto}"
-                                 selectionMode="single" selection="#{productoMB.pro}">
-                        <p:ajax event="rowSelect" update="pngDatos"/>
+                    <p:dataTable id="tblDatos" value="#{productoMB.lstProducto}" var="pro" rowIndexVar="rowId" rowKey="#{pro.idProducto}">
                         <p:column headerText="#Id" width="70" styleClass="colCenter">
                             <p:outputLabel value="#{pro.idProducto}"/>
                         </p:column>
@@ -46,10 +45,17 @@
                         <p:column headerText="#{msj.status}">
                             <p:outputLabel value="#{pro.status eq 1? msj.activo:msj.descontinuado}"/>
                         </p:column>
-                        <p:column headerText="#{msj.categoriaProducto}">
-                            <p:commandButton value="#{msj.ver}" icon="fa fa-eye" action="#{productoMB.openDialogCategory}">
-                                <p:ajax event="dialogReturn" />
-                            </p:commandButton>
+                        <p:column headerText="#{msj['categoriaProducto']}" width="70" styleClass="colCenter">
+                            <p:commandLink action="#{productoMB.openDialogCategory}">
+                                <f:setPropertyActionListener value="#{pro}" target="#{productoMB.pro}"/>
+                                <i class="fa fa-eye" style="font-size: 17px;"></i>
+                            </p:commandLink>
+                        </p:column>
+                        <p:column headerText="#{msj['editar']}" width="30" styleClass="colCenter">
+                            <p:commandLink action="#{productoMB.editProducto}" update="pngDatos">
+                                <f:setPropertyActionListener value="#{pro}" target="#{productoMB.pro}"/>
+                                <i class="fa fa-pencil" style="font-size: 17px;"></i>
+                            </p:commandLink>
                         </p:column>
                     </p:dataTable>
                 </div>

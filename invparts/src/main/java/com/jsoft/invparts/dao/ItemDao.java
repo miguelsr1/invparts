@@ -5,9 +5,14 @@
  */
 package com.jsoft.invparts.dao;
 
+import com.jsoft.invparts.model.inventario.Producto;
+import java.util.List;
+
 /**
  *
  * @author misanchez
  */
 public interface ItemDao {
+    
+    public List<Producto> getLstProducto(Integer idEmp);
 }
