@@ -5,9 +5,11 @@
  */
 package com.jsoft.invparts.mb.mantto;
 
+import com.jsoft.invparts.model.inventario.Estante;
 import com.jsoft.invparts.model.inventario.Item;
 import com.jsoft.invparts.model.inventario.Producto;
 import com.jsoft.invparts.servicios.ItemService;
+import com.jsoft.invparts.util.JsfUtil;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +17,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import org.primefaces.PrimeFaces;
 
 /**
  *
@@ -37,6 +40,7 @@ public class ItemMB implements Serializable {
 
     @PostConstruct
     public void init() {
+        item = itemService.getItemByPk(1);
         lstProductos = itemService.getLstProducto(0);
     }
 
@@ -55,6 +59,10 @@ public class ItemMB implements Serializable {
     public void setLstProductos(List<Producto> lstProductos) {
         this.lstProductos = lstProductos;
     }
+    
+    public List<Estante> getLstEstantes(){
+        return itemService.getLstEstantesByIdSucursal(1);
+    }
 
     public Item getItem() {
         return item;
@@ -65,9 +73,18 @@ public class ItemMB implements Serializable {
     }
 
     public void guardar() {
+        itemService.guardar(item);
     }
 
     public void nuevo() {
+        item = new Item();
     }
 
+    public void showDialogFotografias(){
+        if(item.getIdItem() != null){
+            PrimeFaces.current().executeScript("PF('dlgFotos').show()");
+        }else{
+            JsfUtil.addWarningMessage("Debe de guardar primero el item");
+        }
+    }
 }

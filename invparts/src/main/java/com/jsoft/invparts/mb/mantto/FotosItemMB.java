@@ -32,9 +32,11 @@ public class FotosItemMB implements Serializable {
 
     private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle.getBundle("etiquetas");
 
-    private String codigoItem;
-    private List<String> imagenesDeProducto;
+    private String codigoItem = "";
+    private String nombreImagen;
+    private List<String> imagenesDeProducto = new ArrayList();
 
+    private File folderImg = null;
     private UploadedFile file;
 
     public FotosItemMB() {
@@ -42,13 +44,27 @@ public class FotosItemMB implements Serializable {
 
     @PostConstruct
     public void init() {
-        imagenesDeProducto = new ArrayList();
-        File folderImg = new File(RESOURCE_BUNDLE.getString("pathimagenesitem") + codigoItem);
+        cargarFotos();
+    }
+
+    public void cargarFotos() {
+        imagenesDeProducto.clear();
+        codigoItem = ((ItemMB)FacesContext.getCurrentInstance().getApplication().getELResolver().getValue(FacesContext.getCurrentInstance().getELContext(), null, "itemMB")).getItem().getCodigoProducto();
+        
+        folderImg = new File(RESOURCE_BUNDLE.getString("pathimagenesitem") + codigoItem);
         if (folderImg.exists()) {
             for (File listFile : folderImg.listFiles()) {
-                imagenesDeProducto.add(codigoItem + File.separator + listFile.getName());
+                imagenesDeProducto.add(listFile.getName());
             }
         }
+    }
+
+    public String getNombreImagen() {
+        return nombreImagen;
+    }
+
+    public void setNombreImagen(String nombreImagen) {
+        this.nombreImagen = nombreImagen;
     }
 
     public String getCodigoItem() {
@@ -75,7 +91,7 @@ public class FotosItemMB implements Serializable {
         try {
             FacesMessage msg = new FacesMessage("Succesful", event.getFile().getFileName() + " is uploaded.");
             FacesContext.getCurrentInstance().addMessage(null, msg);
-            File folderImg = new File(RESOURCE_BUNDLE.getString("path_imagenes_item") + codigoItem);
+            
             if (!folderImg.exists()) {
                 folderImg.mkdir();
             }
@@ -86,6 +102,14 @@ public class FotosItemMB implements Serializable {
             event.getFile().write(img.getAbsolutePath());
         } catch (Exception ex) {
             Logger.getLogger(FotosItemMB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void deleteImage() {
+        File img = new File(RESOURCE_BUNDLE.getString("pathimagenesitem") + codigoItem + "/" + nombreImagen);
+        if (img.exists()) {
+            img.delete();
+            cargarFotos();
         }
     }
 }

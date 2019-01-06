@@ -5,21 +5,23 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 template="#{pageContext.servletContext.contextPath}/resources/template/template.xhtml"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <ui:define name="head">
 
+    </ui:define>
     <ui:define name="content">
         <div class="ui-g">
             <div class="ui-g-12">
                 <div class="card card-w-title">
                     <p:menubar id="mbar">
-                        <p:menuitem id="mitGuardar" value="#{msj.guardar}" action="#{itemMB.guardar}" icon="fa fa-floppy-o" update="pngDatos"/>
-                        <p:menuitem id="mitNuevo" value="#{msj.nuevo}" action="#{itemMB.nuevo}" icon="fa fa-file-o" update="pngDatos"/>
-                        <p:menuitem id="mitBuscar" value="#{msj.buscar}" icon="fa fa-search" update="pngDatos"/>
+                        <p:menuitem id="mitGuardar" value="#{msj.guardar}" action="#{itemMB.guardar}" icon="fa fa-floppy-o" update="pnlDatos pnlFotos"/>
+                        <p:menuitem id="mitNuevo" value="#{msj.nuevo}" action="#{itemMB.nuevo}" icon="fa fa-file-o" update="pnlDatos"/>
+                        <p:menuitem id="mitBuscar" value="#{msj.buscar}" icon="fa fa-search" update="pnlDatos"/>
                     </p:menubar>
 
-                    <p:panel header="Datos generales">
-                        <p:panelGrid id="pngDatos" columns="4" columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+                    <p:panel id="pnlDatos" header="Datos generales">
+                        <p:panelGrid columns="4" columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
                             <p:outputLabel value="Producto"/>
-                            <p:selectOneMenu value="#{itemMB.item.codigoProducto}">
+                            <p:selectOneMenu value="#{itemMB.item.idProducto}">
                                 <f:selectItem itemValue="0" itemLabel="#{msj.seleccioneUnValor}"/>
                                 <f:selectItems value="#{itemMB.lstProductos}" var="item" itemValue="#{item.idProducto}" itemLabel="#{item.nombreProducto}"/>
                             </p:selectOneMenu>
@@ -31,8 +33,9 @@
                             <p:outputLabel value="Peso"/>
                             <p:inputText value="#{itemMB.item.peso}"/> 
                             <p:outputLabel value="Estante"/>
-                            <p:selectOneMenu value="#{itemMB.item.idItem}">
+                            <p:selectOneMenu value="#{itemMB.item.idEstante}">
                                 <f:selectItem itemLabel="Seleccione un valor"/>
+                                <f:selectItems value="#{itemMB.lstEstantes}" var="est" itemValue="#{est.idEstante}" itemLabel="#{est.nombreEstante}"/>
                             </p:selectOneMenu>
                         </p:panelGrid>
                         <p:panelGrid columns="2" style="width: 100%" 
@@ -45,21 +48,41 @@
                     </p:panel>
                     <br/>
 
-                    <p:panel header="Detalle de Fotos">
-                        <h:form enctype="multipart/form-data">
-                            <p:fileUpload fileUploadListener="#{fotosItemMB.handleFileUpload}" auto="true"  value="Cargar" multiple="true" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" sizeLimit="2000000" previewWidth="50"/>
-                            <br />
-                        <p:galleria value="#{fotosItemMB.imagenesDeProducto}" var="image">
-                            <p:graphicImage value="/DynamicImageServlet?file=#{image}" styleClass="content" />
-                            <div class="caption">#{image}</div>
-                        </p:galleria>
-                        </h:form>
-                        
+                    <p:panel id="pnlFotos">
+                        <f:facet name="header">
+                            <p:outputLabel value="Detalle de Fotos"/>
+                            <p:commandButton value="Cargar fotografias" icon="fa fa-picture-o" style="float: right;" action="#{itemMB.showDialogFotografias}">
+                                <f:setPropertyActionListener target="#{fotosItemMB.codigoItem}" value="#{itemMB.item.codigoProducto}"/>
+                            </p:commandButton>
+                        </f:facet>
+
+                        <br />
+
+                        <p:dataGrid id="dgFotos" var="img" value="#{fotosItemMB.imagenesDeProducto}" columns="6" layout="grid">
+                            <p:panel style="text-align:center;">
+                                <h:panelGrid columns="1" style="width:100%">
+                                    <p:outputPanel>
+                                        <p:commandLink action="#{fotosItemMB.deleteImage}" style="float:right; clear: both;" update="dgFotos">
+                                            <i class="fa fa-trash" aria-hidden="true"></i>
+                                            <f:setPropertyActionListener value="#{img}" target="#{fotosItemMB.nombreImagen}"/> 
+                                        </p:commandLink>
+                                        <p:graphicImage value="/DynamicImageServlet?file=#{fotosItemMB.codigoItem}/#{img}" styleClass="content" width="100px" height="100px"/>
+                                    </p:outputPanel>
+                                </h:panelGrid>
+                            </p:panel>
+                        </p:dataGrid>
                     </p:panel>
 
 
                 </div>
             </div>
         </div>
+
+        <p:dialog id="dlgFotos" widgetVar="dlgFotos" header="Cargar fotografias" modal="true">
+            <p:ajax event="close" update="dgFotos" listener="#{fotosItemMB.cargarFotos}" />
+            <h:form enctype="multipart/form-data">
+                <p:fileUpload fileUploadListener="#{fotosItemMB.handleFileUpload}" value="Cargar" multiple="true" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" sizeLimit="2000000" previewWidth="50" />
+            </h:form>
+        </p:dialog>
     </ui:define>
 </ui:composition>

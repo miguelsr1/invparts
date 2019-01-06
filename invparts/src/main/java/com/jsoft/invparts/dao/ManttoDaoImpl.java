@@ -24,13 +24,9 @@ import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
-import javax.annotation.PostConstruct;
-import javax.sql.DataSource;
-import org.springframework.beans.factory.BeanCreationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
@@ -44,20 +40,9 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
     private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle.getBundle("etiquetas");
 
     @Autowired
-    private DataSource dataSource;
-
-    @Autowired
     Environment env;
 
     public ManttoDaoImpl() {
-    }
-
-    @PostConstruct
-    public void init() {
-        if (dataSource == null) {
-            throw new BeanCreationException("Must set mySqlDataSource on " + this.getClass().getName());
-        }
-        setJdbcTemplate(new JdbcTemplate(dataSource));
     }
 
     @Override

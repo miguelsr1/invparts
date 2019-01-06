@@ -27,7 +27,7 @@ public class DynamicImageServlet extends HttpServlet {
             String file = request.getParameter("file");
             byte[] bytes;
             // Get image contents.
-            try (BufferedInputStream in = new BufferedInputStream(new FileInputStream("C:\\Users\\DesarrolloPc\\invParts\\fotos\\" + file))) {
+            try (BufferedInputStream in = new BufferedInputStream(new FileInputStream("C:/Users/DesarrolloPc/invParts/fotos/" + file))) {
                 // Get image contents.
                 bytes = new byte[in.available()];
                 in.read(bytes);

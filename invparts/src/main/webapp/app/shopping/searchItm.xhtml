@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                template="#{pageContext.servletContext.contextPath}/resources/template/template.xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <ui:define name="head">
+
+    </ui:define>
+    <ui:define name="content">
+        <div class="ui-g">
+            <div class="ui-g-12">
+                <div class="card card-w-title">
+                    <p:panelGrid id="pnlFiltro" columns="6" columnClasses="col2_label,col2,col2_label,col2,col2_label,col2" 
+                                  styleClass="ui-panelgrid-blank form-group form-elements">
+                        <p:outputLabel value="Marca"/>
+                        <p:selectOneMenu value="#{carritoMB.idMarca}">
+                            <f:selectItem itemValue="0" itemLabel="Seleccione un valor"/>
+                            <f:selectItems value="#{carritoMB.lstMarcas}" var="marca" itemValue="#{marca.idMarca}" itemLabel="#{marca.nombreMarca}"/>
+                            <p:ajax update="cboModelo"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="Modelo"/>
+                        <p:selectOneMenu id="cboModelo">
+                            <f:selectItem itemValue="0" itemLabel="Seleccione un valor"/>
+                            <f:selectItems value="#{carritoMB.lstModelo}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="Categoria"/>
+                        <p:selectOneMenu>
+                            <f:selectItem itemValue="null" itemLabel="Seleccione un valor"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                </div>
+            </div>
+        </div>
+    </ui:define>
+</ui:composition>
