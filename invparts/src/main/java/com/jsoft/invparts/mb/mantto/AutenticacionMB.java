@@ -28,26 +28,27 @@ public class AutenticacionMB {
     private String login;
     private String clave;
     private Usuario user = new Usuario();
-    private List<Modulo> lstModulo =new ArrayList<>() ;
-    
+    private List<Modulo> lstModulo = new ArrayList<>();
+
     @ManagedProperty("#{manttoService}")
     private ManttoService manttoService;
 
-    
     /**
      * Creates a new instance of AutenticacionMB
      */
     public AutenticacionMB() {
     }
-    
+
     private static final long serialVersionUID = 1L;
 
     private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle.getBundle("etiquetas");
 
-    
-     @PostConstruct
+    @PostConstruct
     public void init() {
-    
+
+        JsfUtil.addVariableSession("USU_SESSION", user);
+
+        Usuario p = (Usuario) JsfUtil.getVariableSession("USU_SESSION");
     }
 
     public Usuario getUser() {
@@ -58,7 +59,6 @@ public class AutenticacionMB {
         this.user = user;
     }
 
-    
     public String getLogin() {
         return login;
     }
@@ -82,21 +82,18 @@ public class AutenticacionMB {
     public void setLstModulo(List<Modulo> lstModulo) {
         this.lstModulo = lstModulo;
     }
-    
-    
- 
-    public void validarUsuario(){
-       if(!manttoService.getUsuarioByUsu(login)){
-          if(!manttoService.getUsuarioByClave(login,clave)){
-              user = manttoService.findUserByLogin(login);
-              lstModulo = manttoService.getlstModulos(login);
-          }else{
-             JsfUtil.addErrorMessage(RESOURCE_BUNDLE.getString("usuarioInvalido"));
-          }
-       }else{
-           JsfUtil.addErrorMessage(RESOURCE_BUNDLE.getString("claveIncorrecta"));
-       }
+
+    public void validarUsuario() {
+        if (!manttoService.getUsuarioByUsu(login)) {
+            if (!manttoService.getUsuarioByClave(login, clave)) {
+                user = manttoService.findUserByLogin(login);
+                lstModulo = manttoService.getlstModulos(login);
+            } else {
+                JsfUtil.addErrorMessage(RESOURCE_BUNDLE.getString("usuarioInvalido"));
+            }
+        } else {
+            JsfUtil.addErrorMessage(RESOURCE_BUNDLE.getString("claveIncorrecta"));
+        }
     }
-    
-    
+
 }
