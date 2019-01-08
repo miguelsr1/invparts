@@ -73,6 +73,21 @@ public class ManttoServiceImpl implements ManttoService {
     }
 
     @Override
+    public Usuario findUserByLogin(String usuario) {
+        return dao.findUserByLogin(usuario);
+    }
+    
+    @Override
+    public List<Modulo> getlstModulos(String usuario){
+       return dao.getlstModulos(usuario);
+    }
+    
+    @Override
+    public Boolean getUsuarioByClave(String usuario,String clave) {
+        return dao.getUsuarioByClave(usuario, encriptar(clave));
+    }
+    
+    @Override
     public void enviarCorreoActivacionUsuario(Persona per, String codAct) {
         StringBuilder sb = new StringBuilder("");
 

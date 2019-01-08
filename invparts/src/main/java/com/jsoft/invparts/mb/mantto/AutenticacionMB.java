@@ -6,8 +6,11 @@
 package com.jsoft.invparts.mb.mantto;
 
 import com.jsoft.invparts.model.seguridad.Usuario;
+import com.jsoft.invparts.model.seguridad.Modulo;
 import com.jsoft.invparts.servicios.ManttoService;
 import com.jsoft.invparts.util.JsfUtil;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedProperty;
@@ -25,6 +28,7 @@ public class AutenticacionMB {
     private String login;
     private String clave;
     private Usuario user = new Usuario();
+    private List<Modulo> lstModulo =new ArrayList<>() ;
     
     @ManagedProperty("#{manttoService}")
     private ManttoService manttoService;
@@ -70,12 +74,27 @@ public class AutenticacionMB {
     public void setClave(String clave) {
         this.clave = clave;
     }
+
+    public List<Modulo> getLstModulo() {
+        return lstModulo;
+    }
+
+    public void setLstModulo(List<Modulo> lstModulo) {
+        this.lstModulo = lstModulo;
+    }
+    
+    
  
-    public void validarUsuario(String login,String clave){
+    public void validarUsuario(){
        if(!manttoService.getUsuarioByUsu(login)){
-         //  user = manttoService.getUsuarioByUsu(clave);
+          if(!manttoService.getUsuarioByClave(login,clave)){
+              user = manttoService.findUserByLogin(login);
+              lstModulo = manttoService.getlstModulos(login);
+          }else{
+             JsfUtil.addErrorMessage(RESOURCE_BUNDLE.getString("usuarioInvalido"));
+          }
        }else{
-           JsfUtil.addErrorMessage(RESOURCE_BUNDLE.getString("usuarioInvalido"));
+           JsfUtil.addErrorMessage(RESOURCE_BUNDLE.getString("claveIncorrecta"));
        }
     }
     

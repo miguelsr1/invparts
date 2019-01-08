@@ -2,7 +2,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:b="http://bootsfaces.net/ui">
 
     <h:head>
         <f:facet name="first">
@@ -24,16 +25,16 @@
                         <h2>Welcome to Paradise</h2>
                     </div>
                     <div class="ui-g-12">
-                        <p:outputLabel for="username" value="Username" />
+                        <p:outputLabel for="username" value="#{msj.usuario}" />
                         <div class="input-wrapper">
-                            <p:inputText id="username" placeholder="Username" />
+                            <p:inputText id="username" placeholder="Username" value="#{autenticacionMB.login}"/>
                             <i class="fa fa-user" />
                         </div>
                     </div>
                     <div class="ui-g-12">
-                        <p:outputLabel for="password" value="Password" />
+                        <p:outputLabel for="password" value="#{msj.claveAcceso}" />
                         <div class="input-wrapper">
-                            <p:password id="password" placeholder="Password" feedback="false" />
+                            <p:password id="password" placeholder="Password" feedback="false" value="#{autenticacionMB.clave}"/>
                             <i class="fa fa-lock" />
                         </div>
                     </div>
@@ -50,7 +51,7 @@
                         
                     </div>
                     <div class="ui-g-12 button-container">
-                        <p:button outcome="/app/mantto/people" value="Sign In" styleClass="blue-btn raised-btn"/>
+                        <b:commandButton value="#{msj.butonIngreso}" styleClass="blue-btn raised-btn" action="#{autenticacionMB.validarUsuario}"/>
                     </div>
                     
                     <h:outputStylesheet name="css/layout-#{guestPreferences.layout}.css" library="paradise-layout" />

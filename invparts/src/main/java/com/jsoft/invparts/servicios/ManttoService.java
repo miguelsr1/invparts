@@ -52,6 +52,10 @@ public interface ManttoService {
     public List<Marca> listMarca(Marca mar);
 
     public Boolean getUsuarioByUsu(String usuario);
+    
+     public Usuario findUserByLogin(String login);
+
+    public Boolean getUsuarioByClave(String usuario,String clave);
 
     public Boolean isExistEmailPerByEmail(String eMail);
 
@@ -66,6 +70,8 @@ public interface ManttoService {
     public Categoria findCategoriaById(Integer idCategoria);
 
     public List<Categoria> lstCategoria(Categoria categoria);
+    
+    public List<Modulo> getlstModulos(String usuario);
 
     public List<Categoria> lstSubCategoria(Categoria categoria);
 

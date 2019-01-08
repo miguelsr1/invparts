@@ -57,7 +57,11 @@ public interface ManttoDao {
 
     public String nombreTipoEmpresa(Integer id);
 
+     public Usuario findUserByLogin(String login);
+             
     public Boolean getUsuarioByUsu(String usuario);
+    
+    public Boolean getUsuarioByClave(String usuario,String clave);
 
     public Boolean isExistEmailPerByEmail(String eMail);
 
@@ -78,4 +82,6 @@ public interface ManttoDao {
     public String findNombreMarca(Integer id);
 
     public List<ProductoCategoriaDto> getLstCategoriasByProducto(Integer idProducto);
+    
+    public List<Modulo> getlstModulos(String usuario);
 }

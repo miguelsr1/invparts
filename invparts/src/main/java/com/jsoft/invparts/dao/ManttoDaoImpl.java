@@ -297,6 +297,11 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
         return !getJdbcTemplate().query("SELECT * FROM usuario WHERE usuario = '" + usuario + "'", new BeanPropertyRowMapper(Usuario.class)).isEmpty();
     }
 
+     @Override
+    public Boolean getUsuarioByClave(String usuario,String clave) {
+        return !getJdbcTemplate().query("SELECT * FROM usuario WHERE usuario = '" + usuario + "' and clave_acceso='"+clave+"'", new BeanPropertyRowMapper(Usuario.class)).isEmpty();
+    }
+    
     /**
      * Metodo que devuelve true si el correo registrado a un nuevo usuario ya
      * existe
@@ -439,5 +444,39 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
                 new BeanPropertyRowMapper(Categoria.class));
 
         return customer;
+    }
+    
+    @Override
+    public Usuario findUserByLogin(String login) {
+        String sql = "SELECT * FROM usuario WHERE usuario = ?";
+
+        Usuario user = (Usuario) getJdbcTemplate().queryForObject(
+                sql, new Object[]{login},
+                new BeanPropertyRowMapper(Usuario.class));
+
+        return user;
+    }
+    
+    @Override
+    public List<Modulo> getlstModulos(String login){
+         String sql = "select * from modulo " +
+                      " where id_modulo in (select mp.id_modulo from usuario_empresa ue inner join modulo_perfil mp on mp.id_modulo_perfil=ue.id_modulo_perfil " +
+                                            " where ue.usuario='"+login+"');";
+
+        
+        List<Modulo> listMod = getJdbcTemplate().query(sql, new RowMapper<Modulo>() {
+
+            @Override
+            public Modulo mapRow(ResultSet rs, int rowNumber) throws SQLException {
+                Modulo modulos = new Modulo();
+                modulos.setIdModulo(rs.getInt("id_modulo"));
+                modulos.setNombreModulo(rs.getString("nombre_Modulo"));
+                modulos.setIconoModulo(rs.getString("icono_Modulo"));
+                return modulos;
+            }
+
+        });
+        return listMod;
+        
     }
 }
