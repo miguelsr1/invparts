@@ -1,5 +1,6 @@
 package com.jsoft.invparts.util;
 
+import com.jsoft.invparts.mb.mantto.MenuMB;
 import java.math.BigDecimal;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -69,14 +70,19 @@ public class JsfUtil {
         return converter.getAsObject(FacesContext.getCurrentInstance(), component, theId);
     }
 
-    public static void setVariableSession(String key, Object value) {
-        FacesContext context = FacesContext.getCurrentInstance();
-        context.getExternalContext().getSessionMap().put(key, value);
+    public static void addVariableSession(String key, Object value) {
+         (((MenuMB) FacesContext.getCurrentInstance().getApplication().getELResolver().
+                getValue(FacesContext.getCurrentInstance().getELContext(), null, "menuMB")).getVariables()).put(key, value);
     }
 
     public static Object getVariableSession(String key) {
-        FacesContext context = FacesContext.getCurrentInstance();
-        return context.getExternalContext().getSessionMap().get(key);
+        return (((MenuMB) FacesContext.getCurrentInstance().getApplication().getELResolver().
+                getValue(FacesContext.getCurrentInstance().getELContext(), null, "menuMB")).getVariables()).get(key);
+    }
+    
+    public static void removeVariableSession(String key){
+        (((MenuMB) FacesContext.getCurrentInstance().getApplication().getELResolver().
+                getValue(FacesContext.getCurrentInstance().getELContext(), null, "menuMB")).getVariables()).remove(key);
     }
 
     public static PreparedStatement setValuesPreparedStatement(PreparedStatement ps, Object[] valores) throws SQLException {
