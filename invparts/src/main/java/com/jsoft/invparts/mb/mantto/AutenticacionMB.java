@@ -9,6 +9,7 @@ import com.jsoft.invparts.model.seguridad.Usuario;
 import com.jsoft.invparts.model.seguridad.Modulo;
 import com.jsoft.invparts.servicios.ManttoService;
 import com.jsoft.invparts.util.JsfUtil;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -23,7 +24,7 @@ import javax.faces.view.ViewScoped;
  */
 @Named(value = "autenticacionMB")
 @ViewScoped
-public class AutenticacionMB {
+public class AutenticacionMB implements Serializable{
 
     private String login;
     private String clave;
@@ -46,9 +47,9 @@ public class AutenticacionMB {
     @PostConstruct
     public void init() {
 
-        JsfUtil.addVariableSession("USU_SESSION", user);
-
-        Usuario p = (Usuario) JsfUtil.getVariableSession("USU_SESSION");
+    /*    
+JsfUtil.addVariableSession("USU_SESSION", user);
+        Usuario p = (Usuario) JsfUtil.getVariableSession("USU_SESSION");*/
     }
 
     public Usuario getUser() {
@@ -84,10 +85,13 @@ public class AutenticacionMB {
     }
 
     public void validarUsuario() {
-        if (!manttoService.getUsuarioByUsu(login)) {
+        if (manttoService.getUsuarioByUsu(login)) {
             if (!manttoService.getUsuarioByClave(login, clave)) {
+                
                 user = manttoService.findUserByLogin(login);
+                JsfUtil.addVariableSession("USU_SESSION", login);
                 lstModulo = manttoService.getlstModulos(login);
+                JsfUtil.redireccionar("/principal.xhtml");
             } else {
                 JsfUtil.addErrorMessage(RESOURCE_BUNDLE.getString("usuarioInvalido"));
             }
