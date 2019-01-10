@@ -1,16 +1,25 @@
-<?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:f="http://java.sun.com/jsf/core">
-    <ui:composition template="#{pageContext.servletContext.contextPath}/resources/template/template.xhtml">
-        <ui:define name="content">
-            <h:form>
+      xmlns:b="http://bootsfaces.net/ui">
+
+    <h:head>
+        <f:facet name="first">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+            <meta name="apple-mobile-web-app-capable" content="yes" />
+        </f:facet>
+        <title>PrimeFaces Paradise</title>
+    </h:head>
+
+    <h:body styleClass="login-body">      
+        <h:form>
                <div class="contentPrincipal ">
                     <div style="position: absolute; right: 1%;" >
-                        <p:commandButton value="Salir" icon="fa fa-sign-out" action="#{loginController.logout}" />
+                        <p:commandButton value="Salir" icon="fa fa-sign-out" action="#{autenticacionMB.logout}" />
                     </div>
                     <p:spacer width="10" height="100"/>
         <p:dataGrid var="modulo" value="#{autenticacionMB.lstModulo}" columns="4" layout="grid"
@@ -25,8 +34,8 @@
  
              
         </p:dataGrid>    
+               </div>
        </h:form>
-        </ui:define>
-    </ui:composition>
+    </h:body> 
 </html>
 

@@ -14,17 +14,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import javax.annotation.PostConstruct;
+import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 
 /**
  *
  * @author torre
  */
-@Named(value = "autenticacionMB")
+@ManagedBean
 @ViewScoped
-public class AutenticacionMB implements Serializable{
+public class AutenticacionMB implements Serializable {
 
     private String login;
     private String clave;
@@ -47,9 +47,17 @@ public class AutenticacionMB implements Serializable{
     @PostConstruct
     public void init() {
 
-    /*    
+        /*    
 JsfUtil.addVariableSession("USU_SESSION", user);
         Usuario p = (Usuario) JsfUtil.getVariableSession("USU_SESSION");*/
+    }
+
+    public ManttoService getManttoService() {
+        return manttoService;
+    }
+
+    public void setManttoService(ManttoService manttoService) {
+        this.manttoService = manttoService;
     }
 
     public Usuario getUser() {
@@ -86,18 +94,22 @@ JsfUtil.addVariableSession("USU_SESSION", user);
 
     public void validarUsuario() {
         if (manttoService.getUsuarioByUsu(login)) {
-            if (!manttoService.getUsuarioByClave(login, clave)) {
-                
+            if (manttoService.getUsuarioByClave(login, clave)) {
+
                 user = manttoService.findUserByLogin(login);
                 JsfUtil.addVariableSession("USU_SESSION", login);
                 lstModulo = manttoService.getlstModulos(login);
-                JsfUtil.redireccionar("/principal.xhtml");
+                JsfUtil.redireccionar("/app/principal.xhtml");
             } else {
-                JsfUtil.addErrorMessage(RESOURCE_BUNDLE.getString("usuarioInvalido"));
+                JsfUtil.addErrorMessage(RESOURCE_BUNDLE.getString("claveIncorrecta"));
             }
         } else {
-            JsfUtil.addErrorMessage(RESOURCE_BUNDLE.getString("claveIncorrecta"));
+            JsfUtil.addErrorMessage(RESOURCE_BUNDLE.getString("usuarioInvalido"));
         }
     }
-
+     
+    public void logout(){
+            JsfUtil.removeVariableSession(login);
+                     JsfUtil.redireccionar("/login.xhtml");
+        }
 }
