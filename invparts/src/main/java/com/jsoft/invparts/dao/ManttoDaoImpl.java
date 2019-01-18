@@ -458,6 +458,25 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
     }
     
     @Override
+    public Integer findIdEmpByLogin(String login) {
+        String sql = "SELECT id_empresa FROM usuario_Empresa WHERE usuario = ?";
+
+         Integer idEmp = getJdbcTemplate().queryForObject(sql, new Object[] {login},Integer.class);
+        
+        return idEmp;
+    }
+    
+    
+    @Override
+    public Integer findIdModPerByLogin(String login,Integer emp) {
+        String sql = "SELECT id_modulo_perfil FROM usuario_Empresa WHERE usuario = ? and id_empresa=?";
+
+         Integer idEmp = getJdbcTemplate().queryForObject(sql, new Object[] {login,emp},Integer.class);
+        
+        return idEmp;
+    }
+    
+    @Override
     public List<Modulo> getlstModulos(String login){
          String sql = "select * from modulo " +
                       " where id_modulo in (select mp.id_modulo from usuario_empresa ue inner join modulo_perfil mp on mp.id_modulo_perfil=ue.id_modulo_perfil " +

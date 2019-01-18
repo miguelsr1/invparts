@@ -54,7 +54,11 @@ public interface ManttoService {
     public Boolean getUsuarioByUsu(String usuario);
     
      public Usuario findUserByLogin(String login);
-
+     
+   public Integer findIdEmpByLogin(String login);  
+    
+    public Integer findIdModPerByLogin(String login,Integer emp);  
+   
     public Boolean getUsuarioByClave(String usuario,String clave);
 
     public Boolean isExistEmailPerByEmail(String eMail);

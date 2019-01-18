@@ -6,6 +6,7 @@
 package com.jsoft.invparts.mb.mantto;
 
 import com.jsoft.invparts.model.seguridad.Usuario;
+
 import com.jsoft.invparts.model.seguridad.Modulo;
 import com.jsoft.invparts.servicios.ManttoService;
 import com.jsoft.invparts.util.JsfUtil;
@@ -28,7 +29,10 @@ public class AutenticacionMB implements Serializable {
 
     private String login;
     private String clave;
+    private String usuario;
+    private String idApp;
     private Usuario user = new Usuario();
+    
     private List<Modulo> lstModulo = new ArrayList<>();
 
     @ManagedProperty("#{manttoService}")
@@ -68,6 +72,22 @@ JsfUtil.addVariableSession("USU_SESSION", user);
         this.user = user;
     }
 
+    public String getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
+
+    public String getIdApp() {
+        return idApp;
+    }
+
+    public void setIdApp(String idApp) {
+        this.idApp = idApp;
+    }
+
     public String getLogin() {
         return login;
     }
@@ -92,12 +112,26 @@ JsfUtil.addVariableSession("USU_SESSION", user);
         this.lstModulo = lstModulo;
     }
 
+    public void obtenerMenu() {
+                  JsfUtil.redireccionar("/menu.xhtml");
+    
+    }
+
     public void validarUsuario() {
+        Integer emp;
+        Integer modPer;
+        
         if (manttoService.getUsuarioByUsu(login)) {
             if (manttoService.getUsuarioByClave(login, clave)) {
 
+                emp=manttoService.findIdEmpByLogin(login);
+                modPer= manttoService.findIdModPerByLogin(login,emp);
+                
                 user = manttoService.findUserByLogin(login);
                 JsfUtil.addVariableSession("USU_SESSION", login);
+                JsfUtil.addVariableSession("EMP_SESSION",emp );
+                JsfUtil.addVariableSession("MODPER_SESSION",modPer);
+                
                 lstModulo = manttoService.getlstModulos(login);
                 JsfUtil.redireccionar("/app/principal.xhtml");
             } else {

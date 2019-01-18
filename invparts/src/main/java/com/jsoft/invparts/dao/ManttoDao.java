@@ -58,7 +58,12 @@ public interface ManttoDao {
     public String nombreTipoEmpresa(Integer id);
 
      public Usuario findUserByLogin(String login);
-             
+        
+    public Integer findIdEmpByLogin(String login);  
+    
+    public Integer findIdModPerByLogin(String login,Integer emp);  
+    
+    
     public Boolean getUsuarioByUsu(String usuario);
     
     public Boolean getUsuarioByClave(String usuario,String clave);

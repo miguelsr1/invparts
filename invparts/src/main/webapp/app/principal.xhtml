@@ -3,39 +3,42 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:b="http://bootsfaces.net/ui">
-
-    <h:head>
-        <f:facet name="first">
-            <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-            <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
-            <meta name="apple-mobile-web-app-capable" content="yes" />
-        </f:facet>
-        <title>PrimeFaces Paradise</title>
-    </h:head>
-
-    <h:body styleClass="login-body">      
-        <h:form>
-               <div class="contentPrincipal ">
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    
+      <ui:composition template="#{pageContext.servletContext.contextPath}/resources/template/template.xhtml">
+        <ui:define name="content">
+         <h:form>
+            <p:growl id="growl" showDetail="true" sticky="true" >
+                        <p:autoUpdate/>
+                </p:growl>
+             <div class="contentPrincipal ">
                     <div style="position: absolute; right: 1%;" >
                         <p:commandButton value="Salir" icon="fa fa-sign-out" action="#{autenticacionMB.logout}" />
                     </div>
-                    <p:spacer width="10" height="100"/>
-        <p:dataGrid var="modulo" value="#{autenticacionMB.lstModulo}" columns="4" layout="grid"
-              rows="12" paginator="false" id="modulo" >
-         
-        <f:facet name="header">
-            Aplicaciones
-        </f:facet>
-            <p:graphicImage name="#{modulo.iconoModulo}"/> 
- 
-            <h:outputText value="#{modulo.nombreModulo}" />
- 
-             
-        </p:dataGrid>    
-               </div>
-       </h:form>
-    </h:body> 
-</html>
+           <p:spacer width="10" height="100"/>
+            <p:dataGrid var="modulo" value="#{autenticacionMB.lstModulo}" columns="4" layout="grid"
+                rows="12" paginator="false" id="modulo" >
+                    <div class="bloque2 textoConSombra" style=" min-height:200px; background-position:left top; background-repeat:no-repeat; margin: 0px auto;">
+                            <div class="subItem" >
+                                <p:commandLink ajax="false" styleClass="secciones" action="#{autenticacionMB.obtenerMenu}">
+                                <h:panelGrid columns="1" columnClasses="colAppImagen,colAppDescripcion" style="margin: 0 auto;" >
+                                    <p:graphicImage name="#{modulo.iconoModulo}" library="images" height="80px" width="80px" />
+                                    <p:outputLabel value="#{modulo.nombreModulo}"/>
+                                </h:panelGrid>
+                                <f:setPropertyActionListener target="#{autenticacionMB.idApp}" value="1" />
+                                <f:param name="usuario" value="#{autenticacionMB.usuario}"/> 
+                                <f:param name="idApp" value="#{autenticacionMB.idApp}"/> 
 
+                            </p:commandLink>
+                        </div>
+                          
+                    </div>
+            </p:dataGrid>
+                </div>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>
+         
+        

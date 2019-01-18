@@ -77,6 +77,16 @@ public class ManttoServiceImpl implements ManttoService {
         return dao.findUserByLogin(usuario);
     }
     
+      @Override
+    public Integer findIdEmpByLogin(String login){
+        return dao.findIdEmpByLogin(login);
+    }  
+    @Override
+    public Integer findIdModPerByLogin(String login,Integer emp){
+        return dao.findIdModPerByLogin(login,emp);
+    }  
+   
+    
     @Override
     public List<Modulo> getlstModulos(String usuario){
        return dao.getlstModulos(usuario);
