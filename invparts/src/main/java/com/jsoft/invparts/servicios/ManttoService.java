@@ -16,6 +16,7 @@ import com.jsoft.invparts.model.inventario.Vendedor;
 import com.jsoft.invparts.model.inventario.dto.ProductoCategoriaDto;
 import com.jsoft.invparts.model.seguridad.Empresa;
 import com.jsoft.invparts.model.seguridad.Modulo;
+import com.jsoft.invparts.model.seguridad.OpcionMenu;
 import com.jsoft.invparts.model.seguridad.Persona;
 import com.jsoft.invparts.model.seguridad.Usuario;
 import com.jsoft.invparts.model.seguridad.Perfil;
@@ -33,6 +34,8 @@ public interface ManttoService {
 
     public List<Empresa> listEmpresaUsu(Empresa emp);
 
+    public List<OpcionMenu> listOpcionesMenu(OpcionMenu opc);
+    
     public List<Perfil> listPerfil(Perfil per);
 
     public List<Modulo> listModulo(Modulo mod);
@@ -46,6 +49,10 @@ public interface ManttoService {
     public List<Producto> listProducto(Producto pro);
 
     public String nombreTipoEmpresa(Integer id);
+    
+    public String nombreOpcion(Integer id);
+
+      public String nombreModulo(Integer id);
 
     public List<Modelo> listModelo(Modelo mod);
 

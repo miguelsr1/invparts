@@ -14,6 +14,7 @@ import com.jsoft.invparts.model.inventario.Vendedor;
 import com.jsoft.invparts.model.inventario.dto.ProductoCategoriaDto;
 import com.jsoft.invparts.model.seguridad.Empresa;
 import com.jsoft.invparts.model.seguridad.Modulo;
+import com.jsoft.invparts.model.seguridad.OpcionMenu;
 import com.jsoft.invparts.model.seguridad.Perfil;
 import com.jsoft.invparts.model.seguridad.Persona;
 import com.jsoft.invparts.model.seguridad.Usuario;
@@ -38,6 +39,8 @@ public interface ManttoDao {
     public List<Empresa> listEmpresa(Empresa emp, Short idTipoEmpresa);
 
     public List<Empresa> listEmpresaUsu(Empresa emp);
+    
+    public List<OpcionMenu> listOpcMenu(OpcionMenu opc);
 
     public List<Usuario> listUsuario();
 
@@ -57,7 +60,11 @@ public interface ManttoDao {
 
     public String nombreTipoEmpresa(Integer id);
 
-     public Usuario findUserByLogin(String login);
+    public String findNombreOpcion(Integer id);
+
+    public String findNombreModulo(Integer id);
+
+    public Usuario findUserByLogin(String login);
         
     public Integer findIdEmpByLogin(String login);  
     

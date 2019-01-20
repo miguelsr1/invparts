@@ -8,6 +8,7 @@ package com.jsoft.invparts.servicios;
 import com.jsoft.invparts.dao.PersistenciaDao;
 import com.jsoft.invparts.model.seguridad.Empresa;
 import com.jsoft.invparts.model.seguridad.Persona;
+
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -21,6 +22,7 @@ import com.jsoft.invparts.model.inventario.Sucursal;
 import com.jsoft.invparts.model.inventario.Vendedor;
 import com.jsoft.invparts.model.inventario.dto.ProductoCategoriaDto;
 import com.jsoft.invparts.model.seguridad.Modulo;
+import com.jsoft.invparts.model.seguridad.OpcionMenu;
 import com.jsoft.invparts.model.seguridad.Usuario;
 import com.jsoft.invparts.model.seguridad.Perfil;
 import java.text.MessageFormat;
@@ -62,6 +64,11 @@ public class ManttoServiceImpl implements ManttoService {
         return dao.listEmpresa(emp, idTipoEmpresa);
     }
 
+    @Override
+    public List<OpcionMenu> listOpcionesMenu(OpcionMenu opc) {
+        return dao.listOpcMenu(opc);
+    }
+    
     @Override
     public List<Usuario> listUsuario() {
         return dao.listUsuario();
@@ -147,6 +154,14 @@ public class ManttoServiceImpl implements ManttoService {
         return dao.nombreTipoEmpresa(id);
     }
 
+     @Override
+    public String nombreOpcion(Integer id) {
+        return dao.findNombreOpcion(id);
+    }
+@Override
+    public String nombreModulo(Integer id) {
+        return dao.findNombreModulo(id);
+    }
     @Override
     public List<Categoria> lstCategoria(Categoria categoria) {
         return dao.lstCategoria(categoria);

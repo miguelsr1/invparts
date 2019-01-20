@@ -113,24 +113,26 @@ JsfUtil.addVariableSession("USU_SESSION", user);
     }
 
     public void obtenerMenu() {
-                  JsfUtil.redireccionar("/menu.xhtml");
+        
+        JsfUtil.redireccionar("/menu.xhtml");
     
     }
 
     public void validarUsuario() {
         Integer emp;
-        Integer modPer;
+        
         
         if (manttoService.getUsuarioByUsu(login)) {
             if (manttoService.getUsuarioByClave(login, clave)) {
 
                 emp=manttoService.findIdEmpByLogin(login);
-                modPer= manttoService.findIdModPerByLogin(login,emp);
+             //   modPer= manttoService.findIdModPerByLogin(login,emp);
                 
                 user = manttoService.findUserByLogin(login);
+                
                 JsfUtil.addVariableSession("USU_SESSION", login);
                 JsfUtil.addVariableSession("EMP_SESSION",emp );
-                JsfUtil.addVariableSession("MODPER_SESSION",modPer);
+                JsfUtil.addVariableSession("PERSONA_SESSION",user.getIdPersona());
                 
                 lstModulo = manttoService.getlstModulos(login);
                 JsfUtil.redireccionar("/app/principal.xhtml");

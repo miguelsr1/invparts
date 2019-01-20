@@ -15,6 +15,7 @@ import com.jsoft.invparts.model.inventario.dto.ProductoCategoriaDto;
 import com.jsoft.invparts.model.mapper.CategoriaRowMapper;
 import com.jsoft.invparts.model.seguridad.Empresa;
 import com.jsoft.invparts.model.seguridad.Modulo;
+import com.jsoft.invparts.model.seguridad.OpcionMenu;
 import com.jsoft.invparts.model.seguridad.Perfil;
 import com.jsoft.invparts.model.seguridad.Persona;
 import com.jsoft.invparts.model.seguridad.Usuario;
@@ -146,6 +147,37 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
         return listEmp;
     }
 
+    @Override
+    public List<OpcionMenu> listOpcMenu(OpcionMenu opc) {
+        String sql = "SELECT * from Opcion_Menu ";
+
+        if (opc != null) {
+            sql += opc.getWhere();
+        }
+
+        List<OpcionMenu> listOpc = getJdbcTemplate().query(sql, new RowMapper<OpcionMenu>() {
+
+            @Override
+            public OpcionMenu mapRow(ResultSet rs, int rowNumber) throws SQLException {
+                OpcionMenu opc = new OpcionMenu();
+                opc.setIdOpcionMenu(rs.getInt("id_opcion_menu"));
+                opc.setNombreOpcion(rs.getString("nombre_Opcion"));
+                opc.setIconoOpcion(rs.getString("icono_Opcion"));
+                opc.setUrlOpcion(rs.getString("url_opcion"));
+                opc.setOpcionActiva(rs.getInt("opcion_activa"));
+                opc.setOrdenOpcion(rs.getInt("orden_opcion"));
+                opc.setIdModulo(rs.getInt("id_modulo"));
+                opc.setOpcionIdOpcionMenu(rs.getInt("opc_id_opcion_menu"));
+                return opc;
+            }
+
+        });
+        return listOpc;
+    }
+
+    
+    
+    
     @Override
     public List<Usuario> listUsuario() {
         String sql = "SELECT * from usuario";
@@ -405,6 +437,30 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
         List<Categoria> lstCat = getJdbcTemplate().query(sql, new Object[]{idProducto, "%" + nombreCategoria + "%"}, new CategoriaRowMapper());
         return lstCat;
     }
+
+   @Override
+    public String findNombreOpcion(Integer id){
+        String name;
+        if (id!=0 && id!=null){
+            String sql = "SELECT nombre_opcion FROM opcion_menu WHERE id_opcion_menu=?";
+        
+           name = getJdbcTemplate().queryForObject(sql, new Object[] {id},String.class);
+        }else{
+            name="-";
+        }
+        return name;
+    }
+
+    @Override
+    public String findNombreModulo(Integer id){
+        String sql = "SELECT nombre_modulo FROM modulo WHERE id_modulo=?";
+        
+        String name = getJdbcTemplate().queryForObject(sql, new Object[] {id},String.class);
+        
+        return name;
+    }
+
+
     
     @Override
     public String findNombreMarca(Integer id){
