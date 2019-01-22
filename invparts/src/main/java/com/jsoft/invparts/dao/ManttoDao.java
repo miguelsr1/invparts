@@ -42,6 +42,10 @@ public interface ManttoDao {
     
     public List<OpcionMenu> listOpcMenu(OpcionMenu opc);
 
+    public List<OpcionMenu> listOpcMenuMod(Integer idApp);
+     
+    public void crearArbolMenu(List<OpcionMenu> lstOpcionMenu);
+     
     public List<Usuario> listUsuario();
 
     public List<Perfil> listPerfil(Perfil per);

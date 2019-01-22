@@ -28,6 +28,7 @@ import java.util.List;
  */
 public interface ManttoService {
 
+   
     public List<Persona> listPersona(Persona per);
 
     public List<Empresa> listEmpresa(Empresa emp, Short idTipoEmpresa);
@@ -35,6 +36,8 @@ public interface ManttoService {
     public List<Empresa> listEmpresaUsu(Empresa emp);
 
     public List<OpcionMenu> listOpcionesMenu(OpcionMenu opc);
+    
+    public List<OpcionMenu> listOpcMenuMod(Integer Modulo);
     
     public List<Perfil> listPerfil(Perfil per);
 

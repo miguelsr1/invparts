@@ -8,6 +8,7 @@ package com.jsoft.invparts.mb.mantto;
 import com.jsoft.invparts.model.seguridad.Usuario;
 
 import com.jsoft.invparts.model.seguridad.Modulo;
+import com.jsoft.invparts.model.seguridad.OpcionMenu;
 import com.jsoft.invparts.servicios.ManttoService;
 import com.jsoft.invparts.util.JsfUtil;
 import java.io.Serializable;
@@ -17,14 +18,14 @@ import java.util.ResourceBundle;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.view.ViewScoped;
+import javax.faces.bean.SessionScoped;
 
 /**
  *
  * @author torre
  */
 @ManagedBean
-@ViewScoped
+@SessionScoped
 public class AutenticacionMB implements Serializable {
 
     private String login;
@@ -34,6 +35,8 @@ public class AutenticacionMB implements Serializable {
     private Usuario user = new Usuario();
     
     private List<Modulo> lstModulo = new ArrayList<>();
+    private String idModulo;
+    private List<OpcionMenu> lstOpcMenu = new ArrayList<>();
 
     @ManagedProperty("#{manttoService}")
     private ManttoService manttoService;
@@ -51,9 +54,11 @@ public class AutenticacionMB implements Serializable {
     @PostConstruct
     public void init() {
 
-        /*    
-JsfUtil.addVariableSession("USU_SESSION", user);
-        Usuario p = (Usuario) JsfUtil.getVariableSession("USU_SESSION");*/
+        Usuario p = (Usuario) JsfUtil.getVariableSession("USU_SESSION");
+      idModulo =  JsfUtil.getRequestParameter("idApp");
+      
+      lstOpcMenu = manttoService.listOpcMenuMod(Integer.parseInt(idModulo));
+     
     }
 
     public ManttoService getManttoService() {
@@ -62,6 +67,22 @@ JsfUtil.addVariableSession("USU_SESSION", user);
 
     public void setManttoService(ManttoService manttoService) {
         this.manttoService = manttoService;
+    }
+
+    public String getIdModulo() {
+        return idModulo;
+    }
+
+    public void setIdModulo(String idModulo) {
+        this.idModulo = idModulo;
+    }
+
+    public List<OpcionMenu> getLstOpcMenu() {
+        return lstOpcMenu;
+    }
+
+    public void setLstOpcMenu(List<OpcionMenu> lstOpcMenu) {
+        this.lstOpcMenu = lstOpcMenu;
     }
 
     public Usuario getUser() {
@@ -113,7 +134,7 @@ JsfUtil.addVariableSession("USU_SESSION", user);
     }
 
     public void obtenerMenu() {
-        
+      
         JsfUtil.redireccionar("/menu.xhtml");
     
     }
@@ -130,7 +151,7 @@ JsfUtil.addVariableSession("USU_SESSION", user);
                 
                 user = manttoService.findUserByLogin(login);
                 
-                JsfUtil.addVariableSession("USU_SESSION", login);
+                JsfUtil.addVariableSession("USU_SESSION", user);
                 JsfUtil.addVariableSession("EMP_SESSION",emp );
                 JsfUtil.addVariableSession("PERSONA_SESSION",user.getIdPersona());
                 

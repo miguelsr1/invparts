@@ -19,12 +19,20 @@ import com.jsoft.invparts.model.seguridad.OpcionMenu;
 import com.jsoft.invparts.model.seguridad.Perfil;
 import com.jsoft.invparts.model.seguridad.Persona;
 import com.jsoft.invparts.model.seguridad.Usuario;
+import com.jsoft.invparts.util.JsfUtil;
 import com.jsoft.invparts.util.XJdbcTemplate;
+import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.primefaces.model.menu.DefaultMenuItem;
+import org.primefaces.model.menu.DefaultMenuModel;
+import org.primefaces.model.menu.DefaultSubMenu;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -43,7 +51,17 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
     @Autowired
     Environment env;
 
+    private DefaultMenuModel model;   
+
     public ManttoDaoImpl() {
+    }
+
+    public DefaultMenuModel getModel() {
+        return model;
+    }
+
+    public void setModel(DefaultMenuModel model) {
+        this.model = model;
     }
 
     @Override
@@ -175,7 +193,30 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
         return listOpc;
     }
 
-    
+    @Override
+    public List<OpcionMenu> listOpcMenuMod(Integer idMod) {
+        String sql = "SELECT * FROM Opcion_Menu WHERE id_modulo="+idMod;
+
+        List<OpcionMenu> listOpc = getJdbcTemplate().query(sql, new RowMapper<OpcionMenu>() {
+
+            @Override
+            public OpcionMenu mapRow(ResultSet rs, int rowNumber) throws SQLException {
+                OpcionMenu opc = new OpcionMenu();
+                opc.setIdOpcionMenu(rs.getInt("id_opcion_menu"));
+                opc.setNombreOpcion(rs.getString("nombre_Opcion"));
+                opc.setIconoOpcion(rs.getString("icono_Opcion"));
+                opc.setUrlOpcion(rs.getString("url_opcion"));
+                opc.setOpcionActiva(rs.getInt("opcion_activa"));
+                opc.setOrdenOpcion(rs.getInt("orden_opcion"));
+                opc.setIdModulo(rs.getInt("id_modulo"));
+                opc.setOpcionIdOpcionMenu(rs.getInt("opc_id_opcion_menu"));
+                return opc;
+            }
+
+        });
+        return listOpc;
+    }
+
     
     
     @Override
@@ -350,7 +391,8 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
     public int guardarConIdAutogenerado(PersistenciaDao objeto) {
         return super.persistirConIdAutogenerado(objeto);
     }
-
+    
+  
     @Override
     public int guardarConIdString(PersistenciaDao objeto, Boolean nuevo) {
         return super.persistirConIdString(objeto, nuevo);
@@ -440,13 +482,11 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
 
    @Override
     public String findNombreOpcion(Integer id){
-        String name;
+        String name="-";
         if (id!=0 && id!=null){
             String sql = "SELECT nombre_opcion FROM opcion_menu WHERE id_opcion_menu=?";
         
            name = getJdbcTemplate().queryForObject(sql, new Object[] {id},String.class);
-        }else{
-            name="-";
         }
         return name;
     }
@@ -554,4 +594,92 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
         return listMod;
         
     }
+  
+    @Override  
+     public void crearArbolMenu(List<OpcionMenu> lstOpcionMenu) {
+        DefaultMenuModel menu = new DefaultMenuModel();
+        DefaultSubMenu subMenu = new DefaultSubMenu();
+        Object obj = null;
+
+        try {
+            if (!lstOpcionMenu.isEmpty()) {
+                OpcionMenu opcMenu = lstOpcionMenu.get(0);
+
+                if (lstOpcionMenu.size() == 1) {
+                    DefaultMenuItem itemMenu = new DefaultMenuItem();
+
+                    itemMenu.setValue(" " + opcMenu.getNombreOpcion());
+                    itemMenu.setUrl(opcMenu.getUrlOpcion() + "?faces-redirect=true");
+                    itemMenu.setIcon(opcMenu.getIconoOpcion()!= null ? opcMenu.getIconoOpcion(): null);
+                    itemMenu.setAjax(true);
+                    itemMenu.setId("item" + opcMenu.getIdOpcionMenu().toString());
+
+                    subMenu.addElement(itemMenu);
+                    obj = subMenu;
+                } else {
+                    subMenu.setLabel(opcMenu.getNombreOpcion());
+                    subMenu.setId("sub" + opcMenu.getIdOpcionMenu().toString());
+
+                    if (!lstOpcionMenu.subList(1, lstOpcionMenu.size()).isEmpty()) {
+                        obj = getHijo(subMenu, lstOpcionMenu.subList(1, lstOpcionMenu.size()));
+                    }
+                }
+            } else {
+
+                subMenu.setLabel(" Sin opciones");
+                obj = subMenu;
+            }
+            menu.addElement((DefaultSubMenu) obj);
+            model = menu;
+
+        } catch (Exception ex) {
+            JsfUtil.addErrorMessage("Ocurrio una excepción en el proceso de creación del arbol del menu. Contactese con el administrador del sistema.");
+        }
+    }
+
+    
+    
+    
+    private Object getHijo(DefaultSubMenu opPadre, List<OpcionMenu> resultado) {
+        DefaultSubMenu subMenu;
+        DefaultMenuItem itemMenu;
+        Boolean hijo = true;
+        OpcionMenu opcionM;
+
+        for (int j = 0; j < resultado.size(); j++) {
+            opcionM = resultado.get(j);
+
+            if (opPadre.getId().replace("sub", "").equals(opcionM.getOpcionIdOpcionMenu().toString())) { //Hijo del padre
+                subMenu = new DefaultSubMenu();
+                subMenu.setLabel(opcionM.getOrdenOpcion().toString() + ". " + opcionM.getNombreOpcion());
+                subMenu.setId("sub" + opcionM.getIdOpcionMenu().toString());
+
+                Object obj = getHijo(subMenu, resultado.subList(j, resultado.size()));
+
+                if (obj instanceof DefaultMenuItem) {
+                    opPadre.getElements().add((DefaultMenuItem) obj);
+                } else {
+                    opPadre.getElements().add((DefaultSubMenu) obj);
+                }
+                hijo = false;
+            }
+        }
+
+        if (hijo) {
+            opcionM = resultado.get(0);
+            itemMenu = new DefaultMenuItem();
+            itemMenu.setValue(" " + opcionM.getNombreOpcion());
+            itemMenu.setUrl(opcionM.getUrlOpcion() + "?faces-redirect=true");
+            itemMenu.setIcon(opcionM.getIconoOpcion()!= null ? opcionM.getIconoOpcion(): null);
+            itemMenu.setAjax(true);
+            itemMenu.setId("item" + opcionM.getIdOpcionMenu().toString());
+
+            return itemMenu;
+        } else {
+            return opPadre;
+        }
+    }
+
+       
+    
 }
