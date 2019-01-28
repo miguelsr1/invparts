@@ -4,10 +4,19 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 template="#{pageContext.servletContext.contextPath}/resources/template/template.xhtml"
-                xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:jsf="http://xmlns.jcp.org/jsf">
+    <ui:define name="carrito">
+        <div jsf:id="aCarrito">
+            <p:graphicImage name="carrito.png" library="images" style="border: 0px;"/>
+            <span class="topbar-badge">#{carritoMB.numItemDeCarro}</span>
+        </div>
+    </ui:define>
+
     <ui:define name="head">
 
     </ui:define>
+
     <ui:define name="content">
         <f:metadata>
             <f:viewAction action="#{carritoMB.limpiarFiltros}"/>

@@ -15,7 +15,6 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
@@ -38,7 +37,6 @@ public class FotosItemMB implements Serializable {
     private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle.getBundle("etiquetas");
 
     private Item item;
-    private String nombreImagen;
     private List<String> imagenesDeProducto = new ArrayList();
 
     private File folderImg = null;
@@ -52,21 +50,21 @@ public class FotosItemMB implements Serializable {
 
     @PostConstruct
     public void init() {
-        cargarFotos();
+        //cargarFotosInit();
     }
 
     public void limpiar() {
         imagenesDeProducto.clear();
         item = new Item();
     }
-    
-    public void onClose(SelectEvent event){
+
+    public void onClose(SelectEvent event) {
         cargarFotos();
     }
 
     public void cargarFotos() {
         imagenesDeProducto.clear();
-        //item = ((ItemMB) FacesContext.getCurrentInstance().getApplication().getELResolver().getValue(FacesContext.getCurrentInstance().getELContext(), null, "itemMB")).getItem();
+        item = ((ItemMB) FacesContext.getCurrentInstance().getApplication().getELResolver().getValue(FacesContext.getCurrentInstance().getELContext(), null, "itemMB")).getItem();
 
         if (item != null && item.getIdItem() != null) {
             folderImg = new File(RESOURCE_BUNDLE.getString("pathimagenesitem") + item.getCodigoProducto());
@@ -84,14 +82,6 @@ public class FotosItemMB implements Serializable {
 
     public void setItemService(ItemService itemService) {
         this.itemService = itemService;
-    }
-
-    public String getNombreImagen() {
-        return nombreImagen;
-    }
-
-    public void setNombreImagen(String nombreImagen) {
-        this.nombreImagen = nombreImagen;
     }
 
     public String getCodigoItem() {
@@ -141,14 +131,6 @@ public class FotosItemMB implements Serializable {
         }
     }
 
-    public void deleteImage() {
-        File img = new File(RESOURCE_BUNDLE.getString("pathimagenesitem") + item.codigoProducto + "/" + nombreImagen);
-        if (img.exists()) {
-            img.delete();
-            cargarFotos();
-        }
-    }
-
     public void imgPrincipal() {
         if (file != null) {
             item.setUrlImagen(file.getFileName());
@@ -157,8 +139,8 @@ public class FotosItemMB implements Serializable {
             crearArchivo();
         }
     }
-    
-    public void cerrar(){
+
+    public void cerrar() {
         PrimeFaces.current().dialog().closeDynamic("/");
     }
 }

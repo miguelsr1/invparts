@@ -44,11 +44,14 @@ public class ItemMB implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle.getBundle("etiquetas");
 
     @ManagedProperty("#{itemService}")
     private ItemService itemService;
 
     private Integer idModelo = 0;
+    private String nombreImagen;
+    private List<String> imagenesDeProducto = new ArrayList();
 
     private Item item = new Item();
     private InformacionItem infoItem = new InformacionItem();
@@ -72,6 +75,26 @@ public class ItemMB implements Serializable {
         lstCompatibilidadDtos = itemService.getLstCompatibilidadByItem(item.getIdItem());
         //item = new Item();
         lstProductos = itemService.getLstProducto(0);
+
+        if (item.getIdItem() != null) {
+            cargarFotosInit();
+        }
+    }
+
+    public String getNombreImagen() {
+        return nombreImagen;
+    }
+
+    public void setNombreImagen(String nombreImagen) {
+        this.nombreImagen = nombreImagen;
+    }
+
+    public List<String> getImagenesDeProducto() {
+        return imagenesDeProducto;
+    }
+
+    public void setImagenesDeProducto(List<String> imagenesDeProducto) {
+        this.imagenesDeProducto = imagenesDeProducto;
     }
 
     public UploadedFile getFileUpd() {
@@ -178,8 +201,8 @@ public class ItemMB implements Serializable {
     public void nuevo() {
         item = new Item();
     }
-    
-    public void addInfoItem(){
+
+    public void addInfoItem() {
         getLstInfoItems().add(new InformacionItem());
     }
 
@@ -293,6 +316,28 @@ public class ItemMB implements Serializable {
     public void eliminarInfoItem() {
         if (infoItem != null) {
             infoItem.setEliminar(!infoItem.getEliminar());
+        }
+    }
+
+    public void cargarFotosInit() {
+        imagenesDeProducto.clear();
+        //item = ((ItemMB) FacesContext.getCurrentInstance().getApplication().getELResolver().getValue(FacesContext.getCurrentInstance().getELContext(), null, "itemMB")).getItem();
+
+        if (item != null && item.getIdItem() != null) {
+            folderImg = new File(RESOURCE_BUNDLE.getString("pathimagenesitem") + item.getCodigoProducto());
+            if (folderImg.exists()) {
+                for (File listFile : folderImg.listFiles()) {
+                    imagenesDeProducto.add(listFile.getName());
+                }
+            }
+        }
+    }
+
+    public void deleteImage() {
+        File img = new File(RESOURCE_BUNDLE.getString("pathimagenesitem") + item.codigoProducto + "/" + nombreImagen);
+        if (img.exists()) {
+            img.delete();
+            cargarFotosInit();
         }
     }
 }

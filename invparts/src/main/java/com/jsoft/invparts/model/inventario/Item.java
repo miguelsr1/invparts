@@ -28,6 +28,7 @@ public class Item implements Serializable, PersistenciaDao {
     public String codigoProducto;
     public Integer idEstante;
     public Double precioUnitario;
+    public Double precioCompra;
 
     private List<InformacionItem> lstInformacionItem = new ArrayList();
 
@@ -121,22 +122,22 @@ public class Item implements Serializable, PersistenciaDao {
 
     @Override
     public String generarInsertSQL() {
-        return "INSERT INTO item (id_producto, descripcion, tamanio, peso, especificaciones, url_imagen, codigo_producto, id_estante, precio_unitario) VALUES (?, ?, ?, ?, ?, ?, ?, ?,?)";
+        return "INSERT INTO item (id_producto, descripcion, tamanio, peso, especificaciones, url_imagen, codigo_producto, id_estante, precio_unitario, precio_compra) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     }
 
     @Override
     public Object[] getDatosInsert() {
-        return new Object[]{idProducto, descripcion, tamanio, peso, especificaciones, urlImagen, codigoProducto, idEstante, precioUnitario};
+        return new Object[]{idProducto, descripcion, tamanio, peso, especificaciones, urlImagen, codigoProducto, idEstante, precioUnitario, precioCompra};
     }
 
     @Override
     public String generarUpdateSQL() {
-        return "UPDATE item SET id_producto=?, descripcion=?, tamanio=?, peso=?, especificaciones=?, precio_unitario =?, url_imagen=?, codigo_producto=?, id_estante=? WHERE id_item=?";
+        return "UPDATE item SET id_producto=?, descripcion=?, tamanio=?, peso=?, especificaciones=?, precio_unitario =?, precio_compra = ?, url_imagen=?, codigo_producto=?, id_estante=? WHERE id_item=?";
     }
 
     @Override
     public Object[] getDatosUpdate() {
-        return new Object[]{idProducto, descripcion, tamanio, peso, especificaciones, precioUnitario, urlImagen, codigoProducto, idEstante, idItem};
+        return new Object[]{idProducto, descripcion, tamanio, peso, especificaciones, precioUnitario, precioCompra, urlImagen, codigoProducto, idEstante, idItem};
     }
 
     @Override
@@ -155,5 +156,13 @@ public class Item implements Serializable, PersistenciaDao {
 
     public void setPrecioUnitario(Double precioUnitario) {
         this.precioUnitario = precioUnitario;
+    }
+
+    public Double getPrecioCompra() {
+        return precioCompra;
+    }
+
+    public void setPrecioCompra(Double precioCompra) {
+        this.precioCompra = precioCompra;
     }
 }

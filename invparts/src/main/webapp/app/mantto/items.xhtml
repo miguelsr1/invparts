@@ -35,7 +35,9 @@
                             </p:selectOneMenu>
                             <p:outputLabel value="Codigo"/>
                             <p:inputText value="#{itemMB.item.codigoProducto}"/>
-                            <p:outputLabel value="Precio Unitario"/>
+                            <p:outputLabel value="Costo Unitario"/>
+                            <p:inputNumber value="#{itemMB.item.precioCompra}" decimalPlaces="2" decimalSeparator="." thousandSeparator=","/>
+                            <p:outputLabel value="Precio de venta"/>
                             <p:inputNumber value="#{itemMB.item.precioUnitario}" decimalPlaces="2" decimalSeparator="." thousandSeparator=","/>
                             <p:outputLabel value="Medidas"/>
                             <p:inputText value="#{itemMB.item.tamanio}"/>
@@ -141,15 +143,15 @@
                             </p:commandButton>
                         </f:facet>
                         <br />
-                        <p:dataGrid id="dgFotos" var="img" value="#{fotosItemMB.imagenesDeProducto}" columns="6" layout="grid">
+                        <p:dataGrid id="dgFotos" var="img" value="#{itemMB.imagenesDeProducto}" columns="6" layout="grid">
                             <p:panel style="text-align:center;">
                                 <h:panelGrid columns="1" style="width:100%">
                                     <p:outputPanel>
-                                        <p:commandLink action="#{fotosItemMB.deleteImage}" style="float:right; clear: both;" update="dgFotos">
+                                        <p:commandLink action="#{itemMB.deleteImage}" style="float:right; clear: both;" update="dgFotos">
                                             <i class="fa fa-trash" aria-hidden="true"></i>
-                                            <f:setPropertyActionListener value="#{img}" target="#{fotosItemMB.nombreImagen}"/> 
+                                            <f:setPropertyActionListener value="#{img}" target="#{itemMB.nombreImagen}"/> 
                                         </p:commandLink>
-                                        <p:graphicImage value="/DynamicImageServlet?file=#{fotosItemMB.codigoItem}/#{img}" styleClass="content" width="100px" height="100px"/>
+                                        <p:graphicImage value="/DynamicImageServlet?file=#{itemMB.item.codigoProducto}/#{img}" styleClass="content" width="100px" height="100px"/>
                                     </p:outputPanel>
                                 </h:panelGrid>
                             </p:panel>
