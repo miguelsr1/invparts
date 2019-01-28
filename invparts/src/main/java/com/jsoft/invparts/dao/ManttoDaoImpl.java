@@ -18,18 +18,15 @@ import com.jsoft.invparts.model.seguridad.Modulo;
 import com.jsoft.invparts.model.seguridad.OpcionMenu;
 import com.jsoft.invparts.model.seguridad.Perfil;
 import com.jsoft.invparts.model.seguridad.Persona;
+import com.jsoft.invparts.model.seguridad.Privilegio;
 import com.jsoft.invparts.model.seguridad.Usuario;
 import com.jsoft.invparts.util.JsfUtil;
 import com.jsoft.invparts.util.XJdbcTemplate;
-import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.primefaces.model.menu.DefaultMenuItem;
 import org.primefaces.model.menu.DefaultMenuModel;
 import org.primefaces.model.menu.DefaultSubMenu;
@@ -51,7 +48,7 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
     @Autowired
     Environment env;
 
-    private DefaultMenuModel model;   
+    private DefaultMenuModel model;
 
     public ManttoDaoImpl() {
     }
@@ -89,6 +86,30 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
         return listPer;
     }
 
+    @Override
+    public List<Privilegio> listPrivilegio(Privilegio pri) {
+        String sql = "SELECT * from Privilegio";
+
+        if (pri != null) {
+            sql += pri.getWhere();
+        }
+
+        List<Privilegio> listPer = getJdbcTemplate().query(sql, new RowMapper<Privilegio>() {
+
+            @Override
+            public Privilegio mapRow(ResultSet rs, int rowNumber) throws SQLException {
+                Privilegio per = new Privilegio();
+                per.setIdPrivilegio(rs.getInt("id_privilegio"));
+                per.setIdModuloPerfil(rs.getInt("id_modulo_perfil"));
+                per.setIdOpcionMenu(rs.getInt("id_opcion_menu"));
+                return per;
+            }
+
+        });
+        return listPer;
+    }
+
+    
     @Override
     public List<Perfil> listPerfil(Perfil per) {
         String sql = "SELECT * from perfil";
@@ -195,7 +216,7 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
 
     @Override
     public List<OpcionMenu> listOpcMenuMod(Integer idMod) {
-        String sql = "SELECT * FROM Opcion_Menu WHERE id_modulo="+idMod;
+        String sql = "SELECT * FROM Opcion_Menu WHERE id_modulo=" + idMod;
 
         List<OpcionMenu> listOpc = getJdbcTemplate().query(sql, new RowMapper<OpcionMenu>() {
 
@@ -217,8 +238,6 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
         return listOpc;
     }
 
-    
-    
     @Override
     public List<Usuario> listUsuario() {
         String sql = "SELECT * from usuario";
@@ -265,16 +284,16 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
     }
 
     @Override
-    public List<Sucursal> listSucursal(Sucursal suc,Integer idEmpresa) {
+    public List<Sucursal> listSucursal(Sucursal suc, Integer idEmpresa) {
         String sql = "SELECT * from Sucursal ";
         if (suc != null) {
             if (idEmpresa != null) {
-                sql += "where id_empresa = " + idEmpresa ;
+                sql += "where id_empresa = " + idEmpresa;
             } else {
                 sql += suc.getWhere();
             }
         }
-        
+
         List<Sucursal> listBranch = getJdbcTemplate().query(sql, new RowMapper<Sucursal>() {
 
             @Override
@@ -370,11 +389,11 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
         return !getJdbcTemplate().query("SELECT * FROM usuario WHERE usuario = '" + usuario + "'", new BeanPropertyRowMapper(Usuario.class)).isEmpty();
     }
 
-     @Override
-    public Boolean getUsuarioByClave(String usuario,String clave) {
-        return !getJdbcTemplate().query("SELECT * FROM usuario WHERE usuario = '" + usuario + "' and clave_acceso='"+clave+"'", new BeanPropertyRowMapper(Usuario.class)).isEmpty();
+    @Override
+    public Boolean getUsuarioByClave(String usuario, String clave) {
+        return !getJdbcTemplate().query("SELECT * FROM usuario WHERE usuario = '" + usuario + "' and clave_acceso='" + clave + "'", new BeanPropertyRowMapper(Usuario.class)).isEmpty();
     }
-    
+
     /**
      * Metodo que devuelve true si el correo registrado a un nuevo usuario ya
      * existe
@@ -391,8 +410,7 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
     public int guardarConIdAutogenerado(PersistenciaDao objeto) {
         return super.persistirConIdAutogenerado(objeto);
     }
-    
-  
+
     @Override
     public int guardarConIdString(PersistenciaDao objeto, Boolean nuevo) {
         return super.persistirConIdString(objeto, nuevo);
@@ -480,34 +498,32 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
         return lstCat;
     }
 
-   @Override
-    public String findNombreOpcion(Integer id){
-        String name="-";
-        if (id!=0 && id!=null){
+    @Override
+    public String findNombreOpcion(Integer id) {
+        String name = "-";
+        if (id != null && id != 0) {
             String sql = "SELECT nombre_opcion FROM opcion_menu WHERE id_opcion_menu=?";
-        
-           name = getJdbcTemplate().queryForObject(sql, new Object[] {id},String.class);
+
+            name = getJdbcTemplate().queryForObject(sql, new Object[]{id}, String.class);
         }
         return name;
     }
 
     @Override
-    public String findNombreModulo(Integer id){
+    public String findNombreModulo(Integer id) {
         String sql = "SELECT nombre_modulo FROM modulo WHERE id_modulo=?";
-        
-        String name = getJdbcTemplate().queryForObject(sql, new Object[] {id},String.class);
-        
+
+        String name = getJdbcTemplate().queryForObject(sql, new Object[]{id}, String.class);
+
         return name;
     }
 
-
-    
     @Override
-    public String findNombreMarca(Integer id){
+    public String findNombreMarca(Integer id) {
         String sql = "SELECT NOMBRE_MARCA FROM MARCA WHERE ID_MARCA=?";
-        
-        String name = getJdbcTemplate().queryForObject(sql, new Object[] {id},String.class);
-        
+
+        String name = getJdbcTemplate().queryForObject(sql, new Object[]{id}, String.class);
+
         return name;
     }
 
@@ -541,7 +557,7 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
 
         return customer;
     }
-    
+
     @Override
     public Usuario findUserByLogin(String login) {
         String sql = "SELECT * FROM usuario WHERE usuario = ?";
@@ -552,33 +568,31 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
 
         return user;
     }
-    
+
     @Override
     public Integer findIdEmpByLogin(String login) {
         String sql = "SELECT id_empresa FROM usuario_Empresa WHERE usuario = ?";
 
-         Integer idEmp = getJdbcTemplate().queryForObject(sql, new Object[] {login},Integer.class);
-        
+        Integer idEmp = getJdbcTemplate().queryForObject(sql, new Object[]{login}, Integer.class);
+
         return idEmp;
     }
-    
-    
+
     @Override
-    public Integer findIdModPerByLogin(String login,Integer emp) {
+    public Integer findIdModPerByLogin(String login, Integer emp) {
         String sql = "SELECT id_modulo_perfil FROM usuario_Empresa WHERE usuario = ? and id_empresa=?";
 
-         Integer idEmp = getJdbcTemplate().queryForObject(sql, new Object[] {login,emp},Integer.class);
-        
+        Integer idEmp = getJdbcTemplate().queryForObject(sql, new Object[]{login, emp}, Integer.class);
+
         return idEmp;
     }
-    
-    @Override
-    public List<Modulo> getlstModulos(String login){
-         String sql = "select * from modulo " +
-                      " where id_modulo in (select mp.id_modulo from usuario_empresa ue inner join modulo_perfil mp on mp.id_modulo_perfil=ue.id_modulo_perfil " +
-                                            " where ue.usuario='"+login+"');";
 
-        
+    @Override
+    public List<Modulo> getlstModulos(String login) {
+        String sql = "select * from modulo "
+                + " where id_modulo in (select mp.id_modulo from usuario_empresa ue inner join modulo_perfil mp on mp.id_modulo_perfil=ue.id_modulo_perfil "
+                + " where ue.usuario='" + login + "');";
+
         List<Modulo> listMod = getJdbcTemplate().query(sql, new RowMapper<Modulo>() {
 
             @Override
@@ -592,11 +606,11 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
 
         });
         return listMod;
-        
+
     }
-  
-    @Override  
-     public void crearArbolMenu(List<OpcionMenu> lstOpcionMenu) {
+
+    @Override
+    public void crearArbolMenu(List<OpcionMenu> lstOpcionMenu) {
         DefaultMenuModel menu = new DefaultMenuModel();
         DefaultSubMenu subMenu = new DefaultSubMenu();
         Object obj = null;
@@ -610,7 +624,7 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
 
                     itemMenu.setValue(" " + opcMenu.getNombreOpcion());
                     itemMenu.setUrl(opcMenu.getUrlOpcion() + "?faces-redirect=true");
-                    itemMenu.setIcon(opcMenu.getIconoOpcion()!= null ? opcMenu.getIconoOpcion(): null);
+                    itemMenu.setIcon(opcMenu.getIconoOpcion() != null ? opcMenu.getIconoOpcion() : null);
                     itemMenu.setAjax(true);
                     itemMenu.setId("item" + opcMenu.getIdOpcionMenu().toString());
 
@@ -637,9 +651,6 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
         }
     }
 
-    
-    
-    
     private Object getHijo(DefaultSubMenu opPadre, List<OpcionMenu> resultado) {
         DefaultSubMenu subMenu;
         DefaultMenuItem itemMenu;
@@ -670,7 +681,7 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
             itemMenu = new DefaultMenuItem();
             itemMenu.setValue(" " + opcionM.getNombreOpcion());
             itemMenu.setUrl(opcionM.getUrlOpcion() + "?faces-redirect=true");
-            itemMenu.setIcon(opcionM.getIconoOpcion()!= null ? opcionM.getIconoOpcion(): null);
+            itemMenu.setIcon(opcionM.getIconoOpcion() != null ? opcionM.getIconoOpcion() : null);
             itemMenu.setAjax(true);
             itemMenu.setId("item" + opcionM.getIdOpcionMenu().toString());
 
@@ -680,6 +691,9 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
         }
     }
 
-       
-    
+    @Override
+    public List<OpcionMenu> listOpcMenuByUsuAndModulo(String usuario, Integer idModulo) {
+        return getJdbcTemplate().query("SELECT * from vw_opciones_menu_by_usu_and_mod WHERE usuario ='" + usuario + "' and id_modulo = " + idModulo, new BeanPropertyRowMapper(OpcionMenu.class));
+    }
+
 }

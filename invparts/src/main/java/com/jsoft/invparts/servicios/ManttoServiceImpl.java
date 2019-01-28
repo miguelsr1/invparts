@@ -25,6 +25,7 @@ import com.jsoft.invparts.model.seguridad.Modulo;
 import com.jsoft.invparts.model.seguridad.OpcionMenu;
 import com.jsoft.invparts.model.seguridad.Usuario;
 import com.jsoft.invparts.model.seguridad.Perfil;
+import com.jsoft.invparts.model.seguridad.Privilegio;
 import java.text.MessageFormat;
 import java.util.Date;
 import java.util.ResourceBundle;
@@ -64,6 +65,11 @@ public class ManttoServiceImpl implements ManttoService {
         return dao.listEmpresa(emp, idTipoEmpresa);
     }
 
+    @Override
+    public List<Privilegio> listPrivilegio(Privilegio pri) {
+        return dao.listPrivilegio(pri);
+    }
+    
     @Override
     public List<OpcionMenu> listOpcionesMenu(OpcionMenu opc) {
         return dao.listOpcMenu(opc);

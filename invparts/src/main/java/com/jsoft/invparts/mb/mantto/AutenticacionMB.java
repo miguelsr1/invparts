@@ -19,6 +19,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 
 /**
  *
@@ -41,6 +42,7 @@ public class AutenticacionMB implements Serializable {
     @ManagedProperty("#{manttoService}")
     private ManttoService manttoService;
 
+     
     /**
      * Creates a new instance of AutenticacionMB
      */
@@ -54,10 +56,10 @@ public class AutenticacionMB implements Serializable {
     @PostConstruct
     public void init() {
 
-        Usuario p = (Usuario) JsfUtil.getVariableSession("USU_SESSION");
+   /*     Usuario p = (Usuario) JsfUtil.getVariableSession("USU_SESSION");
       idModulo =  JsfUtil.getRequestParameter("idApp");
       
-      lstOpcMenu = manttoService.listOpcMenuMod(Integer.parseInt(idModulo));
+      lstOpcMenu = manttoService.listOpcMenuMod(Integer.parseInt(idModulo));*/
      
     }
 
@@ -134,7 +136,7 @@ public class AutenticacionMB implements Serializable {
     }
 
     public void obtenerMenu() {
-      
+        
         JsfUtil.redireccionar("/menu.xhtml");
     
     }

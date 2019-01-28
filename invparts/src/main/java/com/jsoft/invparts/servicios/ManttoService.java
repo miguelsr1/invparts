@@ -20,6 +20,7 @@ import com.jsoft.invparts.model.seguridad.OpcionMenu;
 import com.jsoft.invparts.model.seguridad.Persona;
 import com.jsoft.invparts.model.seguridad.Usuario;
 import com.jsoft.invparts.model.seguridad.Perfil;
+import com.jsoft.invparts.model.seguridad.Privilegio;
 import java.util.List;
 
 /**
@@ -34,6 +35,8 @@ public interface ManttoService {
     public List<Empresa> listEmpresa(Empresa emp, Short idTipoEmpresa);
 
     public List<Empresa> listEmpresaUsu(Empresa emp);
+
+    public List<Privilegio> listPrivilegio(Privilegio per);
 
     public List<OpcionMenu> listOpcionesMenu(OpcionMenu opc);
     

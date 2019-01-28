@@ -42,10 +42,10 @@ public class MenuMB implements Serializable {
      @PostConstruct
     public void init() {
 
-      Usuario p = (Usuario) JsfUtil.getVariableSession("USU_SESSION");
+  /*    Usuario p = (Usuario) JsfUtil.getVariableSession("USU_SESSION");
       idModulo =  JsfUtil.getRequestParameter("idApp");
       
-      lstOpcMenu = manttoService.listOpcMenuMod(Integer.parseInt(idModulo));
+      lstOpcMenu = manttoService.listOpcMenuMod(Integer.parseInt(idModulo));*/
     }
     public HashMap<String, Object> getVariables() {
         return variables;

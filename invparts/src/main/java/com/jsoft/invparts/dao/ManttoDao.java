@@ -17,6 +17,7 @@ import com.jsoft.invparts.model.seguridad.Modulo;
 import com.jsoft.invparts.model.seguridad.OpcionMenu;
 import com.jsoft.invparts.model.seguridad.Perfil;
 import com.jsoft.invparts.model.seguridad.Persona;
+import com.jsoft.invparts.model.seguridad.Privilegio;
 import com.jsoft.invparts.model.seguridad.Usuario;
 import java.util.List;
 
@@ -41,6 +42,8 @@ public interface ManttoDao {
     public List<Empresa> listEmpresaUsu(Empresa emp);
     
     public List<OpcionMenu> listOpcMenu(OpcionMenu opc);
+    
+    public List<OpcionMenu> listOpcMenuByUsuAndModulo(String usuario, Integer idModulo);
 
     public List<OpcionMenu> listOpcMenuMod(Integer idApp);
      
@@ -50,6 +53,9 @@ public interface ManttoDao {
 
     public List<Perfil> listPerfil(Perfil per);
 
+    public List<Privilegio> listPrivilegio(Privilegio pri);
+
+    
     public List<Modulo> listModulo(Modulo mod);
 
     public List<Vendedor> listVendedor(Vendedor ven);
