@@ -14,8 +14,10 @@ import com.jsoft.invparts.model.inventario.Vendedor;
 import com.jsoft.invparts.model.inventario.dto.ProductoCategoriaDto;
 import com.jsoft.invparts.model.seguridad.Empresa;
 import com.jsoft.invparts.model.seguridad.Modulo;
+import com.jsoft.invparts.model.seguridad.OpcionMenu;
 import com.jsoft.invparts.model.seguridad.Perfil;
 import com.jsoft.invparts.model.seguridad.Persona;
+import com.jsoft.invparts.model.seguridad.Privilegio;
 import com.jsoft.invparts.model.seguridad.Usuario;
 import java.util.List;
 
@@ -38,11 +40,22 @@ public interface ManttoDao {
     public List<Empresa> listEmpresa(Empresa emp, Short idTipoEmpresa);
 
     public List<Empresa> listEmpresaUsu(Empresa emp);
+    
+    public List<OpcionMenu> listOpcMenu(OpcionMenu opc);
+    
+    public List<OpcionMenu> listOpcMenuByUsuAndModulo(String usuario, Integer idModulo);
 
+    public List<OpcionMenu> listOpcMenuMod(Integer idApp);
+     
+    public void crearArbolMenu(List<OpcionMenu> lstOpcionMenu);
+     
     public List<Usuario> listUsuario();
 
     public List<Perfil> listPerfil(Perfil per);
 
+    public List<Privilegio> listPrivilegio(Privilegio pri);
+
+    
     public List<Modulo> listModulo(Modulo mod);
 
     public List<Vendedor> listVendedor(Vendedor ven);
@@ -57,8 +70,17 @@ public interface ManttoDao {
 
     public String nombreTipoEmpresa(Integer id);
 
-     public Usuario findUserByLogin(String login);
-             
+    public String findNombreOpcion(Integer id);
+
+    public String findNombreModulo(Integer id);
+
+    public Usuario findUserByLogin(String login);
+        
+    public Integer findIdEmpByLogin(String login);  
+    
+    public Integer findIdModPerByLogin(String login,Integer emp);  
+    
+    
     public Boolean getUsuarioByUsu(String usuario);
     
     public Boolean getUsuarioByClave(String usuario,String clave);

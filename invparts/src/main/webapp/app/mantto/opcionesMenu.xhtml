@@ -1,0 +1,80 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                template="#{pageContext.servletContext.contextPath}/resources/template/template.xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <ui:define name="content">
+        <div class="ui-g">
+            <div class="ui-g-12">
+                <div class="card card-w-title">
+                    <p:menubar id="mbar">
+                        <p:menuitem id="mitGuardar" value="#{msj.guardar}" action="#{opcionMenuMB.guardarOpcion}" icon="fa fa-floppy-o" update="pngDatos tblDatos"/>
+                        <p:menuitem id="mitBuscar" value="#{msj.buscar}" action="#{opcionMenuMB.buscarOpcion}" icon="fa fa-search" update="pngDatos tblDatos"/>
+                        <p:menuitem id="mitNuevo" value="#{msj.limpiar}" action="#{opcionMenuMB.limpiarOpc}" icon="fa fa-eraser" update="pngDatos tblDatos"/>
+                    </p:menubar>
+
+                    <p:panelGrid id="pngDatos" columns="2" columnClasses="col4_label,col8" styleClass="ui-panelgrid-blank form-group form-elements">
+                        <p:outputLabel value="Id"/>
+                        <p:inputText value="#{opcionMenuMB.opc.idOpcionMenu}" readonly="true" style="width: 60px;"/>
+                        <p:outputLabel value="Nombre Opcion"/>
+                        <p:inputText value="#{opcionMenuMB.opc.nombreOpcion}" style="width: 250px;" required="true" requiredMessage="Ingrese Nombre Opcion"/>
+                        <p:outputLabel value="Icono Opcion"/>
+                        <p:inputText value="#{opcionMenuMB.opc.iconoOpcion}" style="width: 250px;" required="true" requiredMessage="Ingrese Icono Opcion"/>
+                        <p:outputLabel value="Url Opcion"/>
+                        <p:inputText value="#{opcionMenuMB.opc.urlOpcion}" style="width: 250px;"/>
+                        <p:outputLabel value="Opcion activa"/>
+                        <p:selectOneMenu id="console" value="#{opcionMenuMB.opc.opcionActiva}" style="width:125px">
+                            <f:selectItem itemLabel="Activo" itemValue="1"  />
+                            <f:selectItem itemLabel="Inactivo" itemValue="0" />
+                        </p:selectOneMenu>
+                          <p:outputLabel value="Orden"/>
+                           <p:inputText  value="#{opcionMenuMB.opc.ordenOpcion}"   size="5" style="width: 250px;"/>
+                        <p:outputLabel value="Modulo"/>
+                        <p:selectOneMenu value="#{opcionMenuMB.opc.idModulo}" required="true" requiredMessage="Ingrese el modulo al que pertenece la opcion">
+                                <f:selectItem itemLabel="Seleccione un valor"/>
+                                <f:selectItems value="#{opcionMenuMB.lstModulos}" var="modu" itemValue="#{modu.idModulo}" itemLabel="#{modu.nombreModulo}"/>
+                            </p:selectOneMenu>
+                        <p:outputLabel value="Opcion Superior"/>
+                        <p:selectOneMenu value="#{opcionMenuMB.opc.opcionIdOpcionMenu}">
+                                <f:selectItem itemLabel="Seleccione un valor"/>
+                                <f:selectItems value="#{opcionMenuMB.lstOpcSup}" var="opc" itemValue="#{opc.idOpcionMenu}" itemLabel="#{opc.nombreOpcion}"/>
+                            </p:selectOneMenu>
+                    </p:panelGrid>
+
+                    <br/>
+                    <p:dataTable id="tblDatos" value="#{opcionMenuMB.lstOpciones}" var="menu" rowIndexVar="rowId" rowKey="#{menu.idOpcionMenu}"
+                                 selectionMode="single" selection="#{opcionMenuMB.opc}">
+                        <p:ajax event="rowSelect" update="pngDatos"/>
+                        <p:column headerText="#Id" width="70" styleClass="colCenter">
+                            <p:outputLabel value="#{menu.idOpcionMenu}"/>
+                        </p:column>
+                        <p:column headerText="Nombre Opcion">
+                            <p:outputLabel value="#{menu.nombreOpcion}"/>
+                        </p:column>
+                        <p:column headerText="Icono Opcion">
+                            <p:outputLabel value="#{menu.iconoOpcion}"/>
+                        </p:column>
+                        <p:column headerText="Url Opcion">
+                            <p:outputLabel value="#{menu.urlOpcion}"/>
+                        </p:column>
+                        <p:column headerText="Opcion Activa">
+                            <p:outputLabel value="#{menu.opcionActiva==1?'Activa':'Inactiva'}"/>
+                        </p:column>
+                        <p:column headerText="Orden Opcion">
+                            <p:outputLabel value="#{menu.ordenOpcion}"/>
+                        </p:column>
+                         <p:column headerText="Modulo">
+                             <p:outputLabel value="#{opcionMenuMB.nombreModulo(menu.idModulo)}"/>
+                        </p:column>
+                        <p:column headerText="Opcion Superior">
+                            <p:outputLabel value="#{opcionMenuMB.nombreOpcion(menu.opcionIdOpcionMenu)}"/>
+                        </p:column>
+                    </p:dataTable>
+                </div>
+            </div>
+        </div>
+    </ui:define>
+</ui:composition>

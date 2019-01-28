@@ -15,15 +15,21 @@ import com.jsoft.invparts.model.inventario.dto.ProductoCategoriaDto;
 import com.jsoft.invparts.model.mapper.CategoriaRowMapper;
 import com.jsoft.invparts.model.seguridad.Empresa;
 import com.jsoft.invparts.model.seguridad.Modulo;
+import com.jsoft.invparts.model.seguridad.OpcionMenu;
 import com.jsoft.invparts.model.seguridad.Perfil;
 import com.jsoft.invparts.model.seguridad.Persona;
+import com.jsoft.invparts.model.seguridad.Privilegio;
 import com.jsoft.invparts.model.seguridad.Usuario;
+import com.jsoft.invparts.util.JsfUtil;
 import com.jsoft.invparts.util.XJdbcTemplate;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
+import org.primefaces.model.menu.DefaultMenuItem;
+import org.primefaces.model.menu.DefaultMenuModel;
+import org.primefaces.model.menu.DefaultSubMenu;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -42,7 +48,17 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
     @Autowired
     Environment env;
 
+    private DefaultMenuModel model;
+
     public ManttoDaoImpl() {
+    }
+
+    public DefaultMenuModel getModel() {
+        return model;
+    }
+
+    public void setModel(DefaultMenuModel model) {
+        this.model = model;
     }
 
     @Override
@@ -70,6 +86,30 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
         return listPer;
     }
 
+    @Override
+    public List<Privilegio> listPrivilegio(Privilegio pri) {
+        String sql = "SELECT * from Privilegio";
+
+        if (pri != null) {
+            sql += pri.getWhere();
+        }
+
+        List<Privilegio> listPer = getJdbcTemplate().query(sql, new RowMapper<Privilegio>() {
+
+            @Override
+            public Privilegio mapRow(ResultSet rs, int rowNumber) throws SQLException {
+                Privilegio per = new Privilegio();
+                per.setIdPrivilegio(rs.getInt("id_privilegio"));
+                per.setIdModuloPerfil(rs.getInt("id_modulo_perfil"));
+                per.setIdOpcionMenu(rs.getInt("id_opcion_menu"));
+                return per;
+            }
+
+        });
+        return listPer;
+    }
+
+    
     @Override
     public List<Perfil> listPerfil(Perfil per) {
         String sql = "SELECT * from perfil";
@@ -147,6 +187,58 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
     }
 
     @Override
+    public List<OpcionMenu> listOpcMenu(OpcionMenu opc) {
+        String sql = "SELECT * from Opcion_Menu ";
+
+        if (opc != null) {
+            sql += opc.getWhere();
+        }
+
+        List<OpcionMenu> listOpc = getJdbcTemplate().query(sql, new RowMapper<OpcionMenu>() {
+
+            @Override
+            public OpcionMenu mapRow(ResultSet rs, int rowNumber) throws SQLException {
+                OpcionMenu opc = new OpcionMenu();
+                opc.setIdOpcionMenu(rs.getInt("id_opcion_menu"));
+                opc.setNombreOpcion(rs.getString("nombre_Opcion"));
+                opc.setIconoOpcion(rs.getString("icono_Opcion"));
+                opc.setUrlOpcion(rs.getString("url_opcion"));
+                opc.setOpcionActiva(rs.getInt("opcion_activa"));
+                opc.setOrdenOpcion(rs.getInt("orden_opcion"));
+                opc.setIdModulo(rs.getInt("id_modulo"));
+                opc.setOpcionIdOpcionMenu(rs.getInt("opc_id_opcion_menu"));
+                return opc;
+            }
+
+        });
+        return listOpc;
+    }
+
+    @Override
+    public List<OpcionMenu> listOpcMenuMod(Integer idMod) {
+        String sql = "SELECT * FROM Opcion_Menu WHERE id_modulo=" + idMod;
+
+        List<OpcionMenu> listOpc = getJdbcTemplate().query(sql, new RowMapper<OpcionMenu>() {
+
+            @Override
+            public OpcionMenu mapRow(ResultSet rs, int rowNumber) throws SQLException {
+                OpcionMenu opc = new OpcionMenu();
+                opc.setIdOpcionMenu(rs.getInt("id_opcion_menu"));
+                opc.setNombreOpcion(rs.getString("nombre_Opcion"));
+                opc.setIconoOpcion(rs.getString("icono_Opcion"));
+                opc.setUrlOpcion(rs.getString("url_opcion"));
+                opc.setOpcionActiva(rs.getInt("opcion_activa"));
+                opc.setOrdenOpcion(rs.getInt("orden_opcion"));
+                opc.setIdModulo(rs.getInt("id_modulo"));
+                opc.setOpcionIdOpcionMenu(rs.getInt("opc_id_opcion_menu"));
+                return opc;
+            }
+
+        });
+        return listOpc;
+    }
+
+    @Override
     public List<Usuario> listUsuario() {
         String sql = "SELECT * from usuario";
         List<Usuario> listUser = getJdbcTemplate().query(sql, new RowMapper<Usuario>() {
@@ -192,16 +284,16 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
     }
 
     @Override
-    public List<Sucursal> listSucursal(Sucursal suc,Integer idEmpresa) {
+    public List<Sucursal> listSucursal(Sucursal suc, Integer idEmpresa) {
         String sql = "SELECT * from Sucursal ";
         if (suc != null) {
             if (idEmpresa != null) {
-                sql += "where id_empresa = " + idEmpresa ;
+                sql += "where id_empresa = " + idEmpresa;
             } else {
                 sql += suc.getWhere();
             }
         }
-        
+
         List<Sucursal> listBranch = getJdbcTemplate().query(sql, new RowMapper<Sucursal>() {
 
             @Override
@@ -297,11 +389,11 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
         return !getJdbcTemplate().query("SELECT * FROM usuario WHERE usuario = '" + usuario + "'", new BeanPropertyRowMapper(Usuario.class)).isEmpty();
     }
 
-     @Override
-    public Boolean getUsuarioByClave(String usuario,String clave) {
-        return !getJdbcTemplate().query("SELECT * FROM usuario WHERE usuario = '" + usuario + "' and clave_acceso='"+clave+"'", new BeanPropertyRowMapper(Usuario.class)).isEmpty();
+    @Override
+    public Boolean getUsuarioByClave(String usuario, String clave) {
+        return !getJdbcTemplate().query("SELECT * FROM usuario WHERE usuario = '" + usuario + "' and clave_acceso='" + clave + "'", new BeanPropertyRowMapper(Usuario.class)).isEmpty();
     }
-    
+
     /**
      * Metodo que devuelve true si el correo registrado a un nuevo usuario ya
      * existe
@@ -405,13 +497,33 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
         List<Categoria> lstCat = getJdbcTemplate().query(sql, new Object[]{idProducto, "%" + nombreCategoria + "%"}, new CategoriaRowMapper());
         return lstCat;
     }
-    
+
     @Override
-    public String findNombreMarca(Integer id){
+    public String findNombreOpcion(Integer id) {
+        String name = "-";
+        if (id != null && id != 0) {
+            String sql = "SELECT nombre_opcion FROM opcion_menu WHERE id_opcion_menu=?";
+
+            name = getJdbcTemplate().queryForObject(sql, new Object[]{id}, String.class);
+        }
+        return name;
+    }
+
+    @Override
+    public String findNombreModulo(Integer id) {
+        String sql = "SELECT nombre_modulo FROM modulo WHERE id_modulo=?";
+
+        String name = getJdbcTemplate().queryForObject(sql, new Object[]{id}, String.class);
+
+        return name;
+    }
+
+    @Override
+    public String findNombreMarca(Integer id) {
         String sql = "SELECT NOMBRE_MARCA FROM MARCA WHERE ID_MARCA=?";
-        
-        String name = getJdbcTemplate().queryForObject(sql, new Object[] {id},String.class);
-        
+
+        String name = getJdbcTemplate().queryForObject(sql, new Object[]{id}, String.class);
+
         return name;
     }
 
@@ -445,7 +557,7 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
 
         return customer;
     }
-    
+
     @Override
     public Usuario findUserByLogin(String login) {
         String sql = "SELECT * FROM usuario WHERE usuario = ?";
@@ -456,14 +568,31 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
 
         return user;
     }
-    
-    @Override
-    public List<Modulo> getlstModulos(String login){
-         String sql = "select * from modulo " +
-                      " where id_modulo in (select mp.id_modulo from usuario_empresa ue inner join modulo_perfil mp on mp.id_modulo_perfil=ue.id_modulo_perfil " +
-                                            " where ue.usuario='"+login+"');";
 
-        
+    @Override
+    public Integer findIdEmpByLogin(String login) {
+        String sql = "SELECT id_empresa FROM usuario_Empresa WHERE usuario = ?";
+
+        Integer idEmp = getJdbcTemplate().queryForObject(sql, new Object[]{login}, Integer.class);
+
+        return idEmp;
+    }
+
+    @Override
+    public Integer findIdModPerByLogin(String login, Integer emp) {
+        String sql = "SELECT id_modulo_perfil FROM usuario_Empresa WHERE usuario = ? and id_empresa=?";
+
+        Integer idEmp = getJdbcTemplate().queryForObject(sql, new Object[]{login, emp}, Integer.class);
+
+        return idEmp;
+    }
+
+    @Override
+    public List<Modulo> getlstModulos(String login) {
+        String sql = "select * from modulo "
+                + " where id_modulo in (select mp.id_modulo from usuario_empresa ue inner join modulo_perfil mp on mp.id_modulo_perfil=ue.id_modulo_perfil "
+                + " where ue.usuario='" + login + "');";
+
         List<Modulo> listMod = getJdbcTemplate().query(sql, new RowMapper<Modulo>() {
 
             @Override
@@ -477,6 +606,94 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
 
         });
         return listMod;
-        
+
     }
+
+    @Override
+    public void crearArbolMenu(List<OpcionMenu> lstOpcionMenu) {
+        DefaultMenuModel menu = new DefaultMenuModel();
+        DefaultSubMenu subMenu = new DefaultSubMenu();
+        Object obj = null;
+
+        try {
+            if (!lstOpcionMenu.isEmpty()) {
+                OpcionMenu opcMenu = lstOpcionMenu.get(0);
+
+                if (lstOpcionMenu.size() == 1) {
+                    DefaultMenuItem itemMenu = new DefaultMenuItem();
+
+                    itemMenu.setValue(" " + opcMenu.getNombreOpcion());
+                    itemMenu.setUrl(opcMenu.getUrlOpcion() + "?faces-redirect=true");
+                    itemMenu.setIcon(opcMenu.getIconoOpcion() != null ? opcMenu.getIconoOpcion() : null);
+                    itemMenu.setAjax(true);
+                    itemMenu.setId("item" + opcMenu.getIdOpcionMenu().toString());
+
+                    subMenu.addElement(itemMenu);
+                    obj = subMenu;
+                } else {
+                    subMenu.setLabel(opcMenu.getNombreOpcion());
+                    subMenu.setId("sub" + opcMenu.getIdOpcionMenu().toString());
+
+                    if (!lstOpcionMenu.subList(1, lstOpcionMenu.size()).isEmpty()) {
+                        obj = getHijo(subMenu, lstOpcionMenu.subList(1, lstOpcionMenu.size()));
+                    }
+                }
+            } else {
+
+                subMenu.setLabel(" Sin opciones");
+                obj = subMenu;
+            }
+            menu.addElement((DefaultSubMenu) obj);
+            model = menu;
+
+        } catch (Exception ex) {
+            JsfUtil.addErrorMessage("Ocurrio una excepción en el proceso de creación del arbol del menu. Contactese con el administrador del sistema.");
+        }
+    }
+
+    private Object getHijo(DefaultSubMenu opPadre, List<OpcionMenu> resultado) {
+        DefaultSubMenu subMenu;
+        DefaultMenuItem itemMenu;
+        Boolean hijo = true;
+        OpcionMenu opcionM;
+
+        for (int j = 0; j < resultado.size(); j++) {
+            opcionM = resultado.get(j);
+
+            if (opPadre.getId().replace("sub", "").equals(opcionM.getOpcionIdOpcionMenu().toString())) { //Hijo del padre
+                subMenu = new DefaultSubMenu();
+                subMenu.setLabel(opcionM.getOrdenOpcion().toString() + ". " + opcionM.getNombreOpcion());
+                subMenu.setId("sub" + opcionM.getIdOpcionMenu().toString());
+
+                Object obj = getHijo(subMenu, resultado.subList(j, resultado.size()));
+
+                if (obj instanceof DefaultMenuItem) {
+                    opPadre.getElements().add((DefaultMenuItem) obj);
+                } else {
+                    opPadre.getElements().add((DefaultSubMenu) obj);
+                }
+                hijo = false;
+            }
+        }
+
+        if (hijo) {
+            opcionM = resultado.get(0);
+            itemMenu = new DefaultMenuItem();
+            itemMenu.setValue(" " + opcionM.getNombreOpcion());
+            itemMenu.setUrl(opcionM.getUrlOpcion() + "?faces-redirect=true");
+            itemMenu.setIcon(opcionM.getIconoOpcion() != null ? opcionM.getIconoOpcion() : null);
+            itemMenu.setAjax(true);
+            itemMenu.setId("item" + opcionM.getIdOpcionMenu().toString());
+
+            return itemMenu;
+        } else {
+            return opPadre;
+        }
+    }
+
+    @Override
+    public List<OpcionMenu> listOpcMenuByUsuAndModulo(String usuario, Integer idModulo) {
+        return getJdbcTemplate().query("SELECT * from vw_opciones_menu_by_usu_and_mod WHERE usuario ='" + usuario + "' and id_modulo = " + idModulo, new BeanPropertyRowMapper(OpcionMenu.class));
+    }
+
 }

@@ -8,6 +8,7 @@ package com.jsoft.invparts.servicios;
 import com.jsoft.invparts.dao.PersistenciaDao;
 import com.jsoft.invparts.model.seguridad.Empresa;
 import com.jsoft.invparts.model.seguridad.Persona;
+
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -21,8 +22,10 @@ import com.jsoft.invparts.model.inventario.Sucursal;
 import com.jsoft.invparts.model.inventario.Vendedor;
 import com.jsoft.invparts.model.inventario.dto.ProductoCategoriaDto;
 import com.jsoft.invparts.model.seguridad.Modulo;
+import com.jsoft.invparts.model.seguridad.OpcionMenu;
 import com.jsoft.invparts.model.seguridad.Usuario;
 import com.jsoft.invparts.model.seguridad.Perfil;
+import com.jsoft.invparts.model.seguridad.Privilegio;
 import java.text.MessageFormat;
 import java.util.Date;
 import java.util.ResourceBundle;
@@ -63,6 +66,22 @@ public class ManttoServiceImpl implements ManttoService {
     }
 
     @Override
+    public List<Privilegio> listPrivilegio(Privilegio pri) {
+        return dao.listPrivilegio(pri);
+    }
+    
+    @Override
+    public List<OpcionMenu> listOpcionesMenu(OpcionMenu opc) {
+        return dao.listOpcMenu(opc);
+    }
+    
+    @Override
+    public List<OpcionMenu> listOpcMenuMod(Integer idMod) {
+        return dao.listOpcMenuMod(idMod);
+    }
+    
+    
+    @Override
     public List<Usuario> listUsuario() {
         return dao.listUsuario();
     }
@@ -76,6 +95,16 @@ public class ManttoServiceImpl implements ManttoService {
     public Usuario findUserByLogin(String usuario) {
         return dao.findUserByLogin(usuario);
     }
+    
+      @Override
+    public Integer findIdEmpByLogin(String login){
+        return dao.findIdEmpByLogin(login);
+    }  
+    @Override
+    public Integer findIdModPerByLogin(String login,Integer emp){
+        return dao.findIdModPerByLogin(login,emp);
+    }  
+   
     
     @Override
     public List<Modulo> getlstModulos(String usuario){
@@ -137,6 +166,14 @@ public class ManttoServiceImpl implements ManttoService {
         return dao.nombreTipoEmpresa(id);
     }
 
+     @Override
+    public String nombreOpcion(Integer id) {
+        return dao.findNombreOpcion(id);
+    }
+@Override
+    public String nombreModulo(Integer id) {
+        return dao.findNombreModulo(id);
+    }
     @Override
     public List<Categoria> lstCategoria(Categoria categoria) {
         return dao.lstCategoria(categoria);
