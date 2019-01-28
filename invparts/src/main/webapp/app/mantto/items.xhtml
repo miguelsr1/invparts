@@ -6,9 +6,17 @@
                 template="#{pageContext.servletContext.contextPath}/resources/template/template.xhtml"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <ui:define name="head">
-
+        <style>
+            .ui-datatable .ui-datatable-header, .ui-datatable {
+                text-align: right;
+                padding: 4px 10px;
+            }
+        </style>
     </ui:define>
     <ui:define name="content">
+        <f:metadata>
+            <f:viewAction action="#{fotosItemMB.limpiar()}"/>
+        </f:metadata>
         <div class="ui-g">
             <div class="ui-g-12">
                 <div class="card card-w-title">
@@ -19,7 +27,7 @@
                     </p:menubar>
 
                     <p:panel id="pnlDatos" header="Datos generales">
-                        <p:panelGrid columns="4" columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+                        <p:panelGrid columns="2" columnClasses="ui-grid-col-2,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
                             <p:outputLabel value="Producto"/>
                             <p:selectOneMenu value="#{itemMB.item.idProducto}">
                                 <f:selectItem itemValue="0" itemLabel="#{msj.seleccioneUnValor}"/>
@@ -27,7 +35,8 @@
                             </p:selectOneMenu>
                             <p:outputLabel value="Codigo"/>
                             <p:inputText value="#{itemMB.item.codigoProducto}"/>
-
+                            <p:outputLabel value="Precio Unitario"/>
+                            <p:inputNumber value="#{itemMB.item.precioUnitario}" decimalPlaces="2" decimalSeparator="." thousandSeparator=","/>
                             <p:outputLabel value="Medidas"/>
                             <p:inputText value="#{itemMB.item.tamanio}"/>
                             <p:outputLabel value="Peso"/>
@@ -37,27 +46,101 @@
                                 <f:selectItem itemLabel="Seleccione un valor"/>
                                 <f:selectItems value="#{itemMB.lstEstantes}" var="est" itemValue="#{est.idEstante}" itemLabel="#{est.nombreEstante}"/>
                             </p:selectOneMenu>
-                        </p:panelGrid>
-                        <p:panelGrid columns="2" style="width: 100%" 
-                                     columnClasses="ui-grid-col-6,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
                             <p:outputLabel value="Descripcion"/>
-                            <p:outputLabel value="Especificaciones"/>
-                            <p:textEditor  value="#{itemMB.item.descripcion}" height="200"/>
-                            <p:textEditor   value="#{itemMB.item.especificaciones}" height="200"/>
+                            <p:textEditor  value="#{itemMB.item.descripcion}" height="120"/>
+
+                            <p:outputLabel value="Otras caracteristicas"/>
+                            <p:dataTable value="#{itemMB.lstInfoItems}" var="infoItem" id="tblInfoItem" rowKey="#{infoItem.idInformacionItem}" editable="true">
+                                <f:facet name="header">
+                                    <p:commandLink action="#{itemMB.addInfoItem}" update="tblInfoItem">
+                                        <p:outputLabel value="Add"/>
+                                        <i class="fa fa-plus"></i>
+                                    </p:commandLink>
+                                </f:facet>
+                                <p:column headerText="Etiqueta">
+                                    <p:cellEditor>
+                                        <f:facet name="output"><h:outputText value="#{infoItem.label}" /></f:facet>
+                                        <f:facet name="input"><p:inputText value="#{infoItem.label}" style="width:100%" label="Label"/></f:facet>
+                                    </p:cellEditor>
+                                </p:column>
+
+                                <p:column headerText="Valor">
+                                    <p:cellEditor>
+                                        <f:facet name="output"><h:outputText value="#{infoItem.value}" /></f:facet>
+                                        <f:facet name="input"><p:inputText value="#{infoItem.value}" style="width:100%" label="Label"/></f:facet>
+                                    </p:cellEditor>
+                                </p:column>
+
+                                <p:column style="width:35px" headerText="Edit">
+                                    <p:rowEditor />
+                                </p:column>
+                                <p:column style="width:30px" headerText="Del">
+                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                </p:column>
+
+                                <p:column headerText="Action" style="text-align: center;" rendered="false">
+                                    <p:commandLink action="#{itemMB.eliminarInfoItem}" update="tblInfoItem">
+                                        <p:outputLabel rendered="#{!infoItem.eliminar}"> <i class="fa fa-check-circle"></i></p:outputLabel>
+                                        <p:outputLabel rendered="#{infoItem.eliminar}"> <i class="fa fa-minus-circle"></i></p:outputLabel>
+                                        <f:setPropertyActionListener value="#{infoItem}" target="#{itemMB.infoItem}"/>    
+                                    </p:commandLink>
+                                </p:column>
+                            </p:dataTable>
+
+                            <p:outputLabel value="Compatibilidad"/>
+                            <p:dataTable id="tblCompatibilidad" value="#{itemMB.lstCompatibilidadDtos}" var="com" editable="true">
+                                <f:facet name="header">
+                                    <p:commandLink action="#{itemMB.showModelo}">
+                                        <p:outputLabel value="Add"/>
+                                        <i class="fa fa-plus"></i>
+                                    </p:commandLink>
+                                </f:facet>
+
+                                <p:column headerText="Modelo" style="text-align: center;">
+                                    <p:outputLabel value="#{com.nombreModelo}" />
+                                </p:column>
+
+                                <p:column headerText="Compatibilidad primaria"  style="text-align: center;">
+                                    <p:selectBooleanCheckbox value="#{com.compatibilidadPrimaria}" itemLabel="" />
+                                </p:column>
+                            </p:dataTable>
+
                         </p:panelGrid>
                     </p:panel>
                     <br/>
 
+                    <p:panel visible="false">
+                        <p:commandButton id="btnAddCompa" value="Add" icon="fa fa-plus" action="#{itemMB.showModelo}" style="width: 70px;">
+                            <p:ajax event="dialogReturn" listener="#{itemMB.addCompatibilidad}" update="tblCompatibilidad"/>
+                        </p:commandButton>
+                    </p:panel>
+
+                    <p:dialog id="dlgItemInfo" widgetVar="dlgItemInfo" modal="true" closable="false" draggable="false">
+                        <p:panelGrid id="pngInfoItem" columns="2" columnClasses="ui-grid-col-4,ui-grid-col-8" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+                            <h:outputLabel value="Etiqueta" for="txtLabel"></h:outputLabel>
+                            <p:inputText id="txtLabel" value="#{itemMB.infoItem.label}"/>
+
+                            <h:outputLabel value="Valor" for="txtValue"></h:outputLabel>
+                            <p:inputText id="txtValue" value="#{itemMB.infoItem.value}"/>
+                            <p:spacer height="8"/>
+                        </p:panelGrid>
+
+                        <f:facet name="footer">
+                            <p:commandButton id="btn_reset" value="Reset" type="reset"/>
+                            <p:commandButton id="btn_add" value="Add" update="tblInfoItem pngInfoItem" action="#{itemMB.reinit}" oncomplete="PF('dlgItemInfo').hide();" />
+                            <p:commandButton id="btnClose" value="Close" oncomplete="PF('dlgItemInfo').hide();" />
+                        </f:facet>
+                    </p:dialog>
+
                     <p:panel id="pnlFotos">
                         <f:facet name="header">
                             <p:outputLabel value="Detalle de Fotos"/>
-                            <p:commandButton value="Cargar fotografias" icon="fa fa-picture-o" style="float: right;" action="#{itemMB.showDialogFotografias}">
+                            <p:commandButton value="Cargar fotografias" icon="fa fa-picture-o" style="float: right;" action="#{itemMB.showDialogImagenes()}">
                                 <f:setPropertyActionListener target="#{fotosItemMB.codigoItem}" value="#{itemMB.item.codigoProducto}"/>
+                                <p:ajax event="dialogReturn" listener="#{fotosItemMB.onClose}" update="dgFotos" />
                             </p:commandButton>
                         </f:facet>
-
                         <br />
-
                         <p:dataGrid id="dgFotos" var="img" value="#{fotosItemMB.imagenesDeProducto}" columns="6" layout="grid">
                             <p:panel style="text-align:center;">
                                 <h:panelGrid columns="1" style="width:100%">
@@ -72,17 +155,8 @@
                             </p:panel>
                         </p:dataGrid>
                     </p:panel>
-
-
                 </div>
             </div>
         </div>
-
-        <p:dialog id="dlgFotos" widgetVar="dlgFotos" header="Cargar fotografias" modal="true">
-            <p:ajax event="close" update="dgFotos" listener="#{fotosItemMB.cargarFotos}" />
-            <h:form enctype="multipart/form-data">
-                <p:fileUpload fileUploadListener="#{fotosItemMB.handleFileUpload}" value="Cargar" multiple="true" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" sizeLimit="2000000" previewWidth="50" />
-            </h:form>
-        </p:dialog>
     </ui:define>
 </ui:composition>

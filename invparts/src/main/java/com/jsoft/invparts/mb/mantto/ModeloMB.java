@@ -5,7 +5,6 @@
  */
 package com.jsoft.invparts.mb.mantto;
 
-
 import com.jsoft.invparts.model.inventario.Marca;
 import com.jsoft.invparts.model.inventario.Modelo;
 import com.jsoft.invparts.servicios.ManttoService;
@@ -17,6 +16,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import org.primefaces.PrimeFaces;
 
 /**
  *
@@ -44,8 +44,12 @@ public class ModeloMB implements Serializable {
     @PostConstruct
     public void init() {
         lstModelo = manttoService.listModelo(null);
-        lstMarca =manttoService.listMarca(null);
+        lstMarca = manttoService.listMarca(null);
 
+    }
+    
+    public void updateListaModelo(){
+        lstModelo = manttoService.listModelo(model);
     }
 
     public ManttoService getManttoService() {
@@ -90,7 +94,6 @@ public class ModeloMB implements Serializable {
         if (model.getNombreModelo() != null && !model.getNombreModelo().isEmpty()) {
             int valor = manttoService.guardarConIdAutogenerado(model);
             if (valor > 0) {
-                model.setIdModelo(valor);
                 lstModelo.add(model);
                 model = new Modelo();
             }
@@ -101,5 +104,13 @@ public class ModeloMB implements Serializable {
 
     public void limpiar() {
         model = new Modelo();
+    }
+    
+    public void selectModelo(){
+        PrimeFaces.current().dialog().closeDynamic(model.idModelo);
+    }
+    
+    public void closeSelectModelo(){
+        PrimeFaces.current().dialog().closeDynamic(null);
     }
 }

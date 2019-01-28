@@ -4,23 +4,25 @@
     xmlns:h="http://java.sun.com/jsf/html"
     xmlns:ui="http://java.sun.com/jsf/facelets"
     xmlns:p="http://primefaces.org/ui"
-    xmlns:pa="http://primefaces.org/paradise">
+    xmlns:pa="http://primefaces.org/paradise"
+    xmlns:jsf="http://xmlns.jcp.org/jsf">
 
     <div class="topbar">
         <h:link  styleClass="topbar-logo">
             <p:graphicImage name="images/#{guestPreferences.layout == 'default' ? 'logo-black.png' : 'logo-white.png'}" style="border: 0px;" library="paradise-layout" />
         </h:link>
-        
+
         <a href="#" id="menu-button">
             <i class="fa fa-bars"></i>
         </a>
-        
+
         <a href="#" id="user-display">
-            <span class="username">Emma Davis</span>
-            <p:graphicImage name="images/avatar.png" library="paradise-layout" style="border: 0px;"/>
-            <i class="fa fa-angle-down"></i>
+            <div jsf:id="aCarrito">
+                <p:graphicImage name="carrito.png" library="images" style="border: 0px;"/>
+                <span class="topbar-badge">#{carritoMB.numItemDeCarro}</span>
+            </div>
         </a>
-        
+
         <label for="topbar-search">
             <i class="fa fa-search topbar-search-icon"></i>
         </label>

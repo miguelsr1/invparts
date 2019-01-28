@@ -7,12 +7,16 @@ package com.jsoft.invparts.servicios;
 
 import com.jsoft.invparts.dao.EmpresaDao;
 import com.jsoft.invparts.dao.ItemDao;
+import com.jsoft.invparts.model.inventario.Categoria;
 import com.jsoft.invparts.model.inventario.Estante;
+import com.jsoft.invparts.model.inventario.InformacionItem;
 import com.jsoft.invparts.model.inventario.Item;
 import com.jsoft.invparts.model.inventario.Marca;
 import com.jsoft.invparts.model.inventario.Modelo;
 import com.jsoft.invparts.model.inventario.Producto;
 import com.jsoft.invparts.model.inventario.Sucursal;
+import com.jsoft.invparts.model.inventario.dto.CompatibilidadDto;
+import com.jsoft.invparts.model.inventario.dto.ItemDto;
 import com.jsoft.invparts.model.seguridad.Empresa;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,6 +62,11 @@ public class ItemServiceImpl implements ItemService {
     public Item getItemByPk(Integer idItem) {
         return itemDao.getItemByPk(idItem);
     }
+    
+    @Override
+    public Modelo getModeloByPk(Integer idModelo){
+        return itemDao.getModeloByPk(idModelo);
+    }
 
     @Override
     public List<Marca> getLstMarca() {
@@ -67,5 +76,35 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public List<Modelo> getLstModeloByIdMarca(Integer idMarca) {
         return itemDao.getLstModeloByIdMarca(idMarca);
+    }
+
+    @Override
+    public List<Categoria> getLstCategoriaByModelo(Integer idModelo) {
+        return itemDao.getLstCategoriaByModelo(idModelo);
+    }
+
+    @Override
+    public List<ItemDto> getLstItemsByModelAndCategory(Integer idModel, Integer idCategory) {
+        return itemDao.getLstItemsByModelAndCategory(idModel, idCategory);
+    }
+
+    @Override
+    public void guardarCompatibilidad(CompatibilidadDto compatibilidad) {
+        itemDao.guardarCompatibilidad(compatibilidad);
+    }
+    
+    @Override
+    public List<CompatibilidadDto> getLstCompatibilidadByItem(Integer idItem){
+        return itemDao.getLstCompatibilidadByItem(idItem);
+    }
+
+    @Override
+    public List<InformacionItem> getLstInformacionItemByIdItem(Integer idItem) {
+        return itemDao.getLstInformacionItemByIdItem(idItem);
+    }
+
+    @Override
+    public Item getItemByCod(String cod) {
+        return itemDao.getItemByCod(cod);
     }
 }

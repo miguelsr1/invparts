@@ -32,3 +32,18 @@
     bottom: 0;
     margin:auto;
 }
+
+.topbar-badge {
+    position: absolute;
+    right: 30px;
+    top: 12px;
+    background-color: #e0284f;
+    color: #ffffff;
+    text-align: center;
+    line-height: 16px;
+    min-width: 16px;
+    min-height: 16px;
+    display: block;
+    font-size: 12px;
+    border-radius: 100%;
+}

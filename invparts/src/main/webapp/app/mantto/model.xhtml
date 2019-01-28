@@ -25,8 +25,9 @@
                         <p:outputLabel value="#{msj.codigoModelo}"/>
                         <p:inputText value="#{modeloMB.model.codigoModelo}" style="width: 250px;" />
                         <p:outputLabel value="#{msj.nombreMarca}"  />
-                        <p:selectOneMenu value="#{modeloMB.lstMarca}" var="mar">
-                            <f:selectItems itemValue="#{mar.idMarca}" itemLabel="#{mar.nombreMarca}"/>
+                        <p:selectOneMenu value="#{modeloMB.model.idMarca}">
+                            <f:selectItem itemLabel="Select One" itemValue="" />
+                            <f:selectItems value="#{modeloMB.lstMarca}" var="mar" itemValue="#{mar.idMarca}" itemLabel="#{mar.nombreMarca}"/>
                         </p:selectOneMenu>
                     </p:panelGrid>
 
@@ -42,6 +43,9 @@
                         </p:column>
                         <p:column headerText="#{msj.codigoModelo}">
                             <p:outputLabel value="#{model.codigoModelo}"/>
+                        </p:column>
+                        <p:column headerText="Marca">
+                            <p:outputLabel value="#{model.idMarca}"/>
                         </p:column>
                     </p:dataTable>
                 </div>

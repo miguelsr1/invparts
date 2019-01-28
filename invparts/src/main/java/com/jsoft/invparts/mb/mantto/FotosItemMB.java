@@ -5,6 +5,8 @@
  */
 package com.jsoft.invparts.mb.mantto;
 
+import com.jsoft.invparts.model.inventario.Item;
+import com.jsoft.invparts.servicios.ItemService;
 import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -15,9 +17,12 @@ import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import org.primefaces.PrimeFaces;
 import org.primefaces.event.FileUploadEvent;
+import org.primefaces.event.SelectEvent;
 import org.primefaces.model.UploadedFile;
 
 /**
@@ -25,19 +30,22 @@ import org.primefaces.model.UploadedFile;
  * @author DesarrolloPc
  */
 @ManagedBean
-@ViewScoped
+@SessionScoped
 public class FotosItemMB implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle.getBundle("etiquetas");
 
-    private String codigoItem = "";
+    private Item item;
     private String nombreImagen;
     private List<String> imagenesDeProducto = new ArrayList();
 
     private File folderImg = null;
     private UploadedFile file;
+
+    @ManagedProperty("#{itemService}")
+    private ItemService itemService;
 
     public FotosItemMB() {
     }
@@ -47,16 +55,35 @@ public class FotosItemMB implements Serializable {
         cargarFotos();
     }
 
+    public void limpiar() {
+        imagenesDeProducto.clear();
+        item = new Item();
+    }
+    
+    public void onClose(SelectEvent event){
+        cargarFotos();
+    }
+
     public void cargarFotos() {
         imagenesDeProducto.clear();
-        codigoItem = ((ItemMB)FacesContext.getCurrentInstance().getApplication().getELResolver().getValue(FacesContext.getCurrentInstance().getELContext(), null, "itemMB")).getItem().getCodigoProducto();
-        
-        folderImg = new File(RESOURCE_BUNDLE.getString("pathimagenesitem") + codigoItem);
-        if (folderImg.exists()) {
-            for (File listFile : folderImg.listFiles()) {
-                imagenesDeProducto.add(listFile.getName());
+        //item = ((ItemMB) FacesContext.getCurrentInstance().getApplication().getELResolver().getValue(FacesContext.getCurrentInstance().getELContext(), null, "itemMB")).getItem();
+
+        if (item != null && item.getIdItem() != null) {
+            folderImg = new File(RESOURCE_BUNDLE.getString("pathimagenesitem") + item.getCodigoProducto());
+            if (folderImg.exists()) {
+                for (File listFile : folderImg.listFiles()) {
+                    imagenesDeProducto.add(listFile.getName());
+                }
             }
         }
+    }
+
+    public ItemService getItemService() {
+        return itemService;
+    }
+
+    public void setItemService(ItemService itemService) {
+        this.itemService = itemService;
     }
 
     public String getNombreImagen() {
@@ -68,11 +95,21 @@ public class FotosItemMB implements Serializable {
     }
 
     public String getCodigoItem() {
-        return codigoItem;
+        if (item.getIdItem() == null) {
+            return "";
+        } else {
+            return item.getCodigoProducto();
+        }
     }
 
     public void setCodigoItem(String codigoItem) {
-        this.codigoItem = codigoItem;
+        if (item == null) {
+            item = new Item();
+        }
+        item = itemService.getItemByCod(codigoItem);
+        if (item != null) {
+            cargarFotos();
+        }
     }
 
     public List<String> getImagenesDeProducto() {
@@ -88,28 +125,40 @@ public class FotosItemMB implements Serializable {
     }
 
     public void handleFileUpload(FileUploadEvent event) {
+        file = event.getFile();
+        crearArchivo();
+    }
+
+    private void crearArchivo() {
         try {
-            FacesMessage msg = new FacesMessage("Succesful", event.getFile().getFileName() + " is uploaded.");
-            FacesContext.getCurrentInstance().addMessage(null, msg);
-            
             if (!folderImg.exists()) {
                 folderImg.mkdir();
             }
-            File img = new File(folderImg.getAbsolutePath() + File.separator + event.getFile().getFileName());
-            if (!img.exists()) {
-                img.createNewFile();
-            }
-            event.getFile().write(img.getAbsolutePath());
+            File img = new File(folderImg.getAbsolutePath() + File.separator + file.getFileName());
+            file.write(img.getAbsolutePath());
         } catch (Exception ex) {
             Logger.getLogger(FotosItemMB.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     public void deleteImage() {
-        File img = new File(RESOURCE_BUNDLE.getString("pathimagenesitem") + codigoItem + "/" + nombreImagen);
+        File img = new File(RESOURCE_BUNDLE.getString("pathimagenesitem") + item.codigoProducto + "/" + nombreImagen);
         if (img.exists()) {
             img.delete();
             cargarFotos();
         }
+    }
+
+    public void imgPrincipal() {
+        if (file != null) {
+            item.setUrlImagen(file.getFileName());
+            itemService.guardar(item);
+
+            crearArchivo();
+        }
+    }
+    
+    public void cerrar(){
+        PrimeFaces.current().dialog().closeDynamic("/");
     }
 }
