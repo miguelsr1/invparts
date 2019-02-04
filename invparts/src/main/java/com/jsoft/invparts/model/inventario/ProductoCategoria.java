@@ -17,10 +17,14 @@ public class ProductoCategoria implements Serializable, PersistenciaDao {
     private static final long serialVersionUID = 1L;
 
     public Integer idProductoCategoria;
-    public Integer idProducto;
+    public Integer idItem;
     public Integer idCategoria;
 
     public ProductoCategoria() {
+    }
+
+    public ProductoCategoria(Integer idCategoria) {
+        this.idCategoria = idCategoria;
     }
 
     public Integer getIdProductoCategoria() {
@@ -31,12 +35,12 @@ public class ProductoCategoria implements Serializable, PersistenciaDao {
         this.idProductoCategoria = idProductoCategoria;
     }
 
-    public Integer getIdProducto() {
-        return idProducto;
+    public Integer getIdItem() {
+        return idItem;
     }
 
-    public void setIdProducto(Integer idProducto) {
-        this.idProducto = idProducto;
+    public void setIdItem(Integer idProducto) {
+        this.idItem = idProducto;
     }
 
     public Integer getIdCategoria() {
@@ -54,22 +58,22 @@ public class ProductoCategoria implements Serializable, PersistenciaDao {
 
     @Override
     public String generarInsertSQL() {
-        return "INSERT INTO producto_categoria (id_producto, id_categoria) VALUES (?, ?)";
+        return "INSERT INTO producto_categoria (id_item, id_categoria) VALUES (?, ?)";
     }
 
     @Override
     public Object[] getDatosInsert() {
-        return new Object[]{idProducto, idCategoria};
+        return new Object[]{idItem, idCategoria};
     }
 
     @Override
     public String generarUpdateSQL() {
-        return "UPDATE producto_categoria SET id_producto=?, id_categoria=? WHERE id_producto_categoria=?";
+        return "UPDATE producto_categoria SET id_item=?, id_categoria=? WHERE id_producto_categoria=?";
     }
 
     @Override
     public Object[] getDatosUpdate() {
-        return new Object[]{idProducto, idCategoria, idProductoCategoria};
+        return new Object[]{idItem, idCategoria, idProductoCategoria};
     }
 
     @Override

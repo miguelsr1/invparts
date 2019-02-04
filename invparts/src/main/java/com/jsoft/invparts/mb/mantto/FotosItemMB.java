@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
@@ -46,11 +45,6 @@ public class FotosItemMB implements Serializable {
     private ItemService itemService;
 
     public FotosItemMB() {
-    }
-
-    @PostConstruct
-    public void init() {
-        //cargarFotosInit();
     }
 
     public void limpiar() {

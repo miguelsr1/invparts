@@ -15,7 +15,7 @@
     </ui:define>
     <ui:define name="content">
         <f:metadata>
-            <f:viewAction action="#{fotosItemMB.limpiar()}"/>
+            <f:viewAction action="#{fotosItemMB.limpiar}"/>
         </f:metadata>
         <div class="ui-g">
             <div class="ui-g-12">
@@ -28,13 +28,32 @@
 
                     <p:panel id="pnlDatos" header="Datos generales">
                         <p:panelGrid columns="2" columnClasses="ui-grid-col-2,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
-                            <p:outputLabel value="Producto"/>
-                            <p:selectOneMenu value="#{itemMB.item.idProducto}">
-                                <f:selectItem itemValue="0" itemLabel="#{msj.seleccioneUnValor}"/>
-                                <f:selectItems value="#{itemMB.lstProductos}" var="item" itemValue="#{item.idProducto}" itemLabel="#{item.nombreProducto}"/>
-                            </p:selectOneMenu>
+                            <p:outputLabel value="UPC Código"/>
+                            <p:inputText value="#{itemMB.item.upcCodigo}"/>
                             <p:outputLabel value="Codigo"/>
                             <p:inputText value="#{itemMB.item.codigoProducto}"/>
+                            <p:outputLabel value="#{msj.nombreProducto}"/>
+                            <p:inputText value="#{itemMB.item.nombreItem}"/>
+                            <p:outputLabel value="Categorias"/>
+                            <p:outputPanel>
+                                <div class="ui-inputgroup">
+                                    <p:autoComplete id="categoria" multiple="true" value="#{itemMB.lstCategoriasPorProducto}" 
+                                                    completeMethod="#{itemMB.completeCategoriaContains}"  converter="categoriaControllerConverter"
+                                                    var="categoria" itemValue="#{categoria}" itemLabel="#{categoria}"  forceSelection="true"
+                                                    requiredMessage="Se necesita un valor de busqueda" >
+                                    </p:autoComplete>
+
+                                    <p:commandButton value="#{msj['agregar']}" icon="fa fa-plus-square" action="#{dlgCategoriaProductoMB.openDialogCategory}"/>
+
+                                    <p:commandLink styleClass="ui-button ui-widget ui-state-default ui-corner-all" action="#{itemMB.openDialogCategory}" rendered="false">
+                                        <f:setPropertyActionListener value="#{idItem}" target="#{dlgCategoriaProductoMB.idItem}"/>
+                                        <h:panelGrid columns="2">
+                                            <i class="fa fa-plus" style="font-size: 17px;"></i>
+                                            <p:outputLabel value="Add"/>
+                                        </h:panelGrid>
+                                    </p:commandLink>
+                                </div>
+                            </p:outputPanel>
                             <p:outputLabel value="Costo Unitario"/>
                             <p:inputNumber value="#{itemMB.item.precioCompra}" decimalPlaces="2" decimalSeparator="." thousandSeparator=","/>
                             <p:outputLabel value="Precio de venta"/>
@@ -93,6 +112,7 @@
                             <p:dataTable id="tblCompatibilidad" value="#{itemMB.lstCompatibilidadDtos}" var="com" editable="true">
                                 <f:facet name="header">
                                     <p:commandLink action="#{itemMB.showModelo}">
+                                        <p:ajax event="dialogReturn" listener="#{itemMB.addCompatibilidad}" update="tblCompatibilidad"/>
                                         <p:outputLabel value="Add"/>
                                         <i class="fa fa-plus"></i>
                                     </p:commandLink>
@@ -139,7 +159,7 @@
                             <p:outputLabel value="Detalle de Fotos"/>
                             <p:commandButton value="Cargar fotografias" icon="fa fa-picture-o" style="float: right;" action="#{itemMB.showDialogImagenes()}">
                                 <f:setPropertyActionListener target="#{fotosItemMB.codigoItem}" value="#{itemMB.item.codigoProducto}"/>
-                                <p:ajax event="dialogReturn" listener="#{fotosItemMB.onClose}" update="dgFotos" />
+                                <p:ajax event="dialogReturn" listener="#{itemMB.cargarFotosInit}" update="dgFotos" />
                             </p:commandButton>
                         </f:facet>
                         <br />

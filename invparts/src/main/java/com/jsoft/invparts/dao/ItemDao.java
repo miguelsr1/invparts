@@ -10,7 +10,6 @@ import com.jsoft.invparts.model.inventario.InformacionItem;
 import com.jsoft.invparts.model.inventario.Item;
 import com.jsoft.invparts.model.inventario.Marca;
 import com.jsoft.invparts.model.inventario.Modelo;
-import com.jsoft.invparts.model.inventario.Producto;
 import com.jsoft.invparts.model.inventario.dto.CompatibilidadDto;
 import com.jsoft.invparts.model.inventario.dto.ItemDto;
 import java.util.List;
@@ -20,8 +19,6 @@ import java.util.List;
  * @author misanchez
  */
 public interface ItemDao {
-
-    public List<Producto> getLstProducto(Integer idEmp);
 
     public Item getItemByPk(Integer idItem);
 

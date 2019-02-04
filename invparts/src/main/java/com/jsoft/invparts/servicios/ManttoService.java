@@ -9,8 +9,6 @@ import com.jsoft.invparts.dao.PersistenciaDao;
 import com.jsoft.invparts.model.inventario.Categoria;
 import com.jsoft.invparts.model.inventario.Marca;
 import com.jsoft.invparts.model.inventario.Modelo;
-import com.jsoft.invparts.model.inventario.Producto;
-import com.jsoft.invparts.model.inventario.ProductoCategoria;
 import com.jsoft.invparts.model.inventario.Sucursal;
 import com.jsoft.invparts.model.inventario.Vendedor;
 import com.jsoft.invparts.model.inventario.dto.ProductoCategoriaDto;
@@ -29,7 +27,6 @@ import java.util.List;
  */
 public interface ManttoService {
 
-   
     public List<Persona> listPersona(Persona per);
 
     public List<Empresa> listEmpresa(Empresa emp, Short idTipoEmpresa);
@@ -39,9 +36,9 @@ public interface ManttoService {
     public List<Privilegio> listPrivilegio(Privilegio per);
 
     public List<OpcionMenu> listOpcionesMenu(OpcionMenu opc);
-    
+
     public List<OpcionMenu> listOpcMenuMod(Integer Modulo);
-    
+
     public List<Perfil> listPerfil(Perfil per);
 
     public List<Modulo> listModulo(Modulo mod);
@@ -50,29 +47,27 @@ public interface ManttoService {
 
     public List<Vendedor> listVendedor(Vendedor ven);
 
-    public List<Sucursal> listSucursal(Sucursal suc,Integer idEmp);
-
-    public List<Producto> listProducto(Producto pro);
+    public List<Sucursal> listSucursal(Sucursal suc, Integer idEmp);
 
     public String nombreTipoEmpresa(Integer id);
-    
+
     public String nombreOpcion(Integer id);
 
-      public String nombreModulo(Integer id);
+    public String nombreModulo(Integer id);
 
     public List<Modelo> listModelo(Modelo mod);
 
     public List<Marca> listMarca(Marca mar);
 
     public Boolean getUsuarioByUsu(String usuario);
-    
-     public Usuario findUserByLogin(String login);
-     
-   public Integer findIdEmpByLogin(String login);  
-    
-    public Integer findIdModPerByLogin(String login,Integer emp);  
-   
-    public Boolean getUsuarioByClave(String usuario,String clave);
+
+    public Usuario findUserByLogin(String login);
+
+    public Integer findIdEmpByLogin(String login);
+
+    public Integer findIdModPerByLogin(String login, Integer emp);
+
+    public Boolean getUsuarioByClave(String usuario, String clave);
 
     public Boolean isExistEmailPerByEmail(String eMail);
 
@@ -83,11 +78,11 @@ public interface ManttoService {
     public void enviarCorreoActivacionUsuario(Persona per, String codAct);
 
     public String encriptar(String cadena);
-    
+
     public Categoria findCategoriaById(Integer idCategoria);
 
     public List<Categoria> lstCategoria(Categoria categoria);
-    
+
     public List<Modulo> getlstModulos(String usuario);
 
     public List<Categoria> lstSubCategoria(Categoria categoria);
@@ -95,6 +90,6 @@ public interface ManttoService {
     public Boolean removerCategoria(Integer idCategoria);
 
     public List<Categoria> getLstCategoriaByLikeNombre(String nombreCategoria, Integer idProducto);
-    
+
     public List<ProductoCategoriaDto> getLstCategoriasByProducto(Integer idProducto);
 }

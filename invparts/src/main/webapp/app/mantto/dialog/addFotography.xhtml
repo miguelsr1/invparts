@@ -14,11 +14,11 @@
     </h:head>
     <h:body>
         <h:form enctype="multipart/form-data">
-            <h:panelGrid columns="1">
+            <h:panelGrid columns="1" style="width: 100%;">
                 <p:outputLabel value="Imagen principal"/>
-                <p:fileUpload id="fUpd" mode="simple"  auto="true"
+                <p:fileUpload id="fUpd" mode="simple" previewWidth="100" auto="true"
                               value="#{fotosItemMB.file}" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" 
-                              sizeLimit="2000000" skinSimple="true" />
+                              sizeLimit="2000000" skinSimple="true"/>
                 <p:spacer width="10"/>
                 <p:outputLabel value="Otras imagenes"/>
                 <p:fileUpload fileUploadListener="#{fotosItemMB.handleFileUpload}" oncomplete="onClick('btnSubmit')" value="Cargar" multiple="true" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" sizeLimit="2000000" previewWidth="50" />

@@ -5,14 +5,17 @@
  */
 package com.jsoft.invparts.mb.mantto;
 
+import com.jsoft.invparts.model.inventario.Categoria;
 import com.jsoft.invparts.model.inventario.Compatibilidad;
 import com.jsoft.invparts.model.inventario.Estante;
 import com.jsoft.invparts.model.inventario.InformacionItem;
 import com.jsoft.invparts.model.inventario.Item;
 import com.jsoft.invparts.model.inventario.Modelo;
-import com.jsoft.invparts.model.inventario.Producto;
+import com.jsoft.invparts.model.inventario.ProductoCategoria;
 import com.jsoft.invparts.model.inventario.dto.CompatibilidadDto;
+import com.jsoft.invparts.model.inventario.dto.ProductoCategoriaDto;
 import com.jsoft.invparts.servicios.ItemService;
+import com.jsoft.invparts.servicios.ManttoService;
 import com.jsoft.invparts.util.JsfUtil;
 import java.io.File;
 import java.io.Serializable;
@@ -49,6 +52,9 @@ public class ItemMB implements Serializable {
     @ManagedProperty("#{itemService}")
     private ItemService itemService;
 
+    @ManagedProperty("#{manttoService}")
+    private ManttoService manttoService;
+
     private Integer idModelo = 0;
     private String nombreImagen;
     private List<String> imagenesDeProducto = new ArrayList();
@@ -57,9 +63,9 @@ public class ItemMB implements Serializable {
     private InformacionItem infoItem = new InformacionItem();
     private Modelo modelo = new Modelo();
     private List<InformacionItem> lstInfoItems = new ArrayList();
-    private List<Producto> lstProductos = new ArrayList();
     private List<Compatibilidad> lstCompatibilidad = new ArrayList();
     private List<CompatibilidadDto> lstCompatibilidadDtos = new ArrayList();
+    private List<Categoria> lstCategorias = new ArrayList();
 
     private File folderImg = null;
     private UploadedFile fileUpd;
@@ -69,16 +75,27 @@ public class ItemMB implements Serializable {
 
     @PostConstruct
     public void init() {
-        item = itemService.getItemByPk(4);
+        item = itemService.getItemByPk(5);
         //item = new Item();
         lstInfoItems = itemService.getLstInformacionItemByIdItem(item.getIdItem());
+
         lstCompatibilidadDtos = itemService.getLstCompatibilidadByItem(item.getIdItem());
+        
+        lstCategorias = itemService.getLstCategoriaByIdItem(item.getIdItem());
         //item = new Item();
-        lstProductos = itemService.getLstProducto(0);
+        //lstProductos = itemService.getLstProducto(0);
 
         if (item.getIdItem() != null) {
             cargarFotosInit();
         }
+    }
+
+    public List<Categoria> getLstCategoriasPorProducto() {
+        return lstCategorias;
+    }
+
+    public void setLstCategoriasPorProducto(List<Categoria> lstCategoriasPorProducto) {
+        this.lstCategorias = lstCategoriasPorProducto;
     }
 
     public String getNombreImagen() {
@@ -135,12 +152,12 @@ public class ItemMB implements Serializable {
         this.itemService = itemService;
     }
 
-    public List<Producto> getLstProductos() {
-        return lstProductos;
+    public ManttoService getManttoService() {
+        return manttoService;
     }
 
-    public void setLstProductos(List<Producto> lstProductos) {
-        this.lstProductos = lstProductos;
+    public void setManttoService(ManttoService manttoService) {
+        this.manttoService = manttoService;
     }
 
     public List<Estante> getLstEstantes() {
@@ -178,6 +195,10 @@ public class ItemMB implements Serializable {
                 existeCompatibilidaPrimaria = true;
                 break;
             }
+        }
+
+        for (Categoria categoria : lstCategorias) {
+            item.getLstCategorias().add(new ProductoCategoria(categoria.getIdCategoria()));
         }
 
         if (existeCompatibilidaPrimaria) {
@@ -229,7 +250,7 @@ public class ItemMB implements Serializable {
         if (item.getIdItem() != null) {
             Map<String, Object> options = new HashMap();
             options.put("modal", true);
-            options.put("width", 400);
+            options.put("width", 650);
             options.put("height", 260);
             options.put("closable", false);
             options.put("contentWidth", "100%");
@@ -339,5 +360,27 @@ public class ItemMB implements Serializable {
             img.delete();
             cargarFotosInit();
         }
+    }
+
+    //===========================================
+    public void openDialogCategory() {
+        Map<String, Object> options = new HashMap();
+        options.put("modal", true);
+        options.put("width", 800);
+        options.put("height", 300);
+        options.put("contentWidth", "100%");
+        options.put("contentHeight", "100%");
+        //options.put("headerElement", RESOURCE_BUNDLE.getString("asociarCategoriaProducto"));
+
+        Map<String, List<String>> params = new HashMap();
+        List<String> values = new ArrayList();
+        values.add(String.valueOf(item.getIdItem()));
+        params.put("item", values);
+
+        PrimeFaces.current().dialog().openDynamic("/app/mantto/dialog/addCategoryProduct", options, params);
+    }
+
+    public List<Categoria> completeCategoriaContains(String query) {
+        return manttoService.getLstCategoriaByLikeNombre(query, item.getIdItem());
     }
 }

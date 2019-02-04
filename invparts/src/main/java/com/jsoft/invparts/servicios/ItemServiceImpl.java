@@ -7,13 +7,13 @@ package com.jsoft.invparts.servicios;
 
 import com.jsoft.invparts.dao.EmpresaDao;
 import com.jsoft.invparts.dao.ItemDao;
+import com.jsoft.invparts.dao.ManttoDao;
 import com.jsoft.invparts.model.inventario.Categoria;
 import com.jsoft.invparts.model.inventario.Estante;
 import com.jsoft.invparts.model.inventario.InformacionItem;
 import com.jsoft.invparts.model.inventario.Item;
 import com.jsoft.invparts.model.inventario.Marca;
 import com.jsoft.invparts.model.inventario.Modelo;
-import com.jsoft.invparts.model.inventario.Producto;
 import com.jsoft.invparts.model.inventario.Sucursal;
 import com.jsoft.invparts.model.inventario.dto.CompatibilidadDto;
 import com.jsoft.invparts.model.inventario.dto.ItemDto;
@@ -29,14 +29,12 @@ public class ItemServiceImpl implements ItemService {
 
     @Autowired
     private ItemDao itemDao;
+    
+    @Autowired
+    private ManttoDao dao;
 
     @Autowired
     private EmpresaDao empresaDao;
-
-    @Override
-    public List<Producto> getLstProducto(Integer idEmp) {
-        return itemDao.getLstProducto(idEmp);
-    }
 
     @Override
     public void guardar(Item item) {
@@ -106,5 +104,15 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public Item getItemByCod(String cod) {
         return itemDao.getItemByCod(cod);
+    }
+
+    @Override
+    public List<Categoria> getLstCategoriaByLikeNombre(String nombreCategoria, Integer idItem) {
+        return dao.getLstCategoriaByLikeNombre(nombreCategoria, idItem);
+    }
+
+    @Override
+    public List<Categoria> getLstCategoriaByIdItem(Integer idItem) {
+        return dao.getLstCategoriaByIdItem(idItem);
     }
 }

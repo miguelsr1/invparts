@@ -5,7 +5,6 @@
  */
 package com.jsoft.invparts.mb.mantto;
 
-import com.jsoft.invparts.model.inventario.Producto;
 import java.util.ArrayList;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
@@ -33,8 +32,6 @@ public class ProductoMB implements Serializable {
     private static final long serialVersionUID = 1L;
     
     private boolean esModificacion = false;
-    private Producto pro = new Producto();
-    private List<Producto> lstProducto = new ArrayList();
     
     @ManagedProperty("#{manttoService}")
     private ManttoService manttoService;
@@ -44,30 +41,12 @@ public class ProductoMB implements Serializable {
     
     @PostConstruct
     public void init() {
-        lstProducto = manttoService.listProducto(null);
     }
 
     //<editor-fold desc="Metodos getters y setters">
-    public Producto getPro() {
-        return pro;
-    }
-    
-    public void setPro(Producto pro) {
-        if (pro != null) {
-            this.pro = pro;
-        }
-    }
     
     public void selectProducto(SelectEvent event) {
         esModificacion = true;
-    }
-    
-    public List<Producto> getLstProducto() {
-        return lstProducto;
-    }
-    
-    public void setLstProducto(List<Producto> lstProducto) {
-        this.lstProducto = lstProducto;
     }
     
     public ManttoService getManttoService() {
@@ -80,18 +59,18 @@ public class ProductoMB implements Serializable {
 
     //</editor-fold >
     public void guardar() {
-        if (manttoService.guardarConIdAutogenerado(pro) == 1) {
+        if (manttoService.guardarConIdAutogenerado(null) == 1) {
             if (esModificacion) {
-                lstProducto.add(pro);
+                //lstProducto.add(pro);
             }
-            pro = new Producto();
+            //pro = new Producto();
         }
         esModificacion = false;
     }
     
     public void nuevo() {
-        pro = new Producto();
-        pro.setStatus((short) 0);
+//        pro = new Producto();
+//        pro.setStatus((short) 0);
     }
     
     public void openDialogCategory() {
@@ -105,7 +84,7 @@ public class ProductoMB implements Serializable {
 
         Map<String, List<String>> params = new HashMap();
         List<String> values = new ArrayList();
-        values.add(String.valueOf(pro.getIdProducto()));
+        //values.add(String.valueOf(pro.getIdProducto()));
         params.put("idProducto", values);
         
         PrimeFaces.current().dialog().openDynamic("/app/mantto/dialog/addCategoryProduct", options, params);

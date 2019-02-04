@@ -12,7 +12,6 @@ package com.jsoft.invparts.util;
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-import com.jsoft.invparts.model.inventario.Categoria;
 import com.jsoft.invparts.servicios.ManttoService;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.component.UIComponent;
@@ -24,6 +23,7 @@ import javax.faces.convert.FacesConverter;
  *
  * @author misanchez
  */
+@FacesConverter("genericConverter")
 public class GenericConverter implements Converter {
 
     @ManagedProperty("#{manttoService}")

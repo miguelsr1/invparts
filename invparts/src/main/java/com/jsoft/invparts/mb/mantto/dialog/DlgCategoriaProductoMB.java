@@ -6,6 +6,7 @@
 package com.jsoft.invparts.mb.mantto.dialog;
 
 import com.jsoft.invparts.model.inventario.Categoria;
+import com.jsoft.invparts.model.inventario.Item;
 import com.jsoft.invparts.model.inventario.ProductoCategoria;
 import com.jsoft.invparts.model.inventario.dto.ProductoCategoriaDto;
 import com.jsoft.invparts.servicios.ManttoService;
@@ -32,7 +33,8 @@ import org.primefaces.PrimeFaces;
 public class DlgCategoriaProductoMB implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private String idProducto;
+    private Item idItem;
+    private String item;
     private String cadenaDeBusqueda;
     private Integer idCategoriaSeleccionada;
     private Categoria categoria = new Categoria();
@@ -61,12 +63,20 @@ public class DlgCategoriaProductoMB implements Serializable {
         this.categoria = categoria;
     }
 
-    public String getIdProducto() {
-        return idProducto;
+    public Item getIdItem() {
+        return idItem;
     }
 
-    public void setIdProducto(String idProducto) {
-        this.idProducto = idProducto;
+    public void setIdItem(Item idProducto) {
+        this.idItem = idProducto;
+    }
+
+    public String getItem() {
+        return item;
+    }
+
+    public void setItem(String item) {
+        this.item = item;
     }
 
     public ManttoService getManttoService() {
@@ -85,15 +95,11 @@ public class DlgCategoriaProductoMB implements Serializable {
         this.cadenaDeBusqueda = cadenaDeBusqueda;
     }
 
-    public List<Categoria> completeCategoriaContains(String query) {
-        List<Categoria> lstCategoria = manttoService.getLstCategoriaByLikeNombre(query, Integer.parseInt(idProducto));
-
-        return lstCategoria;
-    }
+    
 
     public List<ProductoCategoriaDto> getLstCategoriasPorProducto() {
-        if (lstCategoriasPorProducto.isEmpty() && idProducto != null) {
-            lstCategoriasPorProducto = manttoService.getLstCategoriasByProducto(Integer.parseInt(idProducto));
+        if (lstCategoriasPorProducto.isEmpty() && idItem != null) {
+            lstCategoriasPorProducto = manttoService.getLstCategoriasByProducto(Integer.parseInt(idItem.getIdItem().toString()));
         }
 
         return lstCategoriasPorProducto;
@@ -102,12 +108,12 @@ public class DlgCategoriaProductoMB implements Serializable {
     public void addCategoriaAProducto() {
         pcDto = new ProductoCategoriaDto();
         pcDto.setIdCategoria(categoria.getIdCategoria());
-        pcDto.setIdProducto(Integer.parseInt(idProducto));
+        pcDto.setIdItem(idItem.getIdItem());
         pcDto.setNombreCategoria(categoria.getNombreCategoria());
 
         ProductoCategoria pc = new ProductoCategoria();
         pc.setIdCategoria(pcDto.getIdCategoria());
-        pc.setIdProducto(pcDto.getIdProducto());
+        pc.setIdItem(pcDto.getIdItem());
         if (manttoService.guardarConIdAutogenerado(pc) > 0) {
             lstCategoriasPorProducto.add(pcDto);
             categoria = new Categoria();
@@ -126,7 +132,7 @@ public class DlgCategoriaProductoMB implements Serializable {
         PrimeFaces.current().dialog().openDynamic("/app/mantto/dialog/newCategory", options, null);
     }
 
-    @FacesConverter(forClass = Categoria.class)
+    @FacesConverter(forClass = Categoria.class, value = "categoriaControllerConverter")
     public static class CategoriaControllerConverter implements Converter {
 
         @Override
@@ -155,7 +161,7 @@ public class DlgCategoriaProductoMB implements Serializable {
 
         @Override
         public String getAsString(FacesContext facesContext, UIComponent component, Object object) {
-            if (object == null) {
+            if (object == null || ((Categoria) object).getIdCategoria() == null) {
                 return null;
             }
             if (object instanceof Categoria) {

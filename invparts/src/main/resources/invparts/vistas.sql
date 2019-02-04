@@ -9,8 +9,7 @@ from
 	inner join modelo mo 		 	 on ma.id_marca = mo.id_marca
 	inner join compatibilidad co 	 on mo.id_modelo = co.id_modelo
 	inner join item it 			 	 on co.id_item = it.id_item
-	inner join producto pr 		 	 on pr.id_producto = it.id_producto
-	inner join producto_categoria pc on pc.id_producto = pr.id_producto
+	inner join producto_categoria pc on pc.id_item = it.id_item
 	inner join categoria ca 		 on ca.id_categoria = pc.id_categoria;
 
 create or replace view vw_find_items_by_model_and_category as

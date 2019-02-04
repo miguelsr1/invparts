@@ -98,9 +98,11 @@ public class DlgCategoriaMB implements Serializable {
     }
 
     public void setNodoCategoriaPadre(TreeNode nodoCategoriaPadre) {
-        this.nodoCategoriaPadre = nodoCategoriaPadre;
+        if (nodoCategoriaPadre != null) {
+            this.nodoCategoriaPadre = nodoCategoriaPadre;
+        }
     }
-    
+
     public List<Categoria> getLstCategorias() {
         return lstCategorias;
     }
@@ -130,12 +132,16 @@ public class DlgCategoriaMB implements Serializable {
     }
 
     public void guardarCategoria() {
-        if (nodoCategoriaPadre != null && ((Categoria) nodoCategoriaPadre.getData()).getIdCategoria() != null) {
+        if (nodoCategoriaPadre != null && !nodoCategoriaPadre.getData().equals("Root") && ((Categoria) nodoCategoriaPadre.getData()).getIdCategoria() != null) {
             categoria.setPadreIdCategoria(((Categoria) nodoCategoriaPadre.getData()).getIdCategoria());
         }
 
         categoria.setIdCategoria(manttoService.guardarConIdAutogenerado(categoria));
-        nodoCategoriaPadre.getChildren().add(new DefaultTreeNode(categoria, nodoCategoriaPadre));
+        if (nodoCategoriaPadre == null) {
+            rootCategoria.getChildren().add(new DefaultTreeNode(categoria, rootCategoria));
+        } else {
+            nodoCategoriaPadre.getChildren().add(new DefaultTreeNode(categoria, nodoCategoriaPadre));
+        }
 
         categoria = new Categoria();
         nodoCategoriaPadre = new DefaultTreeNode();
@@ -158,7 +164,8 @@ public class DlgCategoriaMB implements Serializable {
 
     public void eliminarCategoria() {
         /**
-         * Considerar el caso de que la categoria tiene asociaciones a productos existentes.
+         * Considerar el caso de que la categoria tiene asociaciones a productos
+         * existentes.
          */
         if (nodoCategoriaPadre != null) {
             if (manttoService.removerCategoria(((Categoria) nodoCategoriaPadre.getData()).getIdCategoria())) {
