@@ -44,7 +44,7 @@ public class Item implements Serializable, PersistenciaDao {
     public void setIdItem(Integer idItem) {
         this.idItem = idItem;
     }
-    
+
     public String getDescripcion() {
         return descripcion;
     }
@@ -127,7 +127,11 @@ public class Item implements Serializable, PersistenciaDao {
 
     @Override
     public String toString() {
-        return "Item{" + "idItem=" + idItem + '}';
+        if (upcCodigo == null) {
+            return "";
+        } else {
+            return upcCodigo + ' ' + nombreItem;
+        }
     }
 
     @Override

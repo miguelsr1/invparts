@@ -13,7 +13,6 @@ import com.jsoft.invparts.model.inventario.Item;
 import com.jsoft.invparts.model.inventario.Modelo;
 import com.jsoft.invparts.model.inventario.ProductoCategoria;
 import com.jsoft.invparts.model.inventario.dto.CompatibilidadDto;
-import com.jsoft.invparts.model.inventario.dto.ProductoCategoriaDto;
 import com.jsoft.invparts.servicios.ItemService;
 import com.jsoft.invparts.servicios.ManttoService;
 import com.jsoft.invparts.util.JsfUtil;
@@ -33,6 +32,7 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import org.primefaces.PrimeFaces;
+import org.primefaces.context.RequestContext;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.model.UploadedFile;
@@ -75,12 +75,17 @@ public class ItemMB implements Serializable {
 
     @PostConstruct
     public void init() {
-        item = itemService.getItemByPk(5);
-        //item = new Item();
+        Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+        if (params.containsKey("idItem")) {
+            item = itemService.getItemByPk(Integer.parseInt(params.get("idItem")));
+        } else {
+            item = new Item();
+        }
+
         lstInfoItems = itemService.getLstInformacionItemByIdItem(item.getIdItem());
 
         lstCompatibilidadDtos = itemService.getLstCompatibilidadByItem(item.getIdItem());
-        
+
         lstCategorias = itemService.getLstCategoriaByIdItem(item.getIdItem());
         //item = new Item();
         //lstProductos = itemService.getLstProducto(0);
@@ -256,7 +261,12 @@ public class ItemMB implements Serializable {
             options.put("contentWidth", "100%");
             options.put("contentHeight", "100%");
 
-            PrimeFaces.current().dialog().openDynamic("/app/mantto/dialog/addFotography", options, null);
+            Map<String, List<String>> params = new HashMap();
+            List<String> values = new ArrayList();
+            values.add(String.valueOf(item.getIdItem()));
+            params.put("item", values);
+
+            PrimeFaces.current().dialog().openDynamic("/app/mantto/dialog/addFotography", options, params);
         } else {
             JsfUtil.addWarningMessage("Debe de guardar primero el item");
         }

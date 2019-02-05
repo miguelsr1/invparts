@@ -14,7 +14,37 @@
     </ui:define>
 
     <ui:define name="head">
+        <style>
+            body .ui-panel .ui-panel-footer {
+                padding: 6px 12px;
+                border: 0 none;
+                margin: 0;
+            }
+        </style>
+    </ui:define>
 
+    <ui:define name="subMenu">
+        <p:panelGrid id="pnlFiltro" columns="1" 
+                     styleClass="ui-panelgrid-blank form-group form-elements">
+            <p:outputLabel value="Marca" style="color: white;"/>
+            <p:selectOneMenu value="#{carritoMB.idMarca}">
+                <f:selectItem itemValue="0" itemLabel="Seleccione un valor"/>
+                <f:selectItems value="#{carritoMB.lstMarcas}" var="marca" itemValue="#{marca.idMarca}" itemLabel="#{marca.nombreMarca}"/>
+                <p:ajax update="cboModelo cboCategoria"/>
+            </p:selectOneMenu>
+            <p:outputLabel value="Modelo" style="color: white;"/>
+            <p:selectOneMenu id="cboModelo" value="#{carritoMB.idModelo}">
+                <f:selectItem itemValue="0" itemLabel="Seleccione un valor"/>
+                <f:selectItems value="#{carritoMB.lstModelo}" var="modelo" itemValue="#{modelo.idModelo}" itemLabel="#{modelo.nombreModelo}"/>
+                <p:ajax update="cboCategoria"/>
+            </p:selectOneMenu>
+            <p:outputLabel value="Categoria" style="color: white;"/>
+            <p:selectOneMenu id="cboCategoria" value="#{carritoMB.idCategoria}">
+                <f:selectItem itemValue="0" itemLabel="Seleccione un valor"/>
+                <f:selectItems value="#{carritoMB.lstCategoria}" var="categoria" itemValue="#{categoria.idCategoria}" itemLabel="#{categoria.nombreCategoria}"/>
+            </p:selectOneMenu>
+            <p:commandButton action="#{carritoMB.buscarItems()}" value="Buscar" icon="fa fa-search" update="dgItems"/>
+        </p:panelGrid>
     </ui:define>
 
     <ui:define name="content">
@@ -25,32 +55,7 @@
         <div class="ui-g">
             <div class="ui-g-12">
                 <div class="card card-w-title">
-                    <p:panelGrid id="pnlFiltro" columns="7" columnClasses="col1_label,col2,col1_label,col2,col1_label,col2,col2" 
-                                 styleClass="ui-panelgrid-blank form-group form-elements">
-                        <p:outputLabel value="Marca"/>
-                        <p:selectOneMenu value="#{carritoMB.idMarca}">
-                            <f:selectItem itemValue="0" itemLabel="Seleccione un valor"/>
-                            <f:selectItems value="#{carritoMB.lstMarcas}" var="marca" itemValue="#{marca.idMarca}" itemLabel="#{marca.nombreMarca}"/>
-                            <p:ajax update="cboModelo cboCategoria"/>
-                        </p:selectOneMenu>
-                        <p:outputLabel value="Modelo"/>
-                        <p:selectOneMenu id="cboModelo" value="#{carritoMB.idModelo}">
-                            <f:selectItem itemValue="0" itemLabel="Seleccione un valor"/>
-                            <f:selectItems value="#{carritoMB.lstModelo}" var="modelo" itemValue="#{modelo.idModelo}" itemLabel="#{modelo.nombreModelo}"/>
-                            <p:ajax update="cboCategoria"/>
-                        </p:selectOneMenu>
-                        <p:outputLabel value="Categoria"/>
-                        <p:selectOneMenu id="cboCategoria" value="#{carritoMB.idCategoria}">
-                            <f:selectItem itemValue="0" itemLabel="Seleccione un valor"/>
-                            <f:selectItems value="#{carritoMB.lstCategoria}" var="categoria" itemValue="#{categoria.idCategoria}" itemLabel="#{categoria.nombreCategoria}"/>
-                        </p:selectOneMenu>
-                        <p:commandButton action="#{carritoMB.buscarItems()}" value="Buscar" icon="fa fa-search" update="dgItems"/>
-                    </p:panelGrid>
-
-                    <br/>
-                    <br/>
-
-                    <p:dataGrid id="dgItems"  var="item" value="#{carritoMB.lstItems}" columns="3" layout="grid"
+                    <p:dataGrid id="dgItems"  var="item" value="#{carritoMB.lstItems}" columns="4" layout="grid"
                                 rows="12" paginator="true" paginatorPosition="bottom"
                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                 rowsPerPageTemplate="6,12,16">
@@ -59,18 +64,20 @@
                             Resultado de búsqueda
                         </f:facet>
 
-                        <p:panel header="#{item.nombreProducto}" style="text-align: center;">
+                        <p:panel>
                             <h:panelGrid columns="1" style="width:100%; text-align: center;">
                                 <p:graphicImage value="/DynamicImageServlet?file=#{item.codigoProducto}/#{item.urlImagen}"/> 
                             </h:panelGrid>
+                            <h:panelGrid columns="1">
+                                <p:outputLabel value="#{item.upcCodigo}" style="font-weight: bold"/>
+                                <p:outputLabel value="#{item.nombreItem}"/>
+                                <p:spacer width="1"/>
+                                <p:outputLabel value="$ #{item.precioUnitario}"/>
+                            </h:panelGrid>
+
                             <f:facet name="footer">
                                 <p:outputPanel style="text-align: center;">
-                                    <p:commandLink update="itemInfo" action="#{carritoMB.cargarFotos()}" oncomplete="PF('dlgItemInfo').show()" title="View Detail">
-                                        <h:outputText styleClass="fa fa-search" style="margin:0 auto; width: 50px;" />
-                                        <f:setPropertyActionListener value="#{item}" target="#{carritoMB.itemSelected}" />
-                                    </p:commandLink>
-                                    <p:spacer width="5"/>
-                                    <p:inputText id="txtNumItem" value="#{carritoMB.numItems}" size="3" style="width: 40px;"/>
+                                    <p:inputNumber id="txtNumItem" value="#{carritoMB.numItems}" size="3" style="width: 40px;" placeholder="QTY" inputStyle="text-align: center;"/>
                                     <p:spacer width="5"/>
                                     <p:commandButton value="Add" icon="fa fa-plus-circle" action="#{carritoMB.addItemToCar()}" update="aCarrito txtNumItem" style="width: 70px;">
                                         <p:confirm header="Confirmation" message="Are you sure?" icon="fa fa-exclamation-triangle" />

@@ -82,7 +82,7 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public List<ItemDto> getLstItemsByModelAndCategory(Integer idModel, Integer idCategory) {
+    public List<Item> getLstItemsByModelAndCategory(Integer idModel, Integer idCategory) {
         return itemDao.getLstItemsByModelAndCategory(idModel, idCategory);
     }
 
@@ -114,5 +114,10 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public List<Categoria> getLstCategoriaByIdItem(Integer idItem) {
         return dao.getLstCategoriaByIdItem(idItem);
+    }
+
+    @Override
+    public List<Item> getLstItemsByUpcContains(String upcCode) {
+        return itemDao.getLstItemsByUpcContains(upcCode);
     }
 }

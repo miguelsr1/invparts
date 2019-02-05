@@ -21,7 +21,6 @@ import org.springframework.stereotype.Repository;
 @Repository("itemDao")
 public class ItemDaoImpl extends XJdbcTemplate implements ItemDao {
 
-
     @Override
     public void guardar(Item item) {
         persistirConIdAutogenerado(item);
@@ -29,7 +28,7 @@ public class ItemDaoImpl extends XJdbcTemplate implements ItemDao {
             informacionItem.setIdItem(item.getIdItem());
             persistirConIdAutogenerado(informacionItem);
         }
-        
+
         for (ProductoCategoria categoria : item.getLstCategorias()) {
             categoria.setIdItem(item.getIdItem());
             persistirConIdAutogenerado(categoria);
@@ -43,12 +42,12 @@ public class ItemDaoImpl extends XJdbcTemplate implements ItemDao {
 
     @Override
     public Item getItemByCod(String codigo) {
-        if(codigo.isEmpty()){
+        if (codigo.isEmpty()) {
             return null;
         }
-        List<Item> lstItems = getJdbcTemplate().query("SELECT * FROM Item WHERE codigo_producto=" + codigo, new BeanPropertyRowMapper(Item.class));
+        List<Item> lstItems = getJdbcTemplate().query("SELECT * FROM Item WHERE upc_codigo=" + codigo, new BeanPropertyRowMapper(Item.class));
         if (!lstItems.isEmpty()) {
-            return (Item) getJdbcTemplate().queryForObject("SELECT * FROM Item WHERE codigo_producto=" + codigo, new BeanPropertyRowMapper(Item.class));
+            return (Item) getJdbcTemplate().queryForObject("SELECT * FROM Item WHERE upc_codigo=" + codigo, new BeanPropertyRowMapper(Item.class));
         } else {
             return null;
         }
@@ -70,8 +69,8 @@ public class ItemDaoImpl extends XJdbcTemplate implements ItemDao {
     }
 
     @Override
-    public List<ItemDto> getLstItemsByModelAndCategory(Integer idModel, Integer idCategory) {
-        return getJdbcTemplate().query("SELECT * from vw_find_items_by_model_and_category WHERE id_modelo =" + idModel + " and id_categoria = " + idCategory, new BeanPropertyRowMapper(ItemDto.class));
+    public List<Item> getLstItemsByModelAndCategory(Integer idModel, Integer idCategory) {
+        return getJdbcTemplate().query("SELECT * from vw_find_items_by_model_and_category WHERE id_modelo =" + idModel + " and id_categoria = " + idCategory, new BeanPropertyRowMapper(Item.class));
     }
 
     @Override
@@ -96,5 +95,10 @@ public class ItemDaoImpl extends XJdbcTemplate implements ItemDao {
     @Override
     public List<InformacionItem> getLstInformacionItemByIdItem(Integer idItem) {
         return getJdbcTemplate().query("SELECT * from informacion_item WHERE id_item =" + idItem, new BeanPropertyRowMapper(InformacionItem.class));
+    }
+
+    @Override
+    public List<Item> getLstItemsByUpcContains(String upcCode) {
+        return getJdbcTemplate().query("SELECT * FROM item where upc_codigo like '%" + upcCode + "%'", new BeanPropertyRowMapper(Item.class));
     }
 }

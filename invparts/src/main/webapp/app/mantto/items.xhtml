@@ -23,7 +23,7 @@
                     <p:menubar id="mbar">
                         <p:menuitem id="mitGuardar" value="#{msj.guardar}" action="#{itemMB.guardar}" icon="fa fa-floppy-o" update="pnlDatos pnlFotos"/>
                         <p:menuitem id="mitNuevo" value="#{msj.nuevo}" action="#{itemMB.nuevo}" icon="fa fa-file-o" update="pnlDatos"/>
-                        <p:menuitem id="mitBuscar" value="#{msj.buscar}" icon="fa fa-search" update="pnlDatos"/>
+                        <p:menuitem id="mitBuscar" value="Atras" action="home.xhtml" icon="fa fa-arrow-left" update="pnlDatos"/>
                     </p:menubar>
 
                     <p:panel id="pnlDatos" header="Datos generales">
@@ -158,7 +158,7 @@
                         <f:facet name="header">
                             <p:outputLabel value="Detalle de Fotos"/>
                             <p:commandButton value="Cargar fotografias" icon="fa fa-picture-o" style="float: right;" action="#{itemMB.showDialogImagenes()}">
-                                <f:setPropertyActionListener target="#{fotosItemMB.codigoItem}" value="#{itemMB.item.codigoProducto}"/>
+                                <f:setPropertyActionListener value="#{itemMB.item}" target="#{fotosItemMB.item}"/> 
                                 <p:ajax event="dialogReturn" listener="#{itemMB.cargarFotosInit}" update="dgFotos" />
                             </p:commandButton>
                         </f:facet>

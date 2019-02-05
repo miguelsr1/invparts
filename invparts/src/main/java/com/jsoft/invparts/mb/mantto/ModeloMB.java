@@ -47,8 +47,8 @@ public class ModeloMB implements Serializable {
         lstMarca = manttoService.listMarca(null);
 
     }
-    
-    public void updateListaModelo(){
+
+    public void updateListaModelo() {
         lstModelo = manttoService.listModelo(model);
     }
 
@@ -92,8 +92,8 @@ public class ModeloMB implements Serializable {
 
     public void guardar() {
         if (model.getNombreModelo() != null && !model.getNombreModelo().isEmpty()) {
-            int valor = manttoService.guardarConIdAutogenerado(model);
-            if (valor > 0) {
+            manttoService.guardarConIdAutogenerado(model);
+            if (model.getIdModelo() != null) {
                 lstModelo.add(model);
                 model = new Modelo();
             }
@@ -105,12 +105,12 @@ public class ModeloMB implements Serializable {
     public void limpiar() {
         model = new Modelo();
     }
-    
-    public void selectModelo(){
+
+    public void selectModelo() {
         PrimeFaces.current().dialog().closeDynamic(model.idModelo);
     }
-    
-    public void closeSelectModelo(){
+
+    public void closeSelectModelo() {
         PrimeFaces.current().dialog().closeDynamic(null);
     }
 }

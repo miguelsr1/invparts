@@ -45,7 +45,7 @@ public interface ItemService {
 
     public List<Categoria> getLstCategoriaByModelo(Integer idModelo);
 
-    public List<ItemDto> getLstItemsByModelAndCategory(Integer idModel, Integer idCategory);
+    public List<Item> getLstItemsByModelAndCategory(Integer idModel, Integer idCategory);
 
     public List<CompatibilidadDto> getLstCompatibilidadByItem(Integer idItem);
 
@@ -54,4 +54,6 @@ public interface ItemService {
     public List<Categoria> getLstCategoriaByLikeNombre(String nombreCategoria, Integer idItem);
     
     public List<Categoria> getLstCategoriaByIdItem(Integer idItem);
+    
+    public List<Item> getLstItemsByUpcContains(String upcCode);
 }

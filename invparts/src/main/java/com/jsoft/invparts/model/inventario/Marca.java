@@ -21,6 +21,8 @@ public class Marca extends UtilWhere implements Serializable, PersistenciaDao {
     public String nombreMarca;
     public Short marcaActiva;
 
+    private Boolean activa = false;
+
     public Marca() {
     }
 
@@ -81,5 +83,17 @@ public class Marca extends UtilWhere implements Serializable, PersistenciaDao {
     @Override
     public void setIdGenerado(Integer id) {
         idMarca = id;
+    }
+
+    public Boolean getActiva() {
+        if (marcaActiva != null) {
+            return marcaActiva == 1;
+        } else {
+            return false;
+        }
+    }
+
+    public void setActiva(Boolean activa) {
+        marcaActiva = activa ? (short) 1 : 0;
     }
 }
