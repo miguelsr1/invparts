@@ -47,6 +47,9 @@ public class PrivilegioMB implements Serializable {
     @PostConstruct
     public void init() {
         lstPrivilegio = manttoService.listPrivilegio(null);
+        lstModPer = manttoService.listModPerfil(null);
+        lstOpcMen = manttoService.listOpcionesMenu(null);
+        
 
     }
 

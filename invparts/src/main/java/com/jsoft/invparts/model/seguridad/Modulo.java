@@ -51,7 +51,7 @@ public class Modulo extends UtilWhere implements Serializable, PersistenciaDao {
     
         @Override
     public String toString() {
-        return "Modulo{" + "idModulo=" + idModulo + "}";
+        return idModulo + "-"+nombreModulo;
     }
 
     @Override

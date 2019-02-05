@@ -15,6 +15,7 @@ import com.jsoft.invparts.model.inventario.dto.ProductoCategoriaDto;
 import com.jsoft.invparts.model.mapper.CategoriaRowMapper;
 import com.jsoft.invparts.model.seguridad.Empresa;
 import com.jsoft.invparts.model.seguridad.Modulo;
+import com.jsoft.invparts.model.seguridad.ModuloPerfil;
 import com.jsoft.invparts.model.seguridad.OpcionMenu;
 import com.jsoft.invparts.model.seguridad.Perfil;
 import com.jsoft.invparts.model.seguridad.Persona;
@@ -357,6 +358,31 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
         return listMod;
     }
 
+    @Override
+    public List<ModuloPerfil> listModPerfil(ModuloPerfil mod) {
+        String sql = "SELECT * from Modulo_perfil";
+
+        if (mod != null) {
+            sql += mod.getWhere();
+        }
+
+        List<ModuloPerfil> listMod = getJdbcTemplate().query(sql, new RowMapper<ModuloPerfil>() {
+
+            @Override
+            public ModuloPerfil mapRow(ResultSet rs, int rowNumber) throws SQLException {
+                ModuloPerfil mod = new ModuloPerfil();
+                mod.setIdModulo(rs.getInt("id_modulo_perfil"));
+                mod.setIdModulo(rs.getInt("id_modulo"));
+                mod.setIdPerfil(rs.getInt("id_perfil"));
+                mod.setPerfilActivo(rs.getInt("perfil_activo"));
+                return mod;
+            }
+
+        });
+        return listMod;
+    }
+    
+    
     @Override
     public String nombreTipoEmpresa(Integer id) {
         String nombre = "";

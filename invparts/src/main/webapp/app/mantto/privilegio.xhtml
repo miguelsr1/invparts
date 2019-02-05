@@ -22,11 +22,12 @@
                         <p:inputText value="#{privilegioMB.pr.idPrivilegio}" readonly="true" style="width: 60px;"/>
                         <p:outputLabel value="Modulo Perfil"/>
                         <p:selectOneMenu value="#{privilegioMB.pr.idModuloPerfil}" required="true" requiredMessage="Ingrese el modulo al que pertenece la opcion">
+                            <p:ajax update="opc"/>
                                 <f:selectItem itemLabel="Seleccione un valor"/>
                                 <f:selectItems value="#{privilegioMB.lstModPer}" var="modu" itemValue="#{modu.idModulo}" itemLabel="#{privilegioMB.obtenerNomModulo(modu.idModulo)}"/>
                             </p:selectOneMenu>
                         <p:outputLabel value="Opcion Menu"/>
-                        <p:selectOneMenu value="#{privilegioMB.pr.idOpcionMenu}" required="true" requiredMessage="Seleccione la opcion de menu">
+                        <p:selectOneMenu id="opc" value="#{privilegioMB.pr.idOpcionMenu}" required="true" requiredMessage="Seleccione la opcion de menu">
                                 <f:selectItem itemLabel="Seleccione un valor"/>
                                 <f:selectItems value="#{privilegioMB.lstOpcMen}" var="opc" itemValue="#{opc.idOpcionMenu}" itemLabel="#{privilegioMB.obtenerNomOpcion(opc.idOpcionMenu)}"/>
                             </p:selectOneMenu>
@@ -34,17 +35,17 @@
                     </p:panelGrid>
 
                     <br/>
-                    <p:dataTable id="tblDatos" value="#{privilegioMB.lstModPer}" var="modu" rowIndexVar="rowId" rowKey="#{modu.idModulo}"
-                                 selectionMode="single" selection="#{moduloMB.modu}">
+                    <p:dataTable id="tblDatos" value="#{privilegioMB.lstPrivilegio}" var="pri" rowIndexVar="rowId" rowKey="#{pri.idPrivilegio}"
+                                 selectionMode="single" selection="#{privilegioMB.pr}">
                         <p:ajax event="rowSelect" update="pngDatos"/>
                         <p:column headerText="#Id" width="70" styleClass="colCenter">
-                            <p:outputLabel value="#{modu.idModulo}"/>
+                            <p:outputLabel value="#{pri.idPrivilegio}"/>
                         </p:column>
-                        <p:column headerText="#{msj.nombreModulo}">
-                            <p:outputLabel value="#{modu.nombreModulo}"/>
+                        <p:column headerText="Modulo">
+                            <p:outputLabel value="#{privilegioMB.obtenerNomModulo(pri.idModuloPerfil)}"/>
                         </p:column>
-                        <p:column headerText="#{msj.iconoModulo}">
-                            <p:outputLabel value="#{modu.iconoModulo}"/>
+                        <p:column headerText="Opcion">
+                            <p:outputLabel value="#{privilegioMB.obtenerNomOpcion(pri.idOpcionMenu)}"/>
                         </p:column>
                     </p:dataTable>
                 </div>

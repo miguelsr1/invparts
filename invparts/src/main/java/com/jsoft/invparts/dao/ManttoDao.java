@@ -14,6 +14,7 @@ import com.jsoft.invparts.model.inventario.Vendedor;
 import com.jsoft.invparts.model.inventario.dto.ProductoCategoriaDto;
 import com.jsoft.invparts.model.seguridad.Empresa;
 import com.jsoft.invparts.model.seguridad.Modulo;
+import com.jsoft.invparts.model.seguridad.ModuloPerfil;
 import com.jsoft.invparts.model.seguridad.OpcionMenu;
 import com.jsoft.invparts.model.seguridad.Perfil;
 import com.jsoft.invparts.model.seguridad.Persona;
@@ -52,6 +53,8 @@ public interface ManttoDao {
     public List<Usuario> listUsuario();
 
     public List<Perfil> listPerfil(Perfil per);
+
+   public List<ModuloPerfil> listModPerfil(ModuloPerfil per);
 
     public List<Privilegio> listPrivilegio(Privilegio pri);
 

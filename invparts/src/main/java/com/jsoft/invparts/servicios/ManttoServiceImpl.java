@@ -22,6 +22,7 @@ import com.jsoft.invparts.model.inventario.Sucursal;
 import com.jsoft.invparts.model.inventario.Vendedor;
 import com.jsoft.invparts.model.inventario.dto.ProductoCategoriaDto;
 import com.jsoft.invparts.model.seguridad.Modulo;
+import com.jsoft.invparts.model.seguridad.ModuloPerfil;
 import com.jsoft.invparts.model.seguridad.OpcionMenu;
 import com.jsoft.invparts.model.seguridad.Usuario;
 import com.jsoft.invparts.model.seguridad.Perfil;
@@ -156,6 +157,11 @@ public class ManttoServiceImpl implements ManttoService {
         return dao.listPerfil(per);
     }
 
+    @Override
+    public List<ModuloPerfil> listModPerfil(ModuloPerfil per) {
+        return dao.listModPerfil(per);
+    }
+    
     @Override
     public List<Modulo> listModulo(Modulo mod) {
         return dao.listModulo(mod);

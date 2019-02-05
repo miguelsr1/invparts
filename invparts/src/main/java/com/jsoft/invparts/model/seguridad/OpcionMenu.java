@@ -96,7 +96,7 @@ public class OpcionMenu extends UtilWhere implements Serializable, PersistenciaD
 
     @Override
     public String toString() {
-        return "OpcionMenu{" + "idOpcionMenu=" + idOpcionMenu + ", nombreOpcion=" + nombreOpcion + '}';
+        return  idOpcionMenu + "-" + nombreOpcion;
     }
 
         
