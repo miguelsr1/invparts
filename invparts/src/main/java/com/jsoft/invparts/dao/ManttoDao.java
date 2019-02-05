@@ -8,7 +8,6 @@ package com.jsoft.invparts.dao;
 import com.jsoft.invparts.model.inventario.Categoria;
 import com.jsoft.invparts.model.inventario.Marca;
 import com.jsoft.invparts.model.inventario.Modelo;
-import com.jsoft.invparts.model.inventario.Producto;
 import com.jsoft.invparts.model.inventario.Sucursal;
 import com.jsoft.invparts.model.inventario.Vendedor;
 import com.jsoft.invparts.model.inventario.dto.ProductoCategoriaDto;
@@ -65,8 +64,6 @@ public interface ManttoDao {
 
     public List<Sucursal> listSucursal(Sucursal suc, Integer idEmpresa);
 
-    public List<Producto> listProducto(Producto pro);
-
     public List<Modelo> listModelo(Modelo mod);
 
     public List<Marca> listMarca(Marca mar);
@@ -103,6 +100,8 @@ public interface ManttoDao {
     public Boolean removerCategoria(Integer idCategoria);
 
     public List<Categoria> getLstCategoriaByLikeNombre(String nombre, Integer idProducto);
+    
+    public List<Categoria> getLstCategoriaByIdItem(Integer idItem);
 
     public String findNombreMarca(Integer id);
 

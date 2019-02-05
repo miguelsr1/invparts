@@ -23,11 +23,13 @@
                         <p:outputLabel value="#{msj.nombreMarca}"/>
                         <p:inputText value="#{marcaMB.mar.nombreMarca}" style="width: 250px;" />
                         <p:outputLabel value="#{msj.marcaActiva}"/>
-                        <p:selectOneMenu id="console" value="#{marcaMB.mar.marcaActiva}" style="width:125px">
+                        <p:selectOneMenu id="console" value="#{marcaMB.mar.marcaActiva}" style="width:125px" rendered="false">
                             <f:selectItem itemLabel="#{msj.seleccioneUnValor}" itemValue="" />
                             <f:selectItem itemLabel="#{msj.labelActiva}" itemValue="1" />
                             <f:selectItem itemLabel="#{msj.labelDesactiva}" itemValue="0" /> 
                         </p:selectOneMenu>
+                        
+                        <p:inputSwitch value="#{marcaMB.mar.activa}" />
                     </p:panelGrid>
 
                     <br/>

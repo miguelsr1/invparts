@@ -7,6 +7,8 @@ package com.jsoft.invparts.model.inventario;
 
 import com.jsoft.invparts.dao.PersistenciaDao;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -17,14 +19,20 @@ public class Item implements Serializable, PersistenciaDao {
     private static final long serialVersionUID = 1L;
 
     public Integer idItem;
-    public Integer idProducto;
+    public String nombreItem;
     public String descripcion;
+    public String upcCodigo;
+    public String codigoProducto;
     public Short tamanio;
     public Double peso;
     public String especificaciones;
     public String urlImagen;
-    public String codigoProducto;
     public Integer idEstante;
+    public Double precioUnitario;
+    public Double precioCompra;
+
+    private List<InformacionItem> lstInformacionItem = new ArrayList();
+    private List<ProductoCategoria> lstCategorias = new ArrayList();
 
     public Item() {
     }
@@ -35,14 +43,6 @@ public class Item implements Serializable, PersistenciaDao {
 
     public void setIdItem(Integer idItem) {
         this.idItem = idItem;
-    }
-
-    public Integer getIdProducto() {
-        return idProducto;
-    }
-
-    public void setIdProducto(Integer idProducto) {
-        this.idProducto = idProducto;
     }
 
     public String getDescripcion() {
@@ -101,29 +101,57 @@ public class Item implements Serializable, PersistenciaDao {
         this.idEstante = idEstante;
     }
 
+    public List<InformacionItem> getLstInformacionItem() {
+        return lstInformacionItem;
+    }
+
+    public void setLstInformacionItem(List<InformacionItem> lstInformacionItem) {
+        this.lstInformacionItem = lstInformacionItem;
+    }
+
+    public String getNombreItem() {
+        return nombreItem;
+    }
+
+    public void setNombreItem(String nombreItem) {
+        this.nombreItem = nombreItem;
+    }
+
+    public String getUpcCodigo() {
+        return upcCodigo;
+    }
+
+    public void setUpcCodigo(String upcCodigo) {
+        this.upcCodigo = upcCodigo;
+    }
+
     @Override
     public String toString() {
-        return "Item{" + "idItem=" + idItem + '}';
+        if (upcCodigo == null) {
+            return "";
+        } else {
+            return upcCodigo + ' ' + nombreItem;
+        }
     }
 
     @Override
     public String generarInsertSQL() {
-        return "INSERT INTO item (id_producto, descripcion, tamanio, peso, especificaciones, url_imagen, codigo_producto, id_estante) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        return "INSERT INTO item (nombre_item, descripcion, upc_codigo, codigo_producto, tamanio, peso, especificaciones, url_imagen, id_estante, precio_unitario, precio_compra) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
     }
 
     @Override
     public Object[] getDatosInsert() {
-        return new Object[]{idProducto, descripcion, tamanio, peso, especificaciones, urlImagen, codigoProducto, idEstante};
+        return new Object[]{nombreItem, descripcion, upcCodigo, codigoProducto, tamanio, peso, especificaciones, urlImagen, idEstante, precioUnitario, precioCompra};
     }
 
     @Override
     public String generarUpdateSQL() {
-        return "UPDATE item id_producto=?, descripcion=?, tamanio=?, peso=?, especificaciones=?, url_imagen=?, codigo_producto=?, id_estante=? WHERE id_item=?";
+        return "UPDATE item SET nombre_item=?, descripcion=?, upc_codigo=?, codigo_producto=?, tamanio=?, peso=?, especificaciones=?, url_imagen=?, id_estante=?, precio_unitario=?, precio_compra=? WHERE id_item=?";
     }
 
     @Override
     public Object[] getDatosUpdate() {
-        return new Object[]{idProducto, descripcion, tamanio, peso, especificaciones, urlImagen, codigoProducto, idEstante, idItem};
+        return new Object[]{nombreItem, descripcion, upcCodigo, codigoProducto, tamanio, peso, especificaciones, urlImagen, idEstante, precioUnitario, precioCompra, idItem};
     }
 
     @Override
@@ -134,5 +162,29 @@ public class Item implements Serializable, PersistenciaDao {
     @Override
     public void setIdGenerado(Integer id) {
         idItem = id;
+    }
+
+    public Double getPrecioUnitario() {
+        return precioUnitario;
+    }
+
+    public void setPrecioUnitario(Double precioUnitario) {
+        this.precioUnitario = precioUnitario;
+    }
+
+    public Double getPrecioCompra() {
+        return precioCompra;
+    }
+
+    public void setPrecioCompra(Double precioCompra) {
+        this.precioCompra = precioCompra;
+    }
+
+    public List<ProductoCategoria> getLstCategorias() {
+        return lstCategorias;
+    }
+
+    public void setLstCategorias(List<ProductoCategoria> lstCategorias) {
+        this.lstCategorias = lstCategorias;
     }
 }

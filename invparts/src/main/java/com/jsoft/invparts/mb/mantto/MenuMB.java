@@ -6,9 +6,7 @@
 package com.jsoft.invparts.mb.mantto;
 
 import com.jsoft.invparts.model.seguridad.OpcionMenu;
-import com.jsoft.invparts.model.seguridad.Usuario;
 import com.jsoft.invparts.servicios.ManttoService;
-import com.jsoft.invparts.util.JsfUtil;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;

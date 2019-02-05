@@ -17,7 +17,6 @@ import com.jsoft.invparts.dao.ManttoDao;
 import com.jsoft.invparts.model.inventario.Categoria;
 import com.jsoft.invparts.model.inventario.Marca;
 import com.jsoft.invparts.model.inventario.Modelo;
-import com.jsoft.invparts.model.inventario.Producto;
 import com.jsoft.invparts.model.inventario.Sucursal;
 import com.jsoft.invparts.model.inventario.Vendedor;
 import com.jsoft.invparts.model.inventario.dto.ProductoCategoriaDto;
@@ -145,11 +144,6 @@ public class ManttoServiceImpl implements ManttoService {
     @Override
     public List<Sucursal> listSucursal(Sucursal suc,Integer idEmp) {
         return dao.listSucursal(suc,idEmp);
-    }
-
-    @Override
-    public List<Producto> listProducto(Producto pro) {
-        return dao.listProducto(pro);
     }
 
     @Override

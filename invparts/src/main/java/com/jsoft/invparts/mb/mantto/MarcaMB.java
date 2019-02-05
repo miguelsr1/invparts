@@ -5,7 +5,6 @@
  */
 package com.jsoft.invparts.mb.mantto;
 
-
 import com.jsoft.invparts.model.inventario.Marca;
 import com.jsoft.invparts.servicios.ManttoService;
 import com.jsoft.invparts.util.JsfUtil;
@@ -26,6 +25,8 @@ import javax.faces.bean.ViewScoped;
 public class MarcaMB implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
+    private Boolean activo = false;
 
     private Marca mar = new Marca();
     private List<Marca> lstMarca = new ArrayList();
@@ -53,6 +54,14 @@ public class MarcaMB implements Serializable {
         this.manttoService = manttoService;
     }
 
+    public Boolean getActivo() {
+        return mar.getMarcaActiva() == 1;
+    }
+
+    public void setActivo(Boolean activo) {
+        this.activo = activo;
+    }
+
     public Marca getMar() {
         return mar;
     }
@@ -71,15 +80,14 @@ public class MarcaMB implements Serializable {
         this.lstMarca = lstMarca;
     }
 
-     public void buscarMarca() {
+    public void buscarMarca() {
         lstMarca = manttoService.listMarca(mar);
     }
 
     public void guardar() {
         if (mar.getNombreMarca() != null && !mar.getNombreMarca().isEmpty()) {
-            int valor = manttoService.guardarConIdAutogenerado(mar);
-            if (valor > 0) {
-                mar.setIdMarca(valor);
+            manttoService.guardarConIdAutogenerado(mar);
+            if (mar.getIdMarca() != null) {
                 lstMarca.add(mar);
                 mar = new Marca();
             }
@@ -90,5 +98,9 @@ public class MarcaMB implements Serializable {
 
     public void limpiar() {
         mar = new Marca();
+    }
+
+    public void activoEvent() {
+        mar.setMarcaActiva((short) (activo ? 1 : 0));
     }
 }

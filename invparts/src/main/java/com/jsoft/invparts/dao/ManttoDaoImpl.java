@@ -8,7 +8,6 @@ package com.jsoft.invparts.dao;
 import com.jsoft.invparts.model.inventario.Categoria;
 import com.jsoft.invparts.model.inventario.Marca;
 import com.jsoft.invparts.model.inventario.Modelo;
-import com.jsoft.invparts.model.inventario.Producto;
 import com.jsoft.invparts.model.inventario.Sucursal;
 import com.jsoft.invparts.model.inventario.Vendedor;
 import com.jsoft.invparts.model.inventario.dto.ProductoCategoriaDto;
@@ -110,7 +109,6 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
         return listPer;
     }
 
-    
     @Override
     public List<Perfil> listPerfil(Perfil per) {
         String sql = "SELECT * from perfil";
@@ -312,30 +310,6 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
     }
 
     @Override
-    public List<Producto> listProducto(Producto pro) {
-        String sql = "SELECT * from Producto";
-
-        if (pro != null) {
-            sql += pro.getWhere();
-        }
-
-        List<Producto> listProv = getJdbcTemplate().query(sql, new RowMapper<Producto>() {
-
-            @Override
-            public Producto mapRow(ResultSet rs, int rowNumber) throws SQLException {
-                Producto pro = new Producto();
-                pro.setIdProducto(rs.getInt("id_producto"));
-                pro.setStatus(rs.getShort("status"));
-                pro.setCodigoProducto(rs.getString("codigo_producto"));
-                pro.setNombreProducto(rs.getString("nombre_producto"));
-                return pro;
-            }
-
-        });
-        return listProv;
-    }
-
-    @Override
     public List<Modulo> listModulo(Modulo mod) {
         String sql = "SELECT * from Modulo";
 
@@ -520,7 +494,7 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
     public List<Categoria> getLstCategoriaByLikeNombre(String nombreCategoria, Integer idProducto) {
         String sql = env.getProperty("lstCategoriasByNombreAndProducto");
 
-        List<Categoria> lstCat = getJdbcTemplate().query(sql, new Object[]{idProducto, "%" + nombreCategoria + "%"}, new CategoriaRowMapper());
+        List<Categoria> lstCat = getJdbcTemplate().query(sql, new Object[]{idProducto, "%" + nombreCategoria + "%"}, new BeanPropertyRowMapper(Categoria.class));
         return lstCat;
     }
 
@@ -562,7 +536,7 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
             @Override
             public ProductoCategoriaDto mapRow(ResultSet rs, int rowNumber) throws SQLException {
                 ProductoCategoriaDto proCatDto = new ProductoCategoriaDto();
-                proCatDto.setIdProducto(rs.getInt("id_producto"));
+                proCatDto.setIdItem(rs.getInt("id_producto"));
                 proCatDto.setIdCategoria(rs.getInt("id_categoria"));
                 proCatDto.setNombreCategoria(rs.getString("nombre_categoria"));
 
@@ -720,6 +694,11 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
     @Override
     public List<OpcionMenu> listOpcMenuByUsuAndModulo(String usuario, Integer idModulo) {
         return getJdbcTemplate().query("SELECT * from vw_opciones_menu_by_usu_and_mod WHERE usuario ='" + usuario + "' and id_modulo = " + idModulo, new BeanPropertyRowMapper(OpcionMenu.class));
+    }
+
+    @Override
+    public List<Categoria> getLstCategoriaByIdItem(Integer idItem) {
+        return getJdbcTemplate().query("select c.* from producto_categoria pc inner join categoria c on pc.id_categoria = c.id_categoria where pc.id_item = ?", new Object[]{idItem}, new BeanPropertyRowMapper(Categoria.class));
     }
 
 }

@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                template="#{pageContext.servletContext.contextPath}/resources/template/template.xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <ui:define name="content">
+        <div class="ui-g">
+            <div class="ui-g-12">
+                <div class="card card-w-title">
+                    <p:menubar id="mbar">
+                        <p:menuitem id="mitGuardar" value="#{msj.guardar}" icon="fa fa-floppy-o"/>
+                        <p:menuitem id="mitBuscar" value="#{msj.buscar}" icon="fa fa-search"/>
+                        <p:menuitem id="mitNuevo" value="#{msj.limpiar}" icon="fa fa-eraser"/>
+                    </p:menubar>
+
+                    <p:panelGrid id="pngDatos" columns="2" columnClasses="col4_label,col8" 
+                                 styleClass="ui-panelgrid-blank form-group form-elements">
+                        <p:outputLabel value="Proveedor"/>
+                        <p:selectOneMenu>
+                            <f:selectItem itemLabel="Seleccione un valor"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="Fecha de compra"/>
+                        <p:calendar size="10" pattern="dd/MM/yyyy" locale="es"/>
+                        
+                        <p:outputLabel value="Fecha de recibido"/>
+                        <p:calendar size="10" pattern="dd/MM/yyyy" locale="es"/>
+                       
+                    </p:panelGrid>
+                </div>
+            </div>
+        </div>
+    </ui:define>
+</ui:composition>

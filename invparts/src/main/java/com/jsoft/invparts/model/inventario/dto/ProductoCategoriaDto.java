@@ -5,45 +5,28 @@
  */
 package com.jsoft.invparts.model.inventario.dto;
 
+import com.jsoft.invparts.model.inventario.Categoria;
 import java.io.Serializable;
 
 /**
  *
  * @author DesarrolloPc
  */
-public class ProductoCategoriaDto implements Serializable{
+public class ProductoCategoriaDto extends Categoria implements Serializable{
     private static final long serialVersionUID = 1L;
     
     private Integer idProductoCategoria;
-    private Integer idProducto;
-    private Integer idCategoria;
-    private String nombreCategoria;
+    private Integer idItem;
 
     public ProductoCategoriaDto() {
     }
 
-    public Integer getIdProducto() {
-        return idProducto;
+    public Integer getIdItem() {
+        return idItem;
     }
 
-    public void setIdProducto(Integer idProducto) {
-        this.idProducto = idProducto;
-    }
-
-    public Integer getIdCategoria() {
-        return idCategoria;
-    }
-
-    public void setIdCategoria(Integer idCategoria) {
-        this.idCategoria = idCategoria;
-    }
-
-    public String getNombreCategoria() {
-        return nombreCategoria;
-    }
-
-    public void setNombreCategoria(String nombreCategoria) {
-        this.nombreCategoria = nombreCategoria;
+    public void setIdItem(Integer idItem) {
+        this.idItem = idItem;
     }
 
     public Integer getIdProductoCategoria() {

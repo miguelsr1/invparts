@@ -562,7 +562,7 @@
   .exception-body.notfound {
     background-image: url("#{resource['paradise-layout:images/exception/404-bg.png']}"); }
   .exception-body .exception-panel {
-    width: 400px;
+    width: 1000px;
     margin: 0 auto;
     background-color: #ffffff;
     margin-top: 200px; }

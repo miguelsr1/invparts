@@ -15,25 +15,26 @@
             <title><ui:insert name="title">PrimeFaces Paradise</ui:insert></title>
             <h:outputScript name="js/nanoscroller.js" library="paradise-layout" />
             <h:outputScript name="js/layout.js" library="paradise-layout" />
-            
-            <h:outputScript name="funciones.js" library="js"/>
             <ui:insert name="head"/>
         </h:head>
 
         <h:body>
-            <div class="layout-wrapper #{guestPreferences.slimMenu ? 'layout-menu-slim' : (guestPreferences.overlayMenu ? 'layout-menu-overlay' : 'layout-menu-static')}">
-                <ui:include src="./topbar.xhtml" />
+            <div class="layout-wrapper layout-menu-overlay">
+                <ui:include src="../../resources/template/topbar.xhtml" />
 
                 <div class="layout-main">
-                    <ui:include src="./menu.xhtml" />
-
                     <div class="layout-content">
                         <h:form id="frmPrincipal" prependId="false">
                             <p:growl id="growl" showDetail="true" escape="false" >  
                                 <p:autoUpdate/>
                             </p:growl>
-                            
-                            <ui:insert name="content"/>
+
+                            <p:menubar>
+                                <p:submenu label="Items" icon="fa fa-sitemap">
+                                    <p:menuitem value="Add new" icon="fa fa-plus" url="../mantto/items.xhtml"/>
+                                    <p:menuitem value="Edit" icon="fa fa-pencil"/>
+                                </p:submenu>
+                            </p:menubar>
                         </h:form>
                     </div>
                 </div>        
