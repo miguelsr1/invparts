@@ -571,7 +571,7 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
 
     @Override
     public Integer findIdEmpByLogin(String login) {
-        String sql = "SELECT id_empresa FROM usuario_Empresa WHERE usuario = ?";
+        String sql = "SELECT distinct id_empresa FROM usuario_Empresa WHERE usuario = ?";
 
         Integer idEmp = getJdbcTemplate().queryForObject(sql, new Object[]{login}, Integer.class);
 

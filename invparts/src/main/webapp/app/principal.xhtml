@@ -23,14 +23,11 @@
                             <div class="subItem" >
                                 <p:commandLink ajax="false" styleClass="secciones" action="#{autenticacionMB.obtenerMenu}">
                                 <h:panelGrid columns="1" columnClasses="colAppImagen,colAppDescripcion" style="margin: 0 auto;" >
-                                    <p:graphicImage name="#{modulo.iconoModulo}" library="images" height="80px" width="80px" />
+                                    <p:graphicImage name="#{modulo.iconoModulo}" library="images" height="90px"/>
                                     <p:outputLabel value="#{modulo.nombreModulo}"/>
                                 </h:panelGrid>
-                                <f:setPropertyActionListener target="#{autenticacionMB.idApp}" value="1" />
-                                <f:param name="usuario" value="#{autenticacionMB.usuario}"/> 
-                                <f:param name="idApp" value="#{modulo.idModulo}"/> 
-
-                            </p:commandLink>
+                                    <f:setPropertyActionListener target="#{autenticacionMB.idApp}" value="#{modulo.idModulo}" />
+                             </p:commandLink>
                         </div>
                           
                     </div>

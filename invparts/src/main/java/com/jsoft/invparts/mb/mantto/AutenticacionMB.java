@@ -19,6 +19,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 
 /**
  *
@@ -31,7 +32,7 @@ public class AutenticacionMB implements Serializable {
     private String login;
     private String clave;
     private String usuario;
-    private String idApp;
+    private Integer idApp;
     private Usuario user = new Usuario();
     
     private List<Modulo> lstModulo = new ArrayList<>();
@@ -102,11 +103,11 @@ public class AutenticacionMB implements Serializable {
         this.usuario = usuario;
     }
 
-    public String getIdApp() {
+    public Integer getIdApp() {
         return idApp;
     }
 
-    public void setIdApp(String idApp) {
+    public void setIdApp(Integer idApp) {
         this.idApp = idApp;
     }
 
@@ -135,7 +136,9 @@ public class AutenticacionMB implements Serializable {
     }
 
     public void obtenerMenu() {
-        
+        lstOpcMenu = manttoService.listOpcMenuMod(idApp);
+        manttoService.crearArbolMenu(lstOpcMenu);
+       // FacesContext.getCurrentInstance().getExternalContext().redirect(url.concat(param));
         JsfUtil.redireccionar("/menu.xhtml");
     
     }

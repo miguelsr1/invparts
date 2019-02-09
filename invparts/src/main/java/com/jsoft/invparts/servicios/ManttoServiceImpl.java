@@ -213,4 +213,9 @@ public class ManttoServiceImpl implements ManttoService {
     public Categoria findCategoriaById(Integer idCategoria) {
         return dao.findCategoriaById(idCategoria);
     }
+    
+    @Override
+    public void crearArbolMenu(List<OpcionMenu> lstOpcionMenu){
+         dao.crearArbolMenu(lstOpcionMenu);
+    }
 }
