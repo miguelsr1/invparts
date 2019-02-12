@@ -15,26 +15,24 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
-import javax.faces.context.FacesContext;
+import javax.faces.bean.ViewScoped;
 
 /**
  *
  * @author torre
  */
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class AutenticacionMB implements Serializable {
 
     private String login;
     private String clave;
     private String usuario;
-    private Integer idApp;
+  
     private Usuario user = new Usuario();
-    
+
     private List<Modulo> lstModulo = new ArrayList<>();
     private String idModulo;
     private List<OpcionMenu> lstOpcMenu = new ArrayList<>();
@@ -42,7 +40,6 @@ public class AutenticacionMB implements Serializable {
     @ManagedProperty("#{manttoService}")
     private ManttoService manttoService;
 
-     
     /**
      * Creates a new instance of AutenticacionMB
      */
@@ -52,16 +49,6 @@ public class AutenticacionMB implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle.getBundle("etiquetas");
-
-    @PostConstruct
-    public void init() {
-
-   /*     Usuario p = (Usuario) JsfUtil.getVariableSession("USU_SESSION");
-      idModulo =  JsfUtil.getRequestParameter("idApp");
-      
-      lstOpcMenu = manttoService.listOpcMenuMod(Integer.parseInt(idModulo));*/
-     
-    }
 
     public ManttoService getManttoService() {
         return manttoService;
@@ -103,15 +90,7 @@ public class AutenticacionMB implements Serializable {
         this.usuario = usuario;
     }
 
-    public Integer getIdApp() {
-        return idApp;
-    }
-
-    public void setIdApp(Integer idApp) {
-        this.idApp = idApp;
-    }
-
-    public String getLogin() {
+      public String getLogin() {
         return login;
     }
 
@@ -135,42 +114,37 @@ public class AutenticacionMB implements Serializable {
         this.lstModulo = lstModulo;
     }
 
-    public void obtenerMenu() {
-        lstOpcMenu = manttoService.listOpcMenuMod(idApp);
-        manttoService.crearArbolMenu(lstOpcMenu);
-       // FacesContext.getCurrentInstance().getExternalContext().redirect(url.concat(param));
-        JsfUtil.redireccionar("/menu.xhtml");
-    
-    }
-
-    public void validarUsuario() {
+    public String validarUsuario() {
         Integer emp;
-        
-        
+        String url;
+
         if (manttoService.getUsuarioByUsu(login)) {
             if (manttoService.getUsuarioByClave(login, clave)) {
+                url = "/app/principal.xhtml?faces-redirect=true";
+                emp = manttoService.findIdEmpByLogin(login);
+                //   modPer= manttoService.findIdModPerByLogin(login,emp);
 
-                emp=manttoService.findIdEmpByLogin(login);
-             //   modPer= manttoService.findIdModPerByLogin(login,emp);
-                
                 user = manttoService.findUserByLogin(login);
-                
-                JsfUtil.addVariableSession("USU_SESSION", user);
-                JsfUtil.addVariableSession("EMP_SESSION",emp );
-                JsfUtil.addVariableSession("PERSONA_SESSION",user.getIdPersona());
-                
                 lstModulo = manttoService.getlstModulos(login);
-                JsfUtil.redireccionar("/app/principal.xhtml");
+
+                JsfUtil.addVariableSession("USU_SESSION", user);
+                JsfUtil.addVariableSession("EMP_SESSION", emp);
+                JsfUtil.addVariableSession("PERSONA_SESSION", user.getIdPersona());
+
+                return url;
             } else {
                 JsfUtil.addErrorMessage(RESOURCE_BUNDLE.getString("claveIncorrecta"));
+                return null;
             }
         } else {
             JsfUtil.addErrorMessage(RESOURCE_BUNDLE.getString("usuarioInvalido"));
+            return null;
         }
     }
-     
-    public void logout(){
-            JsfUtil.removeVariableSession(login);
-                     JsfUtil.redireccionar("/login.xhtml");
-        }
+
+    public String logout() {
+        JsfUtil.removeVariableSession(login);
+        return "/login.xhtml";
+        //JsfUtil.redireccionar("/login.xhtml");
+    }
 }
