@@ -96,10 +96,6 @@ public interface ManttoService {
     public List<Categoria> getLstCategoriaByLikeNombre(String nombreCategoria, Integer idProducto);
 
     public List<ProductoCategoriaDto> getLstCategoriasByProducto(Integer idProducto);
-
-    public void crearArbolMenu(List<OpcionMenu> lstOpcionMenu);
-
-    public List<Ubicacion> getLstUbicaciones();
-
-    public Boolean eliminar(String nombreTbl, Integer id);
+    
+    public  void crearArbolMenu(List<OpcionMenu> lstOpcionMenu);
 }
