@@ -70,18 +70,17 @@ public class ManttoServiceImpl implements ManttoService {
     public List<Privilegio> listPrivilegio(Privilegio pri) {
         return dao.listPrivilegio(pri);
     }
-    
+
     @Override
     public List<OpcionMenu> listOpcionesMenu(OpcionMenu opc) {
         return dao.listOpcMenu(opc);
     }
-    
+
     @Override
     public List<OpcionMenu> listOpcMenuMod(Integer idMod) {
         return dao.listOpcMenuMod(idMod);
     }
-    
-    
+
     @Override
     public List<Usuario> listUsuario() {
         return dao.listUsuario();
@@ -96,27 +95,27 @@ public class ManttoServiceImpl implements ManttoService {
     public Usuario findUserByLogin(String usuario) {
         return dao.findUserByLogin(usuario);
     }
-    
-      @Override
-    public Integer findIdEmpByLogin(String login){
+
+    @Override
+    public Integer findIdEmpByLogin(String login) {
         return dao.findIdEmpByLogin(login);
-    }  
-    @Override
-    public Integer findIdModPerByLogin(String login,Integer emp){
-        return dao.findIdModPerByLogin(login,emp);
-    }  
-   
-    
-    @Override
-    public List<Modulo> getlstModulos(String usuario){
-       return dao.getlstModulos(usuario);
     }
-    
+
     @Override
-    public Boolean getUsuarioByClave(String usuario,String clave) {
+    public Integer findIdModPerByLogin(String login, Integer emp) {
+        return dao.findIdModPerByLogin(login, emp);
+    }
+
+    @Override
+    public List<Modulo> getlstModulos(String usuario) {
+        return dao.getlstModulos(usuario);
+    }
+
+    @Override
+    public Boolean getUsuarioByClave(String usuario, String clave) {
         return dao.getUsuarioByClave(usuario, encriptar(clave));
     }
-    
+
     @Override
     public void enviarCorreoActivacionUsuario(Persona per, String codAct) {
         StringBuilder sb = new StringBuilder("");
@@ -143,8 +142,8 @@ public class ManttoServiceImpl implements ManttoService {
     }
 
     @Override
-    public List<Sucursal> listSucursal(Sucursal suc,Integer idEmp) {
-        return dao.listSucursal(suc,idEmp);
+    public List<Sucursal> listSucursal(Sucursal suc, Integer idEmp) {
+        return dao.listSucursal(suc, idEmp);
     }
 
     @Override
@@ -156,7 +155,7 @@ public class ManttoServiceImpl implements ManttoService {
     public List<ModuloPerfil> listModPerfil(ModuloPerfil per) {
         return dao.listModPerfil(per);
     }
-    
+
     @Override
     public List<Modulo> listModulo(Modulo mod) {
         return dao.listModulo(mod);
@@ -167,14 +166,16 @@ public class ManttoServiceImpl implements ManttoService {
         return dao.nombreTipoEmpresa(id);
     }
 
-     @Override
+    @Override
     public String nombreOpcion(Integer id) {
         return dao.findNombreOpcion(id);
     }
-@Override
+
+    @Override
     public String nombreModulo(Integer id) {
         return dao.findNombreModulo(id);
     }
+
     @Override
     public List<Categoria> lstCategoria(Categoria categoria) {
         return dao.lstCategoria(categoria);
@@ -213,6 +214,11 @@ public class ManttoServiceImpl implements ManttoService {
     @Override
     public Categoria findCategoriaById(Integer idCategoria) {
         return dao.findCategoriaById(idCategoria);
+    }
+
+    @Override
+    public void crearArbolMenu(List<OpcionMenu> lstOpcionMenu) {
+        dao.crearArbolMenu(lstOpcionMenu);
     }
 
     @Override

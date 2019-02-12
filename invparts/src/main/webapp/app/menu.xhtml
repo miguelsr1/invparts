@@ -1,9 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:b="http://bootsfaces.net/ui"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     
       <ui:composition template="#{pageContext.servletContext.contextPath}/resources/template/template.xhtml">
@@ -14,7 +12,7 @@
                 </p:growl>
              <div class="contentPrincipal ">
                     <div style="position: absolute; right: 1%;" >
-                        <p:commandButton value="Salir" icon="fa fa-sign-out" action="#{menuMB.logout}" />
+                        <p:commandButton value="Salir" icon="fa fa-sign-out" action="#{autenticacionMB.logout}" />
                     </div>
                 <p:spacer width="10" height="100"/>
              </div>
