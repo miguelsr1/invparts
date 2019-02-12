@@ -215,9 +215,19 @@ public class ManttoServiceImpl implements ManttoService {
     public Categoria findCategoriaById(Integer idCategoria) {
         return dao.findCategoriaById(idCategoria);
     }
-    
+
     @Override
-    public void crearArbolMenu(List<OpcionMenu> lstOpcionMenu){
-         dao.crearArbolMenu(lstOpcionMenu);
+    public void crearArbolMenu(List<OpcionMenu> lstOpcionMenu) {
+        dao.crearArbolMenu(lstOpcionMenu);
+    }
+
+    @Override
+    public List<Ubicacion> getLstUbicaciones() {
+        return dao.getLstUbicaciones();
+    }
+
+    @Override
+    public Boolean eliminar(String nombreTbl, Integer id) {
+        return dao.eliminar(nombreTbl, id);
     }
 }
