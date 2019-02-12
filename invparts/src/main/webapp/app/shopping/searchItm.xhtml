@@ -66,20 +66,21 @@
 
                         <p:panel>
                             <h:panelGrid columns="1" style="width:100%; text-align: center;">
-                                <p:graphicImage value="/DynamicImageServlet?file=#{item.codigoProducto}/#{item.urlImagen}"/> 
+                                <p:graphicImage value="/DynamicImageServlet?file=#{item.codigoProducto}/#{item.urlImagen}" style="width: auto;height: auto;max-width: 100%;max-height: 100%;"/> 
                             </h:panelGrid>
                             <h:panelGrid columns="1">
                                 <p:outputLabel value="#{item.upcCodigo}" style="font-weight: bold"/>
                                 <p:outputLabel value="#{item.nombreItem}"/>
                                 <p:spacer width="1"/>
-                                <p:outputLabel value="$ #{item.precioUnitario}"/>
+                                <p:outputLabel value="$ #{item.precioVenta}"/>
+                                <p:outputLabel value="#{item.cantidad} en Stock" style="color: #59b600;"/>
                             </h:panelGrid>
 
                             <f:facet name="footer">
                                 <p:outputPanel style="text-align: center;">
-                                    <p:inputNumber id="txtNumItem" value="#{carritoMB.numItems}" size="3" style="width: 40px;" placeholder="QTY" inputStyle="text-align: center;"/>
+                                    <p:inputNumber id="txtNumItem" value="#{carritoMB.numItems}" size="3" style="width: 40px;" placeholder="QTY" inputStyle="text-align: center;font-size: 16px;height: 19px;"/>
                                     <p:spacer width="5"/>
-                                    <p:commandButton value="Add" icon="fa fa-plus-circle" action="#{carritoMB.addItemToCar()}" update="aCarrito txtNumItem" style="width: 70px;">
+                                    <p:commandButton value="Add" iconPos="right" icon="fa fa-shopping-cart" action="#{carritoMB.addItemToCar()}" update="aCarrito txtNumItem" style="width: 70px;font-size: 16px;">
                                         <p:confirm header="Confirmation" message="Are you sure?" icon="fa fa-exclamation-triangle" />
                                         <f:setPropertyActionListener value="#{item}" target="#{carritoMB.itemSelected}" />
                                     </p:commandButton>

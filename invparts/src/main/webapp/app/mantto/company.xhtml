@@ -28,6 +28,7 @@
                         <p:inputText value="#{companyMB.emp.correoEmpresa}" style="width: 250px;" />
                         <p:outputLabel value="#{msj.tipoEmpresa}"/>
                         <p:selectOneMenu id="tipo" value="#{companyMB.emp.idTipoEmpresa}" style="width:125px">
+                            <f:selectItem itemLabel="#{msj.tipoEmpresa1}" itemValue="1" />
                             <f:selectItem itemLabel="#{msj.tipoEmpresa4}" itemValue="4" />
                         </p:selectOneMenu>
                         

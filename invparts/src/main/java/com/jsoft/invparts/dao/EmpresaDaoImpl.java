@@ -56,4 +56,9 @@ public class EmpresaDaoImpl extends XJdbcTemplate implements EmpresaDao {
         return getJdbcTemplate().query(sql, new BeanPropertyRowMapper(Estante.class));
     }
 
+    @Override
+    public List<Empresa> getLstEmpresaByTipo(Short idTipoEmpresa) {
+        return getJdbcTemplate().query("SELECT * FROM empresa WHERE id_tipo_empresa = "+idTipoEmpresa, new BeanPropertyRowMapper(Empresa.class));
+    }
+
 }

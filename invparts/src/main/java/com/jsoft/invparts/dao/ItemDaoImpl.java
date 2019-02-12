@@ -6,12 +6,14 @@
 package com.jsoft.invparts.dao;
 
 import com.jsoft.invparts.model.inventario.Categoria;
+import com.jsoft.invparts.model.inventario.Entrada;
 import com.jsoft.invparts.model.inventario.InformacionItem;
 import com.jsoft.invparts.model.inventario.Item;
 import com.jsoft.invparts.model.inventario.Marca;
 import com.jsoft.invparts.model.inventario.Modelo;
 import com.jsoft.invparts.model.inventario.ProductoCategoria;
 import com.jsoft.invparts.model.inventario.dto.CompatibilidadDto;
+import com.jsoft.invparts.model.inventario.dto.DetalleEntradaDto;
 import com.jsoft.invparts.model.inventario.dto.ItemDto;
 import com.jsoft.invparts.util.XJdbcTemplate;
 import java.util.List;
@@ -69,8 +71,8 @@ public class ItemDaoImpl extends XJdbcTemplate implements ItemDao {
     }
 
     @Override
-    public List<Item> getLstItemsByModelAndCategory(Integer idModel, Integer idCategory) {
-        return getJdbcTemplate().query("SELECT * from vw_find_items_by_model_and_category WHERE id_modelo =" + idModel + " and id_categoria = " + idCategory, new BeanPropertyRowMapper(Item.class));
+    public List<ItemDto> getLstItemsByModelAndCategory(Integer idModel, Integer idCategory) {
+        return getJdbcTemplate().query("SELECT * from vw_find_items_by_model_and_category WHERE id_modelo =" + idModel + " and id_categoria = " + idCategory, new BeanPropertyRowMapper(ItemDto.class));
     }
 
     @Override
@@ -100,5 +102,19 @@ public class ItemDaoImpl extends XJdbcTemplate implements ItemDao {
     @Override
     public List<Item> getLstItemsByUpcContains(String upcCode) {
         return getJdbcTemplate().query("SELECT * FROM item where upc_codigo like '%" + upcCode + "%'", new BeanPropertyRowMapper(Item.class));
+    }
+
+    @Override
+    public List<DetalleEntradaDto> getLstDetalleEntradaByEntrada(Integer idEntrada) {
+        return getJdbcTemplate().query("SELECT * from vw_detalle_entrada_dto WHERE id_entrada =" + idEntrada, new BeanPropertyRowMapper(DetalleEntradaDto.class));
+    }
+
+    @Override
+    public void guardarEntrada(Entrada entrada) {
+        persistirConIdAutogenerado(entrada);
+        for (DetalleEntradaDto detalleEntradaDto : entrada.getLstDetalleEntrada()) {
+            detalleEntradaDto.setIdEntrada(entrada.getIdEntrada());
+            persistirConIdAutogenerado(detalleEntradaDto);
+        }
     }
 }

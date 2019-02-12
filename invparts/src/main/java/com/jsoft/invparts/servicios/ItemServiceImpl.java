@@ -9,6 +9,7 @@ import com.jsoft.invparts.dao.EmpresaDao;
 import com.jsoft.invparts.dao.ItemDao;
 import com.jsoft.invparts.dao.ManttoDao;
 import com.jsoft.invparts.model.inventario.Categoria;
+import com.jsoft.invparts.model.inventario.Entrada;
 import com.jsoft.invparts.model.inventario.Estante;
 import com.jsoft.invparts.model.inventario.InformacionItem;
 import com.jsoft.invparts.model.inventario.Item;
@@ -16,6 +17,7 @@ import com.jsoft.invparts.model.inventario.Marca;
 import com.jsoft.invparts.model.inventario.Modelo;
 import com.jsoft.invparts.model.inventario.Sucursal;
 import com.jsoft.invparts.model.inventario.dto.CompatibilidadDto;
+import com.jsoft.invparts.model.inventario.dto.DetalleEntradaDto;
 import com.jsoft.invparts.model.inventario.dto.ItemDto;
 import com.jsoft.invparts.model.seguridad.Empresa;
 import java.util.List;
@@ -29,7 +31,7 @@ public class ItemServiceImpl implements ItemService {
 
     @Autowired
     private ItemDao itemDao;
-    
+
     @Autowired
     private ManttoDao dao;
 
@@ -60,9 +62,9 @@ public class ItemServiceImpl implements ItemService {
     public Item getItemByPk(Integer idItem) {
         return itemDao.getItemByPk(idItem);
     }
-    
+
     @Override
-    public Modelo getModeloByPk(Integer idModelo){
+    public Modelo getModeloByPk(Integer idModelo) {
         return itemDao.getModeloByPk(idModelo);
     }
 
@@ -82,7 +84,7 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public List<Item> getLstItemsByModelAndCategory(Integer idModel, Integer idCategory) {
+    public List<ItemDto> getLstItemsByModelAndCategory(Integer idModel, Integer idCategory) {
         return itemDao.getLstItemsByModelAndCategory(idModel, idCategory);
     }
 
@@ -90,9 +92,9 @@ public class ItemServiceImpl implements ItemService {
     public void guardarCompatibilidad(CompatibilidadDto compatibilidad) {
         itemDao.guardarCompatibilidad(compatibilidad);
     }
-    
+
     @Override
-    public List<CompatibilidadDto> getLstCompatibilidadByItem(Integer idItem){
+    public List<CompatibilidadDto> getLstCompatibilidadByItem(Integer idItem) {
         return itemDao.getLstCompatibilidadByItem(idItem);
     }
 
@@ -119,5 +121,20 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public List<Item> getLstItemsByUpcContains(String upcCode) {
         return itemDao.getLstItemsByUpcContains(upcCode);
+    }
+
+    @Override
+    public List<Empresa> getLstProveedor() {
+        return empresaDao.getLstEmpresaByTipo((short) 1);
+    }
+
+    @Override
+    public List<DetalleEntradaDto> getLstDetalleEntradaByEntrada(Integer idEntrada) {
+        return itemDao.getLstDetalleEntradaByEntrada(idEntrada);
+    }
+
+    @Override
+    public void guardarEntrada(Entrada entrada) {
+        itemDao.guardarEntrada(entrada);
     }
 }

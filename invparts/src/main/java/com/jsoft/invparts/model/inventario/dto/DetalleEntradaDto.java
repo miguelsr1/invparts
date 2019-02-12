@@ -5,17 +5,21 @@
  */
 package com.jsoft.invparts.model.inventario.dto;
 
-import com.jsoft.invparts.model.inventario.Item;
+import com.jsoft.invparts.model.inventario.DetalleEntrada;
+import java.io.Serializable;
 
 /**
  *
  * @author DesarrolloPc
  */
-public class ItemDto extends Item {
+public class DetalleEntradaDto extends DetalleEntrada implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private String nombreProducto;
-    private Integer cantidad;
-    private Double precioVenta;
+
+    public DetalleEntradaDto() {
+    }
 
     public String getNombreProducto() {
         return nombreProducto;
@@ -25,19 +29,4 @@ public class ItemDto extends Item {
         this.nombreProducto = nombreProducto;
     }
 
-    public Integer getCantidad() {
-        return cantidad;
-    }
-
-    public void setCantidad(Integer cantidad) {
-        this.cantidad = cantidad;
-    }
-
-    public Double getPrecioVenta() {
-        return precioVenta;
-    }
-
-    public void setPrecioVenta(Double precioVenta) {
-        this.precioVenta = precioVenta;
-    }
 }

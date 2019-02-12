@@ -10,6 +10,7 @@ import com.jsoft.invparts.model.inventario.Categoria;
 import com.jsoft.invparts.model.inventario.Marca;
 import com.jsoft.invparts.model.inventario.Modelo;
 import com.jsoft.invparts.model.inventario.Sucursal;
+import com.jsoft.invparts.model.inventario.Ubicacion;
 import com.jsoft.invparts.model.inventario.Vendedor;
 import com.jsoft.invparts.model.inventario.dto.ProductoCategoriaDto;
 import com.jsoft.invparts.model.seguridad.Empresa;
@@ -95,4 +96,8 @@ public interface ManttoService {
     public List<Categoria> getLstCategoriaByLikeNombre(String nombreCategoria, Integer idProducto);
 
     public List<ProductoCategoriaDto> getLstCategoriasByProducto(Integer idProducto);
+    
+    public List<Ubicacion> getLstUbicaciones();
+    
+    public Boolean eliminar(String nombreTbl, Integer id);
 }

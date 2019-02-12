@@ -16,17 +16,29 @@
                         <p:menuitem id="mitNuevo" value="#{msj.limpiar}" action="#{moduloMB.limpiar}" icon="fa fa-eraser" update="pngDatos tblDatos"/>
                     </p:menubar>
 
-                    <p:panelGrid id="pngDatos" columns="2" columnClasses="col4_label,col8" 
-                                 styleClass="ui-panelgrid-blank form-group form-elements">
-                        <p:outputLabel value="Id"/>
-                        <p:inputText value="#{moduloMB.modu.idModulo}" readonly="true" style="width: 60px;"/>
-                        <p:outputLabel value="#{msj.nombreModulo}"/>
-                        <p:inputText value="#{moduloMB.modu.nombreModulo}" style="width: 250px;" />
-                        <p:outputLabel value="#{msj.iconoModulo}"/>
-                        <p:inputText value="#{moduloMB.modu.iconoModulo}" style="width: 250px;" />                                                
-                    </p:panelGrid>
+                    <h3>
+                        <i class="fa fa-cube" aria-hidden="true"></i>
+                        Modulo
+                    </h3>
+                    <p:panel id="pnlFiltro" style="background-color: #E1F7E6;padding: 20px 6px !important;">
+                        <p:panelGrid id="pngDatos" columns="2" columnClasses="col4,col8" 
+                                     styleClass="ui-panelgrid-blank form-group form-elements">
+                            <p:outputLabel value="Id"/>
+                            <p:inputText value="#{moduloMB.modu.idModulo}" readonly="true" style="width: 60px;"/>
+                            <p:outputLabel value="#{msj.nombreModulo}"/>
+                            <p:inputText value="#{moduloMB.modu.nombreModulo}" style="width: 250px;" />
+                            <p:outputLabel value="#{msj.iconoModulo}"/>
+                            <p:inputText value="#{moduloMB.modu.iconoModulo}" style="width: 250px;" />                                                
+                        </p:panelGrid>
+                    </p:panel>
 
                     <br/>
+                    <br/>
+
+                    <h3>
+                        <i class="fa fa-list" aria-hidden="true"></i> 
+                        Lista de modulo
+                    </h3>
                     <p:dataTable id="tblDatos" value="#{moduloMB.lstModulo}" var="modu" rowIndexVar="rowId" rowKey="#{modu.idModulo}"
                                  selectionMode="single" selection="#{moduloMB.modu}">
                         <p:ajax event="rowSelect" update="pngDatos"/>

@@ -123,7 +123,7 @@ public class CompanyMB implements Serializable {
     public void guardarEmpresa() {
         if (emp.getNombreEmpresa() != null && !emp.getNombreEmpresa().isEmpty()) {
             if (manttoService.guardarConIdAutogenerado(emp) == 1) {
-                lstEmpresaUsu = manttoService.listEmpresaUsu(emp);
+                lstEmpresaUsu = manttoService.listEmpresaUsu(null);
                 emp = new Empresa();
             }
         } else {

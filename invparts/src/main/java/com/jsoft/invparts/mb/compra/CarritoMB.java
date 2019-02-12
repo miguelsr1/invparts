@@ -40,7 +40,7 @@ public class CarritoMB implements Serializable {
     private Integer idCategoria;
     private ItemDto itemSelected;
     private List<String> imagenesDeProducto = new ArrayList();
-    private List<Item> lstItems = new ArrayList();
+    private List<ItemDto> lstItems = new ArrayList();
     private List<CarritoDto> lstItemsCarrito = new ArrayList();
 
     @ManagedProperty("#{itemService}")
@@ -97,11 +97,11 @@ public class CarritoMB implements Serializable {
         this.idCategoria = idCategoria;
     }
 
-    public List<Item> getLstItems() {
+    public List<ItemDto> getLstItems() {
         return lstItems;
     }
 
-    public void setLstItems(List<Item> lstItems) {
+    public void setLstItems(List<ItemDto> lstItems) {
         this.lstItems = lstItems;
     }
 

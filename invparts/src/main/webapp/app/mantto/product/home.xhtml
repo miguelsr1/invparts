@@ -30,7 +30,7 @@
 
         <h:body>
             <div class="layout-wrapper layout-menu-overlay">
-                <ui:include src="../../resources/template/topbar.xhtml" />
+                <ui:include src="../../../resources/template/topbar.xhtml" />
 
                 <div class="layout-main">
                     <div class="layout-content">
@@ -41,8 +41,9 @@
 
                             <p:menubar>
                                 <p:submenu label="Items" icon="fa fa-sitemap">
-                                    <p:menuitem value="Add new" icon="fa fa-plus" url="items.xhtml"/>
+                                    <p:menuitem value="New" icon="fa fa-plus" url="items.xhtml"/>
                                     <p:menuitem value="Edit" icon="fa fa-pencil" onclick="PF('dlgFindItem').show();"/>
+                                    <p:menuitem value="Stock Entry" icon="fa fa-cubes" url="addStock.xhtml"/>
                                 </p:submenu>
                             </p:menubar>
                         </h:form>

@@ -20,9 +20,14 @@
             <div class="login-panel ui-fluid">
                 <div class="ui-g">
                     <div class="ui-g-12 logo-container">
-                        <p:graphicImage name="images/logo-gray.png" library="paradise-layout" styleClass="logo" />
-                        <p:graphicImage name="images/login/icon-login.png" library="paradise-layout" styleClass="login-icon" />
-                        <h2>Welcome to Paradise</h2>
+                        <h:panelGrid style="width: 100%;" columns="2" columnClasses="col8,col4">
+                            <p:outputPanel>
+                                <p:outputLabel value="General Auto Service Inc." style="font-size: 24px !important;"/>
+                                <h2>Welcome</h2>
+                            </p:outputPanel>
+                            <p:graphicImage name="images/login/icon-login.png" library="paradise-layout" styleClass="login-icon" />
+                        </h:panelGrid>
+
                     </div>
                     <div class="ui-g-12">
                         <p:outputLabel for="username" value="#{msj.usuario}" />
@@ -48,12 +53,12 @@
                             <p:outputLabel for="remember-me" value="Remember Me"/>
                             <p:selectBooleanCheckbox id="remember-me" />
                         </div>
-                        
+
                     </div>
                     <div class="ui-g-12 button-container">
                         <b:commandButton value="#{msj.butonIngreso}" styleClass="blue-btn raised-btn" action="#{autenticacionMB.validarUsuario}"/>
                     </div>
-                    
+
                     <h:outputStylesheet name="css/layout-#{guestPreferences.layout}.css" library="paradise-layout" />
                 </div>
             </div>

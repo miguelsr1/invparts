@@ -25,13 +25,13 @@ public class GuestPreferences implements Serializable {
 
     private String theme = "blue";
 
-    private String layout = "default";
+    private String layout = "blue";
 
     private boolean overlayMenu = false;
 
     private boolean slimMenu = false;
 
-    private boolean darkMenu = true;
+    private boolean darkMenu = false;
 
     public String getTheme() {
         return theme;

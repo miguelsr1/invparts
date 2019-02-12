@@ -18,6 +18,7 @@ import com.jsoft.invparts.model.inventario.Categoria;
 import com.jsoft.invparts.model.inventario.Marca;
 import com.jsoft.invparts.model.inventario.Modelo;
 import com.jsoft.invparts.model.inventario.Sucursal;
+import com.jsoft.invparts.model.inventario.Ubicacion;
 import com.jsoft.invparts.model.inventario.Vendedor;
 import com.jsoft.invparts.model.inventario.dto.ProductoCategoriaDto;
 import com.jsoft.invparts.model.seguridad.Modulo;
@@ -212,5 +213,15 @@ public class ManttoServiceImpl implements ManttoService {
     @Override
     public Categoria findCategoriaById(Integer idCategoria) {
         return dao.findCategoriaById(idCategoria);
+    }
+
+    @Override
+    public List<Ubicacion> getLstUbicaciones() {
+        return dao.getLstUbicaciones();
+    }
+
+    @Override
+    public Boolean eliminar(String nombreTbl, Integer id) {
+        return dao.eliminar(nombreTbl, id);
     }
 }

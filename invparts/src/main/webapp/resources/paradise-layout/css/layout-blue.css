@@ -853,15 +853,15 @@ body {
   color: #ffffff;
   height: 70px;
   padding: 12px 15px;
-  border-bottom: solid 1px #3984b8;
+  border-bottom: solid 1px #255678;
   z-index: 100;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
-  background-color: #3984b8;
+  background-color: #255678;
   background-image: -webkit-gradient(linear, left top, right top, from(#3984b8), to(#3984b8));
   background-image: -webkit-linear-gradient(left, #3984b8, #3984b8);
-  background-image: -moz-linear-gradient(left, #3984b8, #3984b8);
+  background-image: -moz-linear-gradient(left, #255678, #3D8DC5);
   background-image: -ms-linear-gradient(left, #3984b8, #3984b8);
   background-image: -o-linear-gradient(left, #3984b8, #3984b8);
   background-image: linear-gradient(left, #3984b8, #3984b8);

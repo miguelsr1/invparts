@@ -16,11 +16,13 @@ create or replace view vw_find_items_by_model_and_category as
 select distinct
 	it.*,
 	co.id_modelo,
-	pc.id_categoria
+	pc.id_categoria,
+	de.cantidad,
+	de.precio_venta
 from item it
 	inner join compatibilidad co 	 on it.id_item = co.id_item
-	inner join producto pr		 	 on pr.id_producto = it.id_producto
-	inner join producto_categoria pc on pc.id_producto = pr.id_producto;
+	inner join producto_categoria pc on pc.id_item = co.id_item
+	inner join detalle_entrada de    on de.id_item = it.id_item;
 
 create view vw_opciones_menu_by_usu_and_mod as
 select 
@@ -37,3 +39,9 @@ select
 from 
 	compatibilidad com
 	inner join modelo m on com.id_modelo = m.id_modelo;
+
+
+create or replace view vw_detalle_entrada_dto as
+select de.*, it.nombre_item
+from item it
+	inner join detalle_entrada de on it.id_item = de.id_item;
