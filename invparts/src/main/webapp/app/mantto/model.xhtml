@@ -17,8 +17,9 @@
                     </p:menubar>
 
                     <h3>
-                        <i class="fa fa-puzzle-piece" aria-hidden="true"></i>
-                        Modelo
+                        <i class="fa fa-puzzle-piece" style="font-size: 16px;" aria-hidden="true"></i>
+                        <p:spacer width="10"/>
+                        <p:outputLabel value="Modelo"/>
                     </h3>
                     <p:panel id="pnlFiltro" style="background-color: #E1F7E6;padding: 20px 6px !important;">
                         <p:panelGrid id="pngDatos" columns="2" columnClasses="col4,col8" 
@@ -36,13 +37,14 @@
                             </p:selectOneMenu>
                         </p:panelGrid>
                     </p:panel>
-
+                    
                     <br/>
                     <br/>
 
                     <h3>
-                        <i class="fa fa-list" aria-hidden="true"></i> 
-                        Lista de modelos
+                        <i class="fa fa-list" style="font-size: 16px;" aria-hidden="true"></i>
+                        <p:spacer width="10"/>
+                        <p:outputLabel value="Listado de modelos"/>
                     </h3>
                     <p:dataTable id="tblDatos" value="#{modeloMB.lstModelo}" var="model" rowIndexVar="rowId" rowKey="#{model.idModelo}"
                                  selectionMode="single" selection="#{modeloMB.model}">

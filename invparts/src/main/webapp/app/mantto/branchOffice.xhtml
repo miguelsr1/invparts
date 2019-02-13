@@ -16,25 +16,35 @@
                         <p:menuitem id="mitNuevo" value="#{msj.limpiar}" action="#{companyMB.limpiarSuc}" icon="fa fa-eraser" update="pngDatos tblDatos"/>
                     </p:menubar>
 
-                    <p:panelGrid id="pngDatos" columns="2" columnClasses="col4_label,col8" 
-                                 styleClass="ui-panelgrid-blank form-group form-elements">
-                        <p:outputLabel value="Id"/>
-                        <p:inputText value="#{companyMB.suc.idSucursal}" readonly="true" style="width: 60px;"/>
-                        <p:outputLabel value="#{msj.nombreSucursal}"/>
-                        <p:inputText value="#{companyMB.suc.nombreSucursal}" style="width: 250px;"/>
-                        <p:outputLabel value="#{msj.nombreEmpresa}"/>
-                        <p:selectOneMenu  value="#{companyMB.suc.idEmpresa}">
-                             <f:selectItem itemLabel="#{msj.seleccioneUnValor}" itemValue="" />
-                             <f:selectItems  var="emp" value="#{companyMB.lstEmpresaUsu}" itemValue="#{emp.idEmpresa}" itemLabel="#{emp.nombreEmpresa}"/>
-                        </p:selectOneMenu>
-                        <p:outputLabel value="#{msj.direccion}"/>
-                        <p:inputText value="#{companyMB.suc.direccionSucursal}" style="width: 250px;"/>
-                        <p:outputLabel value="#{msj.numeroTelefono}"/>
-                        <p:inputMask value="#{companyMB.suc.telefonoSucursal}" mask="(999) 999-9999" style="width: 250px;" />
-                        
-                    </p:panelGrid>
+                    <h3>
+                        <i class="fa fa-building"  style="font-size: 16px;" aria-hidden="true"></i>
+                        <p:spacer width="10"/>
+                        <p:outputLabel value="Sucursal"/>
+                    </h3>
+                    <p:panel id="pnlFiltro" style="background-color: #E1F7E6;padding: 20px 6px !important;">
+                        <p:panelGrid id="pngDatos" columns="2" columnClasses="col4,col8" 
+                                     styleClass="ui-panelgrid-blank form-group form-elements">
+                            <p:outputLabel value="Id"/>
+                            <p:inputText value="#{companyMB.suc.idSucursal}" readonly="true" style="width: 60px;"/>
+                            <p:outputLabel value="#{msj.nombreSucursal}"/>
+                            <p:inputText value="#{companyMB.suc.nombreSucursal}" style="width: 250px;"/>
+                            <p:outputLabel value="#{msj.nombreEmpresa}"/>
+                            <p:selectOneMenu  value="#{companyMB.suc.idEmpresa}">
+                                <f:selectItem itemLabel="#{msj.seleccioneUnValor}" itemValue="" />
+                                <f:selectItems  var="emp" value="#{companyMB.lstEmpresaUsu}" itemValue="#{emp.idEmpresa}" itemLabel="#{emp.nombreEmpresa}"/>
+                            </p:selectOneMenu>
+                            <p:outputLabel value="#{msj.direccion}"/>
+                            <p:inputText value="#{companyMB.suc.direccionSucursal}" style="width: 250px;"/>
+                            <p:outputLabel value="#{msj.numeroTelefono}"/>
+                            <p:inputMask value="#{companyMB.suc.telefonoSucursal}" mask="(999) 999-9999" style="width: 250px;" />
+                        </p:panelGrid>
+                    </p:panel>
 
-                    <br/>
+                    <h3>
+                        <i class="fa fa-list" style="font-size: 16px;" aria-hidden="true"></i>
+                        <p:spacer width="10"/>
+                        <p:outputLabel value="Listado de sucursales"/>
+                    </h3>
                     <p:dataTable id="tblDatos" value="#{companyMB.lstSucursal}" var="suc" rowIndexVar="rowId" rowKey="#{suc.idSucursal}"
                                  selectionMode="single" selection="#{companyMB.suc}">
                         <p:ajax event="rowSelect" update="pngDatos"/>
@@ -47,10 +57,10 @@
                         <p:column headerText="#{msj.direccion}">
                             <p:outputLabel value="#{suc.direccionSucursal}"/>
                         </p:column>
-                         <p:column headerText="#{msj.numeroTelefono}">
-                             <p:outputLabel value="#{suc.telefonoSucursal}"/>
+                        <p:column headerText="#{msj.numeroTelefono}">
+                            <p:outputLabel value="#{suc.telefonoSucursal}"/>
                         </p:column>
-                        
+
                     </p:dataTable>
                 </div>
             </div>

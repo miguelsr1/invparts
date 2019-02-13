@@ -852,7 +852,7 @@ body {
   top: 0;
   color: #ffffff;
   height: 70px;
-  padding: 12px 15px;
+  padding: 5px 15px;
   border-bottom: solid 1px #255678;
   z-index: 100;
   -webkit-box-sizing: border-box;
@@ -867,7 +867,7 @@ body {
   background-image: linear-gradient(left, #3984b8, #3984b8);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#3984b8', endColorstr='#3984b8', gradientType='1'); }
   .layout-wrapper .topbar .topbar-logo img {
-    height: 44px;
+    height: 60px;
     vertical-align: middle; }
   .layout-wrapper .topbar #user-display {
     float: right;

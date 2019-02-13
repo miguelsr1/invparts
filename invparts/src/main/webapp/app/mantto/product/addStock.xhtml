@@ -19,8 +19,12 @@
                         <p:menuitem id="mitBuscar" value="Atras" action="home.xhtml" icon="fa fa-arrow-left" update="pnlFiltro"/>
                     </p:menubar>
 
-                    <h3>Orden de Compra</h3>
-                    <p:panel style="background-color: #e0eaff;padding: 20px 6px !important;">
+                    <h3>
+                        <i class="fa fa-shopping-basket" style="font-size: 16px;" aria-hidden="true"></i>
+                        <p:spacer width="10"/>
+                        <p:outputLabel value="Orden de Compra"/>
+                    </h3>
+                    <p:panel style="background-color: #E1F7E6;padding: 20px 6px !important;">
                         <p:panelGrid columns="2" columnClasses="col3, col9" styleClass="ui-panelgrid-blank ui-fluid">
                             <p:outputLabel value="Proveedor"/>
                             <p:selectOneMenu value="#{entradaMB.entrada.idEmpresa}">
@@ -34,7 +38,11 @@
                     <br/>
                     <br/>
 
-                    <h3>Detalle de Orden de Compra</h3>
+                    <h3>
+                        <i class="fa fa-list" style="font-size: 16px;" aria-hidden="true"></i>
+                        <p:spacer width="10"/>
+                        <p:outputLabel value="Detalle de la orden de compra"/>
+                    </h3>
                     <p:outputPanel id="pnlFiltro">
                         <p:panelGrid columns="3" columnClasses="col2, col8, col2" styleClass="ui-panelgrid-blank ui-fluid">
                             <p:outputLabel value="UPC Código"/>

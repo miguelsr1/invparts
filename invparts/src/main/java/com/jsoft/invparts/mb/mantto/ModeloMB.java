@@ -5,8 +5,10 @@
  */
 package com.jsoft.invparts.mb.mantto;
 
+import com.jsoft.invparts.model.inventario.Clase;
 import com.jsoft.invparts.model.inventario.Marca;
 import com.jsoft.invparts.model.inventario.Modelo;
+import com.jsoft.invparts.model.inventario.Ubicacion;
 import com.jsoft.invparts.servicios.ManttoService;
 import com.jsoft.invparts.util.JsfUtil;
 import java.io.Serializable;
@@ -29,8 +31,10 @@ public class ModeloMB implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Modelo model = new Modelo();
+    private Clase clase = new Clase();
     private List<Modelo> lstModelo = new ArrayList();
     private List<Marca> lstMarca = new ArrayList();
+    private List<Ubicacion> lstUbicaciones = new ArrayList();
 
     @ManagedProperty("#{manttoService}")
     private ManttoService manttoService;
@@ -85,6 +89,24 @@ public class ModeloMB implements Serializable {
     public void setLstModelo(List<Modelo> lstModelo) {
         this.lstModelo = lstModelo;
     }
+
+    public List<Ubicacion> getLstUbicaciones() {
+        return lstUbicaciones;
+    }
+
+    public void setLstUbicaciones(List<Ubicacion> lstUbicaciones) {
+        this.lstUbicaciones = lstUbicaciones;
+    }
+
+    public Clase getClase() {
+        return clase;
+    }
+
+    public void setClase(Clase clase) {
+        this.clase = clase;
+    }
+    
+    //==============================================================================
 
     public void buscarModelo() {
         lstModelo = manttoService.listModelo(model);

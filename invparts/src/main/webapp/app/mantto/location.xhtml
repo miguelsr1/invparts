@@ -20,8 +20,9 @@
                     </p:menubar>
 
                     <h3>
-                        <i class="fa fa-puzzle-piece" aria-hidden="true"></i>
-                        Ubicaciones
+                        <i class="fa fa-puzzle-piece" style="font-size: 16px;" aria-hidden="true"></i>
+                        <p:spacer width="10"/>
+                        <p:outputLabel value="Ubicación"/>
                     </h3>
                     <p:panel id="pnlFiltro" style="background-color: #E1F7E6;padding: 20px 6px !important;">
                         <p:panelGrid columns="2" columnClasses="col3, col9" styleClass="ui-panelgrid-blank ui-fluid">
@@ -35,8 +36,9 @@
                     <br/>
 
                     <h3>
-                        <i class="fa fa-list" aria-hidden="true"></i> 
-                        Lista de ubicaciones
+                        <i class="fa fa-list" style="font-size: 16px;" aria-hidden="true"></i>
+                        <p:spacer width="10"/>
+                        <p:outputLabel value="Listado de ubicaciones"/>
                     </h3>
                     <p:dataTable id="tblDetalleEntrada" value="#{locationMB.lstUbicaciones}"  var="ubi" rowIndexVar="rowId" rowKey="#{ubi.idUbicacion}">
                         <p:column headerText="Id" style="text-align: center; border-right-width: 0px;border-left-width: 0px;" width="50">

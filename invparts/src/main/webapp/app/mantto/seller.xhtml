@@ -16,8 +16,9 @@
                     </p:menubar>
 
                     <h3>
-                        <i class="fa fa-id-badge" aria-hidden="true"></i>
-                        Vendedor
+                        <i class="fa fa-id-badge" style="font-size: 16px;" aria-hidden="true"></i>
+                        <p:spacer width="10"/>
+                        <p:outputLabel value="Vendedor"/>
                     </h3>
                     <p:panel id="pnlFiltro" style="background-color: #E1F7E6;padding: 20px 6px !important;">
                         <p:panelGrid id="pngDatos" columns="2" columnClasses="col4,col8" 
@@ -35,8 +36,9 @@
                     <br/>
 
                     <h3>
-                        <i class="fa fa-list" aria-hidden="true"></i> 
-                        Lista de vendedores
+                        <i class="fa fa-list" style="font-size: 16px;" aria-hidden="true"></i>
+                        <p:spacer width="10"/>
+                        <p:outputLabel value="Listado de vendedores"/>
                     </h3>
                     <p:dataTable id="tblDatos" value="#{sellerMB.listVendedor}" var="sel" rowIndexVar="rowId" rowKey="#{sel.idVendedor}"
                                  selectionMode="single" selection="#{sellerMB.ven}">

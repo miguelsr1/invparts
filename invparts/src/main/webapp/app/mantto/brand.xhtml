@@ -17,8 +17,9 @@
                     </p:menubar>
 
                     <h3>
-                        <i class="fa fa-puzzle-piece" aria-hidden="true"></i>
-                        Modelos
+                        <i class="fa fa-puzzle-piece"  style="font-size: 16px;" aria-hidden="true"></i>
+                        <p:spacer width="10"/>
+                        <p:outputLabel value="Modelo"/>
                     </h3>
                     <p:panel id="pnlFiltro" style="background-color: #E1F7E6;padding: 20px 6px !important;">
                         <p:panelGrid id="pngDatos" columns="2" columnClasses="col4_label,col8" 
@@ -42,8 +43,9 @@
                     <br/>
 
                     <h3>
-                        <i class="fa fa-list" aria-hidden="true"></i> 
-                        Lista de marcas
+                        <i class="fa fa-list" style="font-size: 16px;" aria-hidden="true"></i>
+                        <p:spacer width="10"/>
+                        <p:outputLabel value="Listado de marcas"/>
                     </h3>
                     <p:dataTable id="tblDatos" value="#{marcaMB.lstMarca}" var="mar" rowIndexVar="rowId" rowKey="#{mar.idMarca}"
                                  selectionMode="single" selection="#{marcaMB.mar}">
