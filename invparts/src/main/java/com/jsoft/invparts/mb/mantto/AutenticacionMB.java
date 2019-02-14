@@ -30,6 +30,7 @@ public class AutenticacionMB implements Serializable {
     private String login;
     private String clave;
     private String usuario;
+    private Integer modPer;
   
     private Usuario user = new Usuario();
 
@@ -72,6 +73,14 @@ public class AutenticacionMB implements Serializable {
 
     public void setLstOpcMenu(List<OpcionMenu> lstOpcMenu) {
         this.lstOpcMenu = lstOpcMenu;
+    }
+
+    public Integer getModPer() {
+        return modPer;
+    }
+
+    public void setModPer(Integer modPer) {
+        this.modPer = modPer;
     }
 
     public Usuario getUser() {
@@ -121,13 +130,15 @@ public class AutenticacionMB implements Serializable {
         if (manttoService.getUsuarioByUsu(login)) {
             if (manttoService.getUsuarioByClave(login, clave)) {
                 url = "/app/principal.xhtml?faces-redirect=true";
+                //obtener empresa 
                 emp = manttoService.findIdEmpByLogin(login);
-                //   modPer= manttoService.findIdModPerByLogin(login,emp);
+                modPer= manttoService.findIdModPerByLogin(login,emp);
 
                 user = manttoService.findUserByLogin(login);
                 lstModulo = manttoService.getlstModulos(login);
 
                 JsfUtil.addVariableSession("USU_SESSION", user);
+                JsfUtil.addVariableSession("MODULO_PERFIL", modPer);
                 JsfUtil.addVariableSession("EMP_SESSION", emp);
                 JsfUtil.addVariableSession("PERSONA_SESSION", user.getIdPersona());
 

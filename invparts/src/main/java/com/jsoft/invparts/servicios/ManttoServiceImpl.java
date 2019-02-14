@@ -76,8 +76,8 @@ public class ManttoServiceImpl implements ManttoService {
     }
     
     @Override
-    public List<OpcionMenu> listOpcMenuMod(Integer idMod) {
-        return dao.listOpcMenuMod(idMod);
+    public List<OpcionMenu> listOpcMenuMod(Integer idMod,Integer idModPer) {
+        return dao.listOpcMenuMod(idMod,idModPer);
     }
     
     

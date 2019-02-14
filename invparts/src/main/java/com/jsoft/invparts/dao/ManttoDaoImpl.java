@@ -27,9 +27,11 @@ import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
+
 import org.primefaces.model.menu.DefaultMenuItem;
 import org.primefaces.model.menu.DefaultMenuModel;
 import org.primefaces.model.menu.DefaultSubMenu;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -214,8 +216,8 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
     }
 
     @Override
-    public List<OpcionMenu> listOpcMenuMod(Integer idMod) {
-        String sql = "SELECT * FROM Opcion_Menu WHERE id_modulo=" + idMod;
+    public List<OpcionMenu> listOpcMenuMod(Integer idMod,Integer idModPer) {
+        String sql = "SELECT * FROM Opcion_Menu WHERE id_modulo=" + idMod+ " and id_opcion_menu in (select id_opc_menu from privilegio where id_modulo_perfil="+idModPer+")";
 
         List<OpcionMenu> listOpc = getJdbcTemplate().query(sql, new RowMapper<OpcionMenu>() {
 
@@ -571,7 +573,7 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
 
     @Override
     public Integer findIdEmpByLogin(String login) {
-        String sql = "SELECT distinct id_empresa FROM usuario_Empresa WHERE usuario = ?";
+        String sql = "SELECT DISTINCT id_empresa FROM usuario_Empresa WHERE usuario = ?";
 
         Integer idEmp = getJdbcTemplate().queryForObject(sql, new Object[]{login}, Integer.class);
 
@@ -645,9 +647,10 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
             }
             menu.addElement((DefaultSubMenu) obj);
             model = menu;
-
+          
         } catch (Exception ex) {
             JsfUtil.addErrorMessage("Ocurrio una excepción en el proceso de creación del arbol del menu. Contactese con el administrador del sistema.");
+          
         }
     }
 

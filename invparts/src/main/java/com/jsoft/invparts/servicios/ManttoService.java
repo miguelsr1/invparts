@@ -22,6 +22,7 @@ import com.jsoft.invparts.model.seguridad.Perfil;
 import com.jsoft.invparts.model.seguridad.Privilegio;
 import java.util.List;
 
+
 /**
  *
  * @author DesarrolloPc
@@ -38,7 +39,7 @@ public interface ManttoService {
 
     public List<OpcionMenu> listOpcionesMenu(OpcionMenu opc);
 
-    public List<OpcionMenu> listOpcMenuMod(Integer Modulo);
+    public List<OpcionMenu> listOpcMenuMod(Integer Modulo,Integer ModPer);
 
     public List<Perfil> listPerfil(Perfil per);
 
@@ -96,5 +97,5 @@ public interface ManttoService {
 
     public List<ProductoCategoriaDto> getLstCategoriasByProducto(Integer idProducto);
     
-    public  void crearArbolMenu(List<OpcionMenu> lstOpcionMenu);
+    public void crearArbolMenu(List<OpcionMenu> lstOpcionMenu);
 }

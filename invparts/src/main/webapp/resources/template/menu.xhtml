@@ -22,7 +22,8 @@
                         </div>
 
                         <pv:menu>
-                            <p:menuitem id="pm_dashboard" value="Dashboard" icon="fa fa-home" outcome="/app/menu" />
+                             <p:menu id="pm_dashboard" model="#{menuMB.model}"/>
+                           
                         </pv:menu>
                         
                         <ui:insert name="subMenu"/>

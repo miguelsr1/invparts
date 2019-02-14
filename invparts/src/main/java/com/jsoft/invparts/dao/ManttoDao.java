@@ -45,7 +45,7 @@ public interface ManttoDao {
     
     public List<OpcionMenu> listOpcMenuByUsuAndModulo(String usuario, Integer idModulo);
 
-    public List<OpcionMenu> listOpcMenuMod(Integer idApp);
+    public List<OpcionMenu> listOpcMenuMod(Integer idApp,Integer idModPer);
      
     public void crearArbolMenu(List<OpcionMenu> lstOpcionMenu);
      

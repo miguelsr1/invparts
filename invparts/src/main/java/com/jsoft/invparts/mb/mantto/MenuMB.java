@@ -22,6 +22,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import org.primefaces.model.menu.DefaultMenuModel;
 
 /**
  *
@@ -37,7 +38,9 @@ public class MenuMB implements Serializable {
     private String login;
       private Integer idApp;
     private List<Modulo> lstModulo = new ArrayList<>();
-
+     private DefaultMenuModel model;
+     private Integer moduloPer;
+ 
     @ManagedProperty("#{manttoService}")
     private ManttoService manttoService;
 
@@ -54,10 +57,9 @@ public class MenuMB implements Serializable {
     public void validarUsuario() {
         if (JsfUtil.getVariableSession("USU_SESSION") != null) {
             Usuario p = (Usuario) JsfUtil.getVariableSession("USU_SESSION");
-            //idModulo = JsfUtil.getRequestParameter("idApp");
             login = p.getUsuario();
+            moduloPer = Integer.parseInt(JsfUtil.getVariableSession("MODULO_PERFIL").toString());
             lstModulo = manttoService.getlstModulos(login);
-            //lstOpcMenu = manttoService.listOpcMenuMod(Integer.parseInt(idModulo));
         }
     }
 
@@ -93,6 +95,22 @@ public class MenuMB implements Serializable {
         this.login = login;
     }
 
+    public DefaultMenuModel getModel() {
+        return model;
+    }
+
+    public void setModel(DefaultMenuModel model) {
+        this.model = model;
+    }
+
+    public Integer getModuloPer() {
+        return moduloPer;
+    }
+
+    public void setModuloPer(Integer moduloPer) {
+        this.moduloPer = moduloPer;
+    }
+
     public List<Modulo> getLstModulo() {
         return lstModulo;
     }
@@ -119,10 +137,13 @@ public class MenuMB implements Serializable {
 
     public void obtenerMenu() {
         try {
-            lstOpcMenu = manttoService.listOpcMenuMod(Integer.parseInt(idModulo));
-            manttoService.crearArbolMenu(lstOpcMenu);
-            FacesContext.getCurrentInstance().getExternalContext().redirect("menu.xhtml?faces-redirect=true");
-            //return ;
+            
+            lstOpcMenu = manttoService.listOpcMenuMod(Integer.parseInt(idModulo),moduloPer);
+           // manttoService.crearArbolMenu(lstOpcMenu);
+            
+           //  ((ManttoService) FacesContext.getCurrentInstance().getApplication().getELResolver().getValue(FacesContext.getCurrentInstance().getELContext(), null, "manttoService")).crearArbolMenu(lstOpcMenu);
+       
+             FacesContext.getCurrentInstance().getExternalContext().redirect("menu.xhtml?faces-redirect=true");
         } catch (IOException ex) {
             Logger.getLogger(MenuMB.class.getName()).log(Level.SEVERE, null, ex);
         }
