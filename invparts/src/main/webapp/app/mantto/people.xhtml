@@ -15,21 +15,34 @@
                         <p:menuitem id="mitBuscar" value="#{msj.buscar}" action="#{personaMB.buscarPersona}" icon="fa fa-search" update="pngDatos tblDatos"/>
                     </p:menubar>
 
-                    <p:panelGrid id="pngDatos" columns="2" columnClasses="col4_label,col8" 
-                                 styleClass="ui-panelgrid-blank form-group form-elements">
-                        <p:outputLabel value="Id"/>
-                        <p:inputText value="#{personaMB.per.idPersona}" readonly="true" style="width: 60px;"/>
-                        <p:outputLabel value="#{msj.primerNombre}"/>
-                        <p:inputText value="#{personaMB.per.primerNombre}" style="width: 250px;"/>
-                        <p:outputLabel value="#{msj.segundoNombre}"/>
-                        <p:inputText value="#{personaMB.per.segundoNombre}" style="width: 250px;"/>
-                        <p:outputLabel value="#{msj.numeroTelefono}"/>
-                        <p:inputText value="#{personaMB.per.numeroTelefono}" style="width: 250px;"/>
-                        <p:outputLabel value="#{msj.eMail}"/>
-                        <p:inputText value="#{personaMB.per.correoElectronico}" style="width: 250px;"/>
-                    </p:panelGrid>
+                    <h3>
+                        <i class="fa fa-user" style="font-size: 16px;" aria-hidden="true"></i>
+                        <p:spacer width="10"/>
+                        <p:outputLabel value="Persona"/>
+                    </h3>
+                    <p:panel id="pnlFiltro" style="background-color: #E1F7E6;padding: 20px 6px !important;">
+                        <p:panelGrid id="pngDatos" columns="2" columnClasses="col4,col8" 
+                                     styleClass="ui-panelgrid-blank form-group form-elements">
+                            <p:outputLabel value="Id"/>
+                            <p:inputText value="#{personaMB.per.idPersona}" readonly="true" style="width: 60px;"/>
+                            <p:outputLabel value="#{msj.primerNombre}"/>
+                            <p:inputText value="#{personaMB.per.primerNombre}" style="width: 250px;"/>
+                            <p:outputLabel value="#{msj.segundoNombre}"/>
+                            <p:inputText value="#{personaMB.per.segundoNombre}" style="width: 250px;"/>
+                            <p:outputLabel value="#{msj.numeroTelefono}"/>
+                            <p:inputText value="#{personaMB.per.numeroTelefono}" style="width: 250px;"/>
+                            <p:outputLabel value="#{msj.eMail}"/>
+                            <p:inputText value="#{personaMB.per.correoElectronico}" style="width: 250px;"/>
+                        </p:panelGrid>
+                    </p:panel>
 
                     <br/>
+                    <br/>
+                    <h3>
+                        <i class="fa fa-list" style="font-size: 16px;" aria-hidden="true"></i>
+                        <p:spacer width="10"/>
+                        <p:outputLabel value="Listado de personas"/>
+                    </h3>
                     <p:dataTable id="tblDatos" value="#{personaMB.lstPersonas}" var="per" rowIndexVar="rowId" rowKey="#{per.idPersona}"
                                  selectionMode="single" selection="#{personaMB.per}">
                         <p:ajax event="rowSelect" update="pngDatos"/>

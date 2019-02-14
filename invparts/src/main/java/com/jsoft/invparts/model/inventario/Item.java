@@ -23,7 +23,7 @@ public class Item implements Serializable, PersistenciaDao {
     public String descripcion;
     public String upcCodigo;
     public String codigoProducto;
-    public Short tamanio;
+    public String tamanio;
     public Double peso;
     public String especificaciones;
     public String urlImagen;
@@ -51,11 +51,11 @@ public class Item implements Serializable, PersistenciaDao {
         this.descripcion = descripcion;
     }
 
-    public Short getTamanio() {
+    public String getTamanio() {
         return tamanio;
     }
 
-    public void setTamanio(Short tamanio) {
+    public void setTamanio(String tamanio) {
         this.tamanio = tamanio;
     }
 

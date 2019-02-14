@@ -6,13 +6,11 @@
 package com.jsoft.invparts.mb.mantto;
 
 import com.jsoft.invparts.model.inventario.Categoria;
-import com.jsoft.invparts.model.inventario.Compatibilidad;
 import com.jsoft.invparts.model.inventario.Estante;
 import com.jsoft.invparts.model.inventario.InformacionItem;
 import com.jsoft.invparts.model.inventario.Item;
 import com.jsoft.invparts.model.inventario.Modelo;
 import com.jsoft.invparts.model.inventario.ProductoCategoria;
-import com.jsoft.invparts.model.inventario.dto.CompatibilidadDto;
 import com.jsoft.invparts.servicios.ItemService;
 import com.jsoft.invparts.servicios.ManttoService;
 import com.jsoft.invparts.util.JsfUtil;
@@ -32,7 +30,6 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import org.primefaces.PrimeFaces;
-import org.primefaces.context.RequestContext;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.model.UploadedFile;
@@ -63,8 +60,8 @@ public class ItemMB implements Serializable {
     private InformacionItem infoItem = new InformacionItem();
     private Modelo modelo = new Modelo();
     private List<InformacionItem> lstInfoItems = new ArrayList();
-    private List<Compatibilidad> lstCompatibilidad = new ArrayList();
-    private List<CompatibilidadDto> lstCompatibilidadDtos = new ArrayList();
+    /*private List<Compatibilidad> lstCompatibilidad = new ArrayList();
+    private List<CompatibilidadDto> lstCompatibilidadDtos = new ArrayList();*/
     private List<Categoria> lstCategorias = new ArrayList();
 
     private File folderImg = null;
@@ -84,8 +81,7 @@ public class ItemMB implements Serializable {
 
         lstInfoItems = itemService.getLstInformacionItemByIdItem(item.getIdItem());
 
-        lstCompatibilidadDtos = itemService.getLstCompatibilidadByItem(item.getIdItem());
-
+        //lstCompatibilidadDtos = itemService.getLstCompatibilidadByItem(item.getIdItem());
         lstCategorias = itemService.getLstCategoriaByIdItem(item.getIdItem());
         //item = new Item();
         //lstProductos = itemService.getLstProducto(0);
@@ -127,14 +123,13 @@ public class ItemMB implements Serializable {
         this.fileUpd = fileUpd;
     }
 
-    public List<CompatibilidadDto> getLstCompatibilidadDtos() {
-        return lstCompatibilidadDtos;
-    }
-
-    public void setLstCompatibilidadDtos(List<CompatibilidadDto> lstCompatibilidadDtos) {
-        this.lstCompatibilidadDtos = lstCompatibilidadDtos;
-    }
-
+//    public List<CompatibilidadDto> getLstCompatibilidadDtos() {
+//        return lstCompatibilidadDtos;
+//    }
+//
+//    public void setLstCompatibilidadDtos(List<CompatibilidadDto> lstCompatibilidadDtos) {
+//        this.lstCompatibilidadDtos = lstCompatibilidadDtos;
+//    }
     public Integer getIdModelo() {
         return idModelo;
     }
@@ -194,34 +189,34 @@ public class ItemMB implements Serializable {
     }
 
     public void guardar() {
-        Boolean existeCompatibilidaPrimaria = false;
-        for (CompatibilidadDto compatibilidad : lstCompatibilidadDtos) {
-            if (compatibilidad.getCompatibilidadPrimaria()) {
-                existeCompatibilidaPrimaria = true;
-                break;
-            }
-        }
+        //Boolean existeCompatibilidaPrimaria = false;
+//        for (CompatibilidadDto compatibilidad : lstCompatibilidadDtos) {
+//            if (compatibilidad.getCompatibilidadPrimaria()) {
+//                existeCompatibilidaPrimaria = true;
+//                break;
+//            }
+//        }
 
         for (Categoria categoria : lstCategorias) {
             item.getLstCategorias().add(new ProductoCategoria(categoria.getIdCategoria()));
         }
 
-        if (existeCompatibilidaPrimaria) {
-            item.setLstInformacionItem(lstInfoItems);
+        //if (existeCompatibilidaPrimaria) {
+        item.setLstInformacionItem(lstInfoItems);
 
-            itemService.guardar(item);
-            if (item.getIdItem() != null) {
-                for (CompatibilidadDto compatibilidad : lstCompatibilidadDtos) {
-                    compatibilidad.setIdItem(item.getIdItem());
-
-                    itemService.guardarCompatibilidad(compatibilidad);
-                }
-            }
-
-            JsfUtil.addSuccessMessage("Registros almacenados satisfactoriamente");
-        } else {
-            JsfUtil.addWarningMessage("Debe de seleccionar un compatibilidad primaria.");
+        itemService.guardar(item);
+        if (item.getIdItem() != null) {
+//                for (CompatibilidadDto compatibilidad : lstCompatibilidadDtos) {
+//                    compatibilidad.setIdItem(item.getIdItem());
+//
+//                    itemService.guardarCompatibilidad(compatibilidad);
+//                }
         }
+
+        JsfUtil.addSuccessMessage("Registros almacenados satisfactoriamente");
+//        } else {
+//            JsfUtil.addWarningMessage("Debe de seleccionar un compatibilidad primaria.");
+//        }
     }
 
     public void nuevo() {
@@ -275,48 +270,47 @@ public class ItemMB implements Serializable {
     public void onModeloSelect(SelectEvent evt) {
         if (evt.getObject() != null) {
             idModelo = (Integer) evt.getObject();
-            if (lstCompatibilidad.isEmpty()) {
-                Compatibilidad primaria = new Compatibilidad();
-                primaria.setTipoCompatibilidad((short) 1);
-                primaria.setIdModelo(idModelo);
-
-                lstCompatibilidad.add(primaria);
-            } else {
-                for (Compatibilidad compatibilidad : lstCompatibilidad) {
-                    if (compatibilidad.getTipoCompatibilidad() == 1) {
-                        compatibilidad.setIdModelo(idModelo);
-                    }
-                }
-            }
+//            if (lstCompatibilidad.isEmpty()) {
+//                Compatibilidad primaria = new Compatibilidad();
+//                primaria.setTipoCompatibilidad((short) 1);
+//                primaria.setIdModelo(idModelo);
+//
+//                lstCompatibilidad.add(primaria);
+//            } else {
+//                for (Compatibilidad compatibilidad : lstCompatibilidad) {
+//                    if (compatibilidad.getTipoCompatibilidad() == 1) {
+//                        compatibilidad.setIdModelo(idModelo);
+//                    }
+//                }
+//            }
 
             modelo = itemService.getModeloByPk(idModelo);
         }
     }
 
-    public void addCompatibilidad(SelectEvent evt) {
-        if (evt.getObject() != null) {
-            Boolean noEsta = true;
-            modelo = itemService.getModeloByPk((Integer) evt.getObject());
-
-            for (CompatibilidadDto compatibilidad : lstCompatibilidadDtos) {
-                if (compatibilidad.getIdModelo().equals((Integer) evt.getObject())) {
-                    noEsta = false;
-                    break;
-                }
-            }
-
-            if (noEsta) {
-                CompatibilidadDto compatibilidadDto = new CompatibilidadDto();
-
-                compatibilidadDto.setIdItem(item.getIdItem());
-                compatibilidadDto.setIdModelo(modelo.getIdModelo());
-                compatibilidadDto.setNombreModelo(modelo.nombreModelo);
-
-                lstCompatibilidadDtos.add(compatibilidadDto);
-            }
-        }
-    }
-
+//    public void addCompatibilidad(SelectEvent evt) {
+//        if (evt.getObject() != null) {
+//            Boolean noEsta = true;
+//            modelo = itemService.getModeloByPk((Integer) evt.getObject());
+//
+//            for (CompatibilidadDto compatibilidad : lstCompatibilidadDtos) {
+//                if (compatibilidad.getIdModelo().equals((Integer) evt.getObject())) {
+//                    noEsta = false;
+//                    break;
+//                }
+//            }
+//
+//            if (noEsta) {
+//                CompatibilidadDto compatibilidadDto = new CompatibilidadDto();
+//
+//                compatibilidadDto.setIdItem(item.getIdItem());
+//                compatibilidadDto.setIdModelo(modelo.getIdModelo());
+//                compatibilidadDto.setNombreModelo(modelo.nombreModelo);
+//
+//                lstCompatibilidadDtos.add(compatibilidadDto);
+//            }
+//        }
+//    }
     public void handleFileUpload(FileUploadEvent event) {
         try {
             FacesMessage msg = new FacesMessage("Succesful", event.getFile().getFileName() + " is uploaded.");

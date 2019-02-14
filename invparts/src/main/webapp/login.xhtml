@@ -2,8 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:b="http://bootsfaces.net/ui">
+      xmlns:p="http://primefaces.org/ui">
 
     <h:head>
         <f:facet name="first">
@@ -56,7 +55,7 @@
 
                     </div>
                     <div class="ui-g-12 button-container">
-                        <b:commandButton value="#{msj.butonIngreso}" styleClass="blue-btn raised-btn" action="#{autenticacionMB.validarUsuario}"/>
+                        <p:commandButton value="#{msj.butonIngreso}" styleClass="blue-btn raised-btn" action="#{autenticacionMB.validarUsuario}"/>
                     </div>
 
                     <h:outputStylesheet name="css/layout-#{guestPreferences.layout}.css" library="paradise-layout" />
