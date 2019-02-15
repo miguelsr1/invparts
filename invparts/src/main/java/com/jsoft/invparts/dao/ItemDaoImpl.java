@@ -56,23 +56,23 @@ public class ItemDaoImpl extends XJdbcTemplate implements ItemDao {
     }
 
     @Override
-    public List<Marca> getLstMarca() {
-        return getJdbcTemplate().query("SELECT * FROM Marca ORDER BY nombre_marca", new BeanPropertyRowMapper(Marca.class));
+    public List<Categoria> getLstMarca() {
+        return getJdbcTemplate().query("SELECT * FROM categoria where padre_id_categoria=107", new BeanPropertyRowMapper(Categoria.class));
     }
 
     @Override
-    public List<Modelo> getLstModeloByIdMarca(Integer idMarca) {
-        return getJdbcTemplate().query("SELECT * FROM Modelo WHERE id_marca=" + idMarca + " ORDER BY nombre_modelo", new BeanPropertyRowMapper(Modelo.class));
+    public List<Categoria> getLstModeloByIdMarca(Integer idMarca) {
+        return getJdbcTemplate().query("SELECT * FROM categoria WHERE padre_id_categoria=" + idMarca, new BeanPropertyRowMapper(Categoria.class));
     }
 
     @Override
     public List<Categoria> getLstCategoriaByModelo(Integer idModelo) {
-        return getJdbcTemplate().query("SELECT id_categoria, nombre_categoria, padre_id_categoria FROM vw_categoria_by_modelo WHERE id_modelo=" + idModelo + " ORDER BY nombre_categoria", new BeanPropertyRowMapper(Categoria.class));
+        return getJdbcTemplate().query("SELECT * FROM categoria WHERE padre_id_categoria=" + idModelo, new BeanPropertyRowMapper(Categoria.class));
     }
 
     @Override
-    public List<ItemDto> getLstItemsByModelAndCategory(Integer idModel, Integer idCategory) {
-        return getJdbcTemplate().query("SELECT * from vw_find_items_by_model_and_category WHERE id_modelo =" + idModel + " and id_categoria = " + idCategory, new BeanPropertyRowMapper(ItemDto.class));
+    public List<ItemDto> getLstItemsByCategory(Integer idCategory) {
+        return getJdbcTemplate().query("SELECT * from vw_find_items_by_model_and_category WHERE id_categoria = " + idCategory, new BeanPropertyRowMapper(ItemDto.class));
     }
 
     @Override

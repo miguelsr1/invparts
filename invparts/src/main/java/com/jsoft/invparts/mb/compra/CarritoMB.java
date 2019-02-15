@@ -61,11 +61,11 @@ public class CarritoMB implements Serializable {
         this.itemService = itemService;
     }
 
-    public List<Marca> getLstMarcas() {
+    public List<Categoria> getLstMarcas() {
         return itemService.getLstMarca();
     }
 
-    public List<Modelo> getLstModelo() {
+    public List<Categoria> getLstModelo() {
         return itemService.getLstModeloByIdMarca(idMarca);
     }
 
@@ -150,11 +150,11 @@ public class CarritoMB implements Serializable {
     }
 
     public void buscarItems() {
-        lstItems = itemService.getLstItemsByModelAndCategory(idModelo, idCategoria);
+        lstItems = itemService.getLstItemsByCategory(idCategoria);
     }
 
     public void cargarFotos() {
-        imagenesDeProducto.clear();;
+        imagenesDeProducto.clear();
 
         File folderImg = new File(RESOURCE_BUNDLE.getString("pathimagenesitem") + itemSelected.getCodigoProducto());
         if (folderImg.exists()) {

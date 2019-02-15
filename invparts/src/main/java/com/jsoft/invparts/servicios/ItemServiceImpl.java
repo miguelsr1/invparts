@@ -69,12 +69,12 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public List<Marca> getLstMarca() {
+    public List<Categoria> getLstMarca() {
         return itemDao.getLstMarca();
     }
 
     @Override
-    public List<Modelo> getLstModeloByIdMarca(Integer idMarca) {
+    public List<Categoria> getLstModeloByIdMarca(Integer idMarca) {
         return itemDao.getLstModeloByIdMarca(idMarca);
     }
 
@@ -84,8 +84,8 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public List<ItemDto> getLstItemsByModelAndCategory(Integer idModel, Integer idCategory) {
-        return itemDao.getLstItemsByModelAndCategory(idModel, idCategory);
+    public List<ItemDto> getLstItemsByCategory(Integer idCategory) {
+        return itemDao.getLstItemsByCategory(idCategory);
     }
 
     @Override

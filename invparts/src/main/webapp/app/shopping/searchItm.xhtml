@@ -29,13 +29,13 @@
             <p:outputLabel value="Marca" style="color: white;"/>
             <p:selectOneMenu value="#{carritoMB.idMarca}">
                 <f:selectItem itemValue="0" itemLabel="Seleccione un valor"/>
-                <f:selectItems value="#{carritoMB.lstMarcas}" var="marca" itemValue="#{marca.idMarca}" itemLabel="#{marca.nombreMarca}"/>
+                <f:selectItems value="#{carritoMB.lstMarcas}" var="marca" itemValue="#{marca.idCategoria}" itemLabel="#{marca.nombreCategoria}"/>
                 <p:ajax update="cboModelo cboCategoria"/>
             </p:selectOneMenu>
             <p:outputLabel value="Modelo" style="color: white;"/>
             <p:selectOneMenu id="cboModelo" value="#{carritoMB.idModelo}">
                 <f:selectItem itemValue="0" itemLabel="Seleccione un valor"/>
-                <f:selectItems value="#{carritoMB.lstModelo}" var="modelo" itemValue="#{modelo.idModelo}" itemLabel="#{modelo.nombreModelo}"/>
+                <f:selectItems value="#{carritoMB.lstModelo}" var="modelo" itemValue="#{modelo.idCategoria}" itemLabel="#{modelo.nombreCategoria}"/>
                 <p:ajax update="cboCategoria"/>
             </p:selectOneMenu>
             <p:outputLabel value="Categoria" style="color: white;"/>
@@ -56,17 +56,15 @@
             <div class="ui-g-12">
                 <div class="card card-w-title">
                     <p:dataGrid id="dgItems"  var="item" value="#{carritoMB.lstItems}" columns="4" layout="grid"
-                                rows="12" paginator="true" paginatorPosition="bottom"
-                                paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                rowsPerPageTemplate="6,12,16">
-
-                        <f:facet name="header">
-                            Resultado de búsqueda
-                        </f:facet>
+                                rows="12" paginator="true" paginatorPosition="top"
+                                paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
 
                         <p:panel>
                             <h:panelGrid columns="1" style="width:100%; text-align: center;">
-                                <p:graphicImage value="/DynamicImageServlet?file=#{item.codigoProducto}/#{item.urlImagen}" style="width: auto;height: auto;max-width: 100%;max-height: 100%;"/> 
+                                <p:link outcome="/app/mantto/product/viewProduct">
+                                    <f:param name="idItem" value="#{item.idItem}"/>
+                                    <p:graphicImage value="/DynamicImageServlet?file=#{item.codigoProducto}/#{item.urlImagen}" style="width: auto;height: auto;max-width: 100%;max-height: 100%;"/> 
+                                </p:link>
                             </h:panelGrid>
                             <h:panelGrid columns="1">
                                 <p:outputLabel value="#{item.upcCodigo}" style="font-weight: bold"/>

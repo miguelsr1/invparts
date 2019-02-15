@@ -27,7 +27,7 @@
                     </p:menubar>
 
                     <p:panel id="pnlDatos" header="Datos generales">
-                        <p:panelGrid columns="2" columnClasses="ui-grid-col-2,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+                        <p:panelGrid columns="2" columnClasses="ui-grid-col-2,ui-grid-col-10" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
                             <p:outputLabel value="UPC Código"/>
                             <p:inputText value="#{itemMB.item.upcCodigo}"/>
                             <p:outputLabel value="Codigo"/>
@@ -44,14 +44,6 @@
                                     </p:autoComplete>
 
                                     <p:commandButton value="#{msj['agregar']}" icon="fa fa-plus-square" action="#{dlgCategoriaProductoMB.openDialogCategory}"/>
-
-                                    <p:commandLink styleClass="ui-button ui-widget ui-state-default ui-corner-all" action="#{itemMB.openDialogCategory}" rendered="false">
-                                        <f:setPropertyActionListener value="#{idItem}" target="#{dlgCategoriaProductoMB.idItem}"/>
-                                        <h:panelGrid columns="2">
-                                            <i class="fa fa-plus" style="font-size: 17px;"></i>
-                                            <p:outputLabel value="Add"/>
-                                        </h:panelGrid>
-                                    </p:commandLink>
                                 </div>
                             </p:outputPanel>
                             <p:outputLabel value="Medidas"/>

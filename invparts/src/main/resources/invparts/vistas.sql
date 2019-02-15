@@ -15,14 +15,12 @@ from
 create or replace view vw_find_items_by_model_and_category as
 select distinct
 	it.*,
-	co.id_modelo,
 	pc.id_categoria,
-	de.cantidad,
-	de.precio_venta
+        IFNULL(de.cantidad,0) as cantidad,
+	IFNULL(de.precio_venta,0) as precio_venta
 from item it
-	inner join compatibilidad co 	 on it.id_item = co.id_item
-	inner join producto_categoria pc on pc.id_item = co.id_item
-	inner join detalle_entrada de    on de.id_item = it.id_item;
+	inner join producto_categoria pc on pc.id_item = it.id_item
+	left outer join detalle_entrada de    on de.id_item = it.id_item;
 
 create view vw_opciones_menu_by_usu_and_mod as
 select 

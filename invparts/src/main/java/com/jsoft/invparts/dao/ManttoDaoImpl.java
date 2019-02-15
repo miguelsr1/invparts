@@ -698,7 +698,7 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
 
     @Override
     public List<Categoria> getLstCategoriaByIdItem(Integer idItem) {
-        return getJdbcTemplate().query("select c.* from producto_categoria pc inner join categoria c on pc.id_categoria = c.id_categoria where pc.id_item = ?", new Object[]{idItem}, new BeanPropertyRowMapper(Categoria.class));
+        return getJdbcTemplate().query("select c.id_categoria, getpath(c.id_categoria) as nombre_categoria, c.padre_id_categoria from producto_categoria pc inner join categoria c on pc.id_categoria = c.id_categoria where pc.id_item = ?", new Object[]{idItem}, new BeanPropertyRowMapper(Categoria.class));
     }
 
     @Override

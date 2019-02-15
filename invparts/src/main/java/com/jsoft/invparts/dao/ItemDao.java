@@ -32,13 +32,13 @@ public interface ItemDao {
 
     public void guardarCompatibilidad(CompatibilidadDto compatibilidad);
 
-    public List<Marca> getLstMarca();
+    public List<Categoria> getLstMarca();
 
-    public List<Modelo> getLstModeloByIdMarca(Integer idMarca);
+    public List<Categoria> getLstModeloByIdMarca(Integer idMarca);
 
     public List<Categoria> getLstCategoriaByModelo(Integer idModelo);
 
-    public List<ItemDto> getLstItemsByModelAndCategory(Integer idModel, Integer idCategory);
+    public List<ItemDto> getLstItemsByCategory(Integer idCategory);
 
     public List<CompatibilidadDto> getLstCompatibilidadByItem(Integer idItem);
 
