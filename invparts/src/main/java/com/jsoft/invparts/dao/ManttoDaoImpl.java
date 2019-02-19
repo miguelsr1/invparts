@@ -205,7 +205,7 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
                 opc.setOpcionActiva(rs.getInt("opcion_activa"));
                 opc.setOrdenOpcion(rs.getInt("orden_opcion"));
                 opc.setIdModulo(rs.getInt("id_modulo"));
-                opc.setOpcionIdOpcionMenu(rs.getInt("opc_id_opcion_menu"));
+                opc.setOpcIdOpcionMenu(rs.getInt("opc_id_opcion_menu"));
                 return opc;
             }
 
@@ -215,7 +215,7 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
 
     @Override
     public List<OpcionMenu> listOpcMenuMod(Integer idMod, Integer idModPer) {
-        String sql = "SELECT * FROM Opcion_Menu WHERE id_modulo=" + idMod + " and opcion_activa=1 and id_opcion_menu in (select id_opc_menu from privilegio where id_modulo_perfil=" + idModPer + ")";
+        String sql = "SELECT * FROM Opcion_Menu WHERE id_modulo=" + idMod + " and opcion_activa=1 and id_opcion_menu in (select id_opcion_menu from privilegio where id_modulo_perfil=" + idModPer + ")";
 
         List<OpcionMenu> listOpc = getJdbcTemplate().query(sql, new BeanPropertyRowMapper(OpcionMenu.class));
 //        {
@@ -596,9 +596,9 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
                 obj = subMenu;
             }
             menu.addElement((DefaultSubMenu) obj);
-            model = menu;
+            
 
-            return model;
+            return menu;
         } catch (Exception ex) {
             JsfUtil.addErrorMessage("Ocurrio una excepción en el proceso de creación del arbol del menu. Contactese con el administrador del sistema.");
             return null;
@@ -614,7 +614,7 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
         for (int j = 0; j < resultado.size(); j++) {
             opcionM = resultado.get(j);
 
-            if (opPadre.getId().replace("sub", "").equals(opcionM.getOpcionIdOpcionMenu().toString())) { //Hijo del padre
+            if (Integer.parseInt(opPadre.getId().replace("sub", "")) ==  opcionM.getOpcIdOpcionMenu()) { //Hijo del padre
                 subMenu = new DefaultSubMenu();
                 subMenu.setLabel(opcionM.getOrdenOpcion().toString() + ". " + opcionM.getNombreOpcion());
                 subMenu.setId("sub" + opcionM.getIdOpcionMenu().toString());

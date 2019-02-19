@@ -24,7 +24,7 @@ public class OpcionMenu extends UtilWhere implements Serializable, PersistenciaD
     public Integer opcionActiva;
     public Integer ordenOpcion;
     public Integer idModulo;
-    public Integer opcionIdOpcionMenu;
+    public Integer opcIdOpcionMenu;
     
     
     
@@ -86,12 +86,12 @@ public class OpcionMenu extends UtilWhere implements Serializable, PersistenciaD
         this.idModulo = idModulo;
     }
 
-    public Integer getOpcionIdOpcionMenu() {
-        return opcionIdOpcionMenu;
+    public Integer getOpcIdOpcionMenu() {
+        return opcIdOpcionMenu;
     }
 
-    public void setOpcionIdOpcionMenu(Integer opcionIdOpcionMenu) {
-        this.opcionIdOpcionMenu = opcionIdOpcionMenu;
+    public void setOpcIdOpcionMenu(Integer opcionIdOpcionMenu) {
+        this.opcIdOpcionMenu = opcionIdOpcionMenu;
     }
 
     @Override
@@ -107,7 +107,7 @@ public class OpcionMenu extends UtilWhere implements Serializable, PersistenciaD
 
     @Override
     public Object[] getDatosInsert() {
-        return new Object[]{nombreOpcion,iconoOpcion,urlOpcion,opcionActiva,ordenOpcion,idModulo,opcionIdOpcionMenu};
+        return new Object[]{nombreOpcion,iconoOpcion,urlOpcion,opcionActiva,ordenOpcion,idModulo,opcIdOpcionMenu};
     }
 
     @Override
@@ -117,7 +117,7 @@ public class OpcionMenu extends UtilWhere implements Serializable, PersistenciaD
 
     @Override
     public Object[] getDatosUpdate() {
-        return new Object[]{nombreOpcion,iconoOpcion,urlOpcion,opcionActiva,ordenOpcion,idModulo,opcionIdOpcionMenu,idOpcionMenu};
+        return new Object[]{nombreOpcion,iconoOpcion,urlOpcion,opcionActiva,ordenOpcion,idModulo,opcIdOpcionMenu,idOpcionMenu};
     }
 
     

@@ -36,11 +36,11 @@ public class MenuMB implements Serializable {
     private HashMap<String, Object> variables = new HashMap();
     private String idModulo;
     private String login;
-      private Integer idApp;
+    private Integer idApp;
     private List<Modulo> lstModulo = new ArrayList<>();
-     private DefaultMenuModel model;
-     private Integer moduloPer;
- 
+    private DefaultMenuModel model;
+    private Integer moduloPer;
+
     @ManagedProperty("#{manttoService}")
     private ManttoService manttoService;
 
@@ -135,16 +135,11 @@ public class MenuMB implements Serializable {
         this.manttoService = manttoService;
     }
 
-    public void obtenerMenu() {
-        try {
-            
-            lstOpcMenu = manttoService.listOpcMenuMod(Integer.parseInt(idModulo),moduloPer);
-             model = manttoService.crearArbolMenu(lstOpcMenu);
-           
-             FacesContext.getCurrentInstance().getExternalContext().redirect("menu.xhtml?faces-redirect=true");
-        } catch (IOException ex) {
-            Logger.getLogger(MenuMB.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    public String obtenerMenu() {
+        lstOpcMenu = manttoService.listOpcMenuMod(Integer.parseInt(idModulo), moduloPer);
+        model = manttoService.crearArbolMenu(lstOpcMenu);
+
+        return "menu.xhtml?faces-redirect=true";
 
     }
 
