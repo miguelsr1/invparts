@@ -21,6 +21,7 @@ import com.jsoft.invparts.model.seguridad.Usuario;
 import com.jsoft.invparts.model.seguridad.Perfil;
 import com.jsoft.invparts.model.seguridad.Privilegio;
 import java.util.List;
+import org.primefaces.model.menu.DefaultMenuModel;
 
 
 /**
@@ -97,5 +98,5 @@ public interface ManttoService {
 
     public List<ProductoCategoriaDto> getLstCategoriasByProducto(Integer idProducto);
     
-    public void crearArbolMenu(List<OpcionMenu> lstOpcionMenu);
+    public DefaultMenuModel crearArbolMenu(List<OpcionMenu> lstOpcionMenu);
 }

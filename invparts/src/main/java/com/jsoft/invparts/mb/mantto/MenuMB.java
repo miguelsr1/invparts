@@ -139,10 +139,8 @@ public class MenuMB implements Serializable {
         try {
             
             lstOpcMenu = manttoService.listOpcMenuMod(Integer.parseInt(idModulo),moduloPer);
-           // manttoService.crearArbolMenu(lstOpcMenu);
-            
-           //  ((ManttoService) FacesContext.getCurrentInstance().getApplication().getELResolver().getValue(FacesContext.getCurrentInstance().getELContext(), null, "manttoService")).crearArbolMenu(lstOpcMenu);
-       
+             model = manttoService.crearArbolMenu(lstOpcMenu);
+           
              FacesContext.getCurrentInstance().getExternalContext().redirect("menu.xhtml?faces-redirect=true");
         } catch (IOException ex) {
             Logger.getLogger(MenuMB.class.getName()).log(Level.SEVERE, null, ex);

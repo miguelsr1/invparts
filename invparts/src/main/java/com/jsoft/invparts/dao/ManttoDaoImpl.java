@@ -189,7 +189,7 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
 
     @Override
     public List<OpcionMenu> listOpcMenu(OpcionMenu opc) {
-        String sql = "SELECT * from Opcion_Menu ";
+        String sql = "SELECT * from Opcion_Menu where opcion_activa=1";
 
         if (opc != null) {
             sql += opc.getWhere();
@@ -216,26 +216,27 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
     }
 
     @Override
-    public List<OpcionMenu> listOpcMenuMod(Integer idMod,Integer idModPer) {
-        String sql = "SELECT * FROM Opcion_Menu WHERE id_modulo=" + idMod+ " and id_opcion_menu in (select id_opc_menu from privilegio where id_modulo_perfil="+idModPer+")";
+    public List<OpcionMenu> listOpcMenuMod(Integer idMod, Integer idModPer) {
+        String sql = "SELECT * FROM Opcion_Menu WHERE id_modulo=" + idMod + " and opcion_activa=1 and id_opcion_menu in (select id_opc_menu from privilegio where id_modulo_perfil=" + idModPer + ")";
 
-        List<OpcionMenu> listOpc = getJdbcTemplate().query(sql, new RowMapper<OpcionMenu>() {
-
-            @Override
-            public OpcionMenu mapRow(ResultSet rs, int rowNumber) throws SQLException {
-                OpcionMenu opc = new OpcionMenu();
-                opc.setIdOpcionMenu(rs.getInt("id_opcion_menu"));
-                opc.setNombreOpcion(rs.getString("nombre_Opcion"));
-                opc.setIconoOpcion(rs.getString("icono_Opcion"));
-                opc.setUrlOpcion(rs.getString("url_opcion"));
-                opc.setOpcionActiva(rs.getInt("opcion_activa"));
-                opc.setOrdenOpcion(rs.getInt("orden_opcion"));
-                opc.setIdModulo(rs.getInt("id_modulo"));
-                opc.setOpcionIdOpcionMenu(rs.getInt("opc_id_opcion_menu"));
-                return opc;
-            }
-
-        });
+        List<OpcionMenu> listOpc = getJdbcTemplate().query(sql, new BeanPropertyRowMapper(OpcionMenu.class));
+//        {
+//
+//            @Override
+//            public OpcionMenu mapRow(ResultSet rs, int rowNumber) throws SQLException {
+//                OpcionMenu opc = new OpcionMenu();
+//                opc.setIdOpcionMenu(rs.getInt("id_opcion_menu"));
+//                opc.setNombreOpcion(rs.getString("nombre_Opcion"));
+//                opc.setIconoOpcion(rs.getString("icono_Opcion"));
+//                opc.setUrlOpcion(rs.getString("url_opcion"));
+//                opc.setOpcionActiva(rs.getInt("opcion_activa"));
+//                opc.setOrdenOpcion(rs.getInt("orden_opcion"));
+//                opc.setIdModulo(rs.getInt("id_modulo"));
+//                opc.setOpcionIdOpcionMenu(rs.getInt("opc_id_opcion_menu"));
+//                return opc;
+//            }
+//
+//        });
         return listOpc;
     }
 
@@ -357,8 +358,7 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
         });
         return listMod;
     }
-    
-    
+
     @Override
     public String nombreTipoEmpresa(Integer id) {
         String nombre = "";
@@ -612,7 +612,7 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
     }
 
     @Override
-    public void crearArbolMenu(List<OpcionMenu> lstOpcionMenu) {
+    public DefaultMenuModel crearArbolMenu(List<OpcionMenu> lstOpcionMenu) {
         DefaultMenuModel menu = new DefaultMenuModel();
         DefaultSubMenu subMenu = new DefaultSubMenu();
         Object obj = null;
@@ -647,10 +647,11 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
             }
             menu.addElement((DefaultSubMenu) obj);
             model = menu;
-          
+
+            return model;
         } catch (Exception ex) {
             JsfUtil.addErrorMessage("Ocurrio una excepción en el proceso de creación del arbol del menu. Contactese con el administrador del sistema.");
-          
+            return null;
         }
     }
 

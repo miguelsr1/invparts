@@ -30,6 +30,7 @@ import java.text.MessageFormat;
 import java.util.Date;
 import java.util.ResourceBundle;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.primefaces.model.menu.DefaultMenuModel;
 
 @Service("manttoService")
 @Component
@@ -215,7 +216,7 @@ public class ManttoServiceImpl implements ManttoService {
     }
     
     @Override
-    public void crearArbolMenu(List<OpcionMenu> lstOpcionMenu){
-         dao.crearArbolMenu(lstOpcionMenu);
+    public DefaultMenuModel crearArbolMenu(List<OpcionMenu> lstOpcionMenu){
+        return dao.crearArbolMenu(lstOpcionMenu);
     }
 }

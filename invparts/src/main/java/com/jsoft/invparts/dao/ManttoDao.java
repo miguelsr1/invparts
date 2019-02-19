@@ -20,6 +20,7 @@ import com.jsoft.invparts.model.seguridad.Persona;
 import com.jsoft.invparts.model.seguridad.Privilegio;
 import com.jsoft.invparts.model.seguridad.Usuario;
 import java.util.List;
+import org.primefaces.model.menu.DefaultMenuModel;
 
 /**
  *
@@ -47,7 +48,7 @@ public interface ManttoDao {
 
     public List<OpcionMenu> listOpcMenuMod(Integer idApp,Integer idModPer);
      
-    public void crearArbolMenu(List<OpcionMenu> lstOpcionMenu);
+    public DefaultMenuModel crearArbolMenu(List<OpcionMenu> lstOpcionMenu);
      
     public List<Usuario> listUsuario();
 
