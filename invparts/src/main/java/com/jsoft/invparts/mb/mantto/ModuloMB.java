@@ -5,7 +5,6 @@
  */
 package com.jsoft.invparts.mb.mantto;
 
-
 import com.jsoft.invparts.model.seguridad.Modulo;
 import com.jsoft.invparts.servicios.ManttoService;
 import com.jsoft.invparts.util.JsfUtil;
@@ -23,14 +22,14 @@ import javax.faces.bean.ViewScoped;
  */
 @ManagedBean
 @ViewScoped
-public class ModuloMB implements Serializable{
+public class ModuloMB implements Serializable {
 
-      private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
     private Modulo modu = new Modulo();
     private List<Modulo> lstModulo = new ArrayList();
-   
-     @ManagedProperty("#{manttoService}")
+
+    @ManagedProperty("#{manttoService}")
     private ManttoService manttoService;
 
     /**
@@ -38,10 +37,11 @@ public class ModuloMB implements Serializable{
      */
     public ModuloMB() {
     }
-     @PostConstruct
+
+    @PostConstruct
     public void init() {
         lstModulo = manttoService.listModulo(null);
-        
+
     }
 
     public Modulo getModu() {
@@ -49,10 +49,10 @@ public class ModuloMB implements Serializable{
     }
 
     public void setModu(Modulo modu) {
-       if (modu != null) {
+        if (modu != null) {
             this.modu = modu;
         }
-     }
+    }
 
     public List<Modulo> getLstModulo() {
         return lstModulo;
@@ -62,17 +62,16 @@ public class ModuloMB implements Serializable{
         this.lstModulo = lstModulo;
     }
 
-     public ManttoService getManttoService() {
+    public ManttoService getManttoService() {
         return manttoService;
     }
 
     public void setManttoService(ManttoService manttoService) {
         this.manttoService = manttoService;
     }
-   
-    
-      public void guardar() {
-        if (modu.getNombreModulo()!= null && !modu.getNombreModulo().isEmpty()) {
+
+    public void guardar() {
+        if (modu.getNombreModulo() != null && !modu.getNombreModulo().isEmpty()) {
             if (manttoService.guardarConIdAutogenerado(modu) == 1) {
                 lstModulo = manttoService.listModulo(null);
                 modu = new Modulo();
@@ -82,12 +81,13 @@ public class ModuloMB implements Serializable{
             JsfUtil.addWarningMessage("Debe de completar todos los registros");
         }
     }
-     
-          public void buscarModulo() {
+
+    public void buscarModulo() {
         lstModulo = manttoService.listModulo(modu);
     }
-    public void limpiar(){
+
+    public void limpiar() {
         modu = new Modulo();
     }
-    
+
 }

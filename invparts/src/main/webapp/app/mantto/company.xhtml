@@ -16,24 +16,38 @@
                         <p:menuitem id="mitNuevo" value="#{msj.limpiar}" action="#{companyMB.limpiarCom}" icon="fa fa-eraser" update="pngDatos tblDatos"/>
                     </p:menubar>
 
-                    <p:panelGrid id="pngDatos" columns="2" columnClasses="col4_label,col8" 
-                                 styleClass="ui-panelgrid-blank form-group form-elements">
-                        <p:outputLabel value="Id"/>
-                        <p:inputText value="#{companyMB.emp.idEmpresa}" readonly="true" style="width: 60px;"/>
-                        <p:outputLabel value="#{msj.nombreEmpresa}"/>
-                        <p:inputText value="#{companyMB.emp.nombreEmpresa}" style="width: 250px;" />
-                        <p:outputLabel value="#{msj.numeroTelefono}"/>
-                        <p:inputMask value="#{companyMB.emp.telefonoEmpresa}" mask="(999) 999-9999" style="width: 250px;" />
-                        <p:outputLabel value="#{msj.eMail}"/>
-                        <p:inputText value="#{companyMB.emp.correoEmpresa}" style="width: 250px;" />
-                        <p:outputLabel value="#{msj.tipoEmpresa}"/>
-                        <p:selectOneMenu id="tipo" value="#{companyMB.emp.idTipoEmpresa}" style="width:125px">
-                            <f:selectItem itemLabel="#{msj.tipoEmpresa4}" itemValue="4" />
-                        </p:selectOneMenu>
-                        
-                    </p:panelGrid>
+                    <h3>
+                        <i class="fa fa-shopping-basket" style="font-size: 16px;" aria-hidden="true"></i>
+                        <p:spacer width="10"/>
+                        <p:outputLabel value="Empresa"/>
+                    </h3>
+                    <p:panel style="background-color: #E1F7E6;padding: 20px 6px !important;">
+                        <p:panelGrid id="pngDatos" columns="2" columnClasses="col4,col8" 
+                                     styleClass="ui-panelgrid-blank form-group form-elements">
+                            <p:outputLabel value="Id"/>
+                            <p:inputText value="#{companyMB.emp.idEmpresa}" readonly="true" style="width: 60px;"/>
+                            <p:outputLabel value="#{msj.nombreEmpresa}"/>
+                            <p:inputText value="#{companyMB.emp.nombreEmpresa}" style="width: 250px;" />
+                            <p:outputLabel value="#{msj.numeroTelefono}"/>
+                            <p:inputMask value="#{companyMB.emp.telefonoEmpresa}" mask="(999) 999-9999" style="width: 250px;" />
+                            <p:outputLabel value="#{msj.eMail}"/>
+                            <p:inputText value="#{companyMB.emp.correoEmpresa}" style="width: 250px;" />
+                            <p:outputLabel value="#{msj.tipoEmpresa}"/>
+                            <p:selectOneMenu id="tipo" value="#{companyMB.emp.idTipoEmpresa}" style="width:125px">
+                                <f:selectItem itemLabel="#{msj.tipoEmpresa1}" itemValue="1" />
+                                <f:selectItem itemLabel="#{msj.tipoEmpresa4}" itemValue="4" />
+                            </p:selectOneMenu>
+                        </p:panelGrid>
+                    </p:panel>
 
                     <br/>
+                    <br/>
+
+                    <h3>
+                        <i class="fa fa-list" style="font-size: 16px;" aria-hidden="true"></i>
+                        <p:spacer width="10"/>
+                        <p:outputLabel value="Listado de Empresas"/>
+                    </h3>
                     <p:dataTable id="tblDatos" value="#{companyMB.lstEmpresaUsu}" var="emp" rowIndexVar="rowId" rowKey="#{emp.idEmpresa}"
                                  selectionMode="single" selection="#{companyMB.emp}">
                         <p:ajax event="rowSelect" update="pngDatos"/>

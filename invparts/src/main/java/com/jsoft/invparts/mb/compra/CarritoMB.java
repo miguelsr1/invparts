@@ -40,7 +40,7 @@ public class CarritoMB implements Serializable {
     private Integer idCategoria;
     private ItemDto itemSelected;
     private List<String> imagenesDeProducto = new ArrayList();
-    private List<Item> lstItems = new ArrayList();
+    private List<ItemDto> lstItems = new ArrayList();
     private List<CarritoDto> lstItemsCarrito = new ArrayList();
 
     @ManagedProperty("#{itemService}")
@@ -61,11 +61,11 @@ public class CarritoMB implements Serializable {
         this.itemService = itemService;
     }
 
-    public List<Marca> getLstMarcas() {
+    public List<Categoria> getLstMarcas() {
         return itemService.getLstMarca();
     }
 
-    public List<Modelo> getLstModelo() {
+    public List<Categoria> getLstModelo() {
         return itemService.getLstModeloByIdMarca(idMarca);
     }
 
@@ -97,11 +97,11 @@ public class CarritoMB implements Serializable {
         this.idCategoria = idCategoria;
     }
 
-    public List<Item> getLstItems() {
+    public List<ItemDto> getLstItems() {
         return lstItems;
     }
 
-    public void setLstItems(List<Item> lstItems) {
+    public void setLstItems(List<ItemDto> lstItems) {
         this.lstItems = lstItems;
     }
 
@@ -150,11 +150,11 @@ public class CarritoMB implements Serializable {
     }
 
     public void buscarItems() {
-        lstItems = itemService.getLstItemsByModelAndCategory(idModelo, idCategoria);
+        lstItems = itemService.getLstItemsByCategory(idCategoria);
     }
 
     public void cargarFotos() {
-        imagenesDeProducto.clear();;
+        imagenesDeProducto.clear();
 
         File folderImg = new File(RESOURCE_BUNDLE.getString("pathimagenesitem") + itemSelected.getCodigoProducto());
         if (folderImg.exists()) {

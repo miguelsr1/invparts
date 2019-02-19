@@ -10,6 +10,7 @@ import com.jsoft.invparts.model.inventario.Categoria;
 import com.jsoft.invparts.model.inventario.Marca;
 import com.jsoft.invparts.model.inventario.Modelo;
 import com.jsoft.invparts.model.inventario.Sucursal;
+import com.jsoft.invparts.model.inventario.Ubicacion;
 import com.jsoft.invparts.model.inventario.Vendedor;
 import com.jsoft.invparts.model.inventario.dto.ProductoCategoriaDto;
 import com.jsoft.invparts.model.seguridad.Empresa;

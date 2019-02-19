@@ -5,8 +5,6 @@
  */
 package com.jsoft.invparts.mb.mantto;
 
-import com.jsoft.invparts.mb.mantto.dialog.DlgCategoriaProductoMB;
-import com.jsoft.invparts.model.inventario.Categoria;
 import com.jsoft.invparts.model.inventario.Item;
 import com.jsoft.invparts.servicios.ItemService;
 import java.io.Serializable;
@@ -58,7 +56,7 @@ public class HomeMB implements Serializable {
     }
 
     public List<Item> searchUpc(String query) {
-        return itemService.getLstItemsByUpcContains(query);
+        return itemService.getLstItemsByUpcContains(query, false);
     }
 
     public String editItem() {

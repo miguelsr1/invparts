@@ -13,7 +13,10 @@ import com.jsoft.invparts.model.inventario.Item;
  */
 public class ItemDto extends Item {
 
-    public String nombreProducto;
+    private String nombreProducto;
+    private String ubicacion;
+    private Integer cantidad;
+    private Double precioVenta;
 
     public String getNombreProducto() {
         return nombreProducto;
@@ -21,5 +24,29 @@ public class ItemDto extends Item {
 
     public void setNombreProducto(String nombreProducto) {
         this.nombreProducto = nombreProducto;
+    }
+
+    public Integer getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(Integer cantidad) {
+        this.cantidad = cantidad;
+    }
+
+    public Double getPrecioVenta() {
+        return precioVenta;
+    }
+
+    public void setPrecioVenta(Double precioVenta) {
+        this.precioVenta = precioVenta;
+    }
+
+    public String getUbicacion() {
+        return ubicacion;
+    }
+
+    public void setUbicacion(String ubicacion) {
+        this.ubicacion = ubicacion;
     }
 }

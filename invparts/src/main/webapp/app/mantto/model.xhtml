@@ -16,22 +16,36 @@
                         <p:menuitem id="mitNuevo" value="#{msj.limpiar}" action="#{modeloMB.limpiar}" icon="fa fa-eraser" update="pngDatos tblDatos"/>
                     </p:menubar>
 
-                    <p:panelGrid id="pngDatos" columns="2" columnClasses="col4_label,col8" 
-                                 styleClass="ui-panelgrid-blank form-group form-elements">
-                        <p:outputLabel value="Id"/>
-                        <p:inputText value="#{modeloMB.model.idModelo}" readonly="true" style="width: 60px;"/>
-                        <p:outputLabel value="#{msj.nombreModelo}"/>
-                        <p:inputText value="#{modeloMB.model.nombreModelo}" style="width: 250px;" />
-                        <p:outputLabel value="#{msj.codigoModelo}"/>
-                        <p:inputText value="#{modeloMB.model.codigoModelo}" style="width: 250px;" />
-                        <p:outputLabel value="#{msj.nombreMarca}"  />
-                        <p:selectOneMenu value="#{modeloMB.model.idMarca}">
-                            <f:selectItem itemLabel="Select One" itemValue="" />
-                            <f:selectItems value="#{modeloMB.lstMarca}" var="mar" itemValue="#{mar.idMarca}" itemLabel="#{mar.nombreMarca}"/>
-                        </p:selectOneMenu>
-                    </p:panelGrid>
-
+                    <h3>
+                        <i class="fa fa-puzzle-piece" style="font-size: 16px;" aria-hidden="true"></i>
+                        <p:spacer width="10"/>
+                        <p:outputLabel value="Modelo"/>
+                    </h3>
+                    <p:panel id="pnlFiltro" style="background-color: #E1F7E6;padding: 20px 6px !important;">
+                        <p:panelGrid id="pngDatos" columns="2" columnClasses="col4,col8" 
+                                     styleClass="ui-panelgrid-blank form-group form-elements">
+                            <p:outputLabel value="Id"/>
+                            <p:inputText value="#{modeloMB.model.idModelo}" readonly="true" style="width: 60px;"/>
+                            <p:outputLabel value="#{msj.nombreModelo}"/>
+                            <p:inputText value="#{modeloMB.model.nombreModelo}" style="width: 250px;" />
+                            <p:outputLabel value="#{msj.codigoModelo}"/>
+                            <p:inputText value="#{modeloMB.model.codigoModelo}" style="width: 250px;" />
+                            <p:outputLabel value="#{msj.nombreMarca}"  />
+                            <p:selectOneMenu value="#{modeloMB.model.idMarca}">
+                                <f:selectItem itemLabel="Select One" itemValue="" />
+                                <f:selectItems value="#{modeloMB.lstMarca}" var="mar" itemValue="#{mar.idMarca}" itemLabel="#{mar.nombreMarca}"/>
+                            </p:selectOneMenu>
+                        </p:panelGrid>
+                    </p:panel>
+                    
                     <br/>
+                    <br/>
+
+                    <h3>
+                        <i class="fa fa-list" style="font-size: 16px;" aria-hidden="true"></i>
+                        <p:spacer width="10"/>
+                        <p:outputLabel value="Listado de modelos"/>
+                    </h3>
                     <p:dataTable id="tblDatos" value="#{modeloMB.lstModelo}" var="model" rowIndexVar="rowId" rowKey="#{model.idModelo}"
                                  selectionMode="single" selection="#{modeloMB.model}">
                         <p:ajax event="rowSelect" update="pngDatos"/>

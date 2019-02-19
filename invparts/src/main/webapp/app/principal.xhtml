@@ -2,35 +2,87 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <f:view locale="#{localeMB.localeCode}">
+        <h:head>
+            <f:facet name="first">
+                <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+                <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+                <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+                <meta name="apple-mobile-web-app-capable" content="yes" />
+            </f:facet>
+            <title><ui:insert name="title">PrimeFaces Paradise</ui:insert></title>
+            <h:outputScript name="js/nanoscroller.js" library="paradise-layout" />
+            <h:outputScript name="js/layout.js" library="paradise-layout" />
+            <ui:insert name="head"/>
 
-    <ui:composition template="#{pageContext.servletContext.contextPath}/resources/template/template.xhtml">
-        <ui:define name="content">
-            <f:metadata>
-                <f:viewAction action="#{menuMB.validarUsuario}"/>
-            </f:metadata>
+            <style>
+                body .ui-widget-header {
+                    background: #ffffff;
+                    color: #757575;
+                    border: 1px solid #c7cdd1;
+                    font-weight: bold;
+                    font-size: 14px;
+                }
+            </style>
+        </h:head>
 
-          
-            <div class="contentPrincipal ">
-                <div style="position: absolute; right: 1%;" >
-                    <p:commandButton value="Salir" icon="fa fa-sign-out" action="#{menuMB.logout}" />
-                </div>
-                <p:spacer width="10" height="100"/>
-                <p:dataGrid var="modulo" value="#{menuMB.lstModulo}" columns="4" layout="grid"
-                            rows="12" paginator="false" id="modulo" >
-                    <div class="bloque2 textoConSombra" style=" min-height:200px; background-position:left top; background-repeat:no-repeat; margin: 0px auto;">
-                        <p:commandLink ajax="false" styleClass="secciones" action="#{menuMB.obtenerMenu}">
-                            <h:panelGrid columns="1" columnClasses="colAppImagen,colAppDescripcion" style="margin: 0 auto;" >
-                                <p:graphicImage name="#{modulo.iconoModulo}" library="images" height="90px"/>
-                                <p:outputLabel value="#{modulo.nombreModulo}"/>
-                            </h:panelGrid>
-                            <f:setPropertyActionListener target="#{menuMB.idModulo}" value="#{modulo.idModulo}" />
-                        </p:commandLink>
+        <h:body styleClass="landing-body">
+            <div class="layout-wrapper layout-menu-overlay">
+                <ui:include src="../resources/template/topbar.xhtml" />
+                <h:form>
+                    <f:metadata>
+                        <f:viewAction action="#{menuMB.validarUsuario}"/>
+                    </f:metadata>
 
+
+                    <div class="landing-wrapper">
+                        <div style="position: absolute; right: 1%;" >
+                            <p:commandButton value="Salir" icon="fa fa-sign-out" action="#{menuMB.logout}" />
+                        </div>
+
+                        <div id="features" style="margin-top: 70px;">
+                            <div>
+                                <div class="ui-g features-content">
+
+                                    <div class="ui-g-12 ui-md-6 feature-left">
+                                        <p:commandLink ajax="false" action="menu.xhtml?faces-redirect=true" style="text-decoration: none;">
+                                            <p:graphicImage name="admin.png" library="images" height="72px" width="72px"/>
+                                            <f:setPropertyActionListener target="#{menuMB.idModulo}" value="1" />
+                                        </p:commandLink>
+                                        <h3>Admintración</h3>
+                                        <p>Mantenimiento de todos los catalogos disponibles</p>
+                                    </div>
+
+                                    <div class="ui-g-12 ui-md-6 feature-right">
+                                        <p:commandLink ajax="false" action="/app/mantto/product/home.xhtml?faces-redirect=true" style="text-decoration: none;">
+                                            <p:graphicImage name="inventario.png" library="images" height="72px" width="72px"/>
+                                            <f:setPropertyActionListener target="#{menuMB.idModulo}" value="3" />
+                                        </p:commandLink>
+                                        <h3>Inventario</h3>
+                                        <p>Ingreso de nuevos productos y entradas de inventario.</p>
+                                    </div>
+                                    
+                                    <div class="ui-g-12 ui-md-6 feature-left">
+                                        <p:commandLink ajax="false" action="/app/shopping/searchItm.xhtml?faces-redirect=true" style="text-decoration: none;">
+                                            <p:graphicImage name="venta.png" library="images" height="72px" width="72px"/>
+                                            <f:setPropertyActionListener target="#{menuMB.idModulo}" value="2" />
+                                        </p:commandLink>
+                                        <h3>Ventas</h3>
+                                        <p>Ingreso de ventas.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </p:dataGrid>
+
+
+                </h:form>
             </div>
-        </ui:define>
-    </ui:composition>
+
+            <h:outputStylesheet name="css/animate.css" library="paradise-layout" />
+            <h:outputStylesheet name="css/layout-#{guestPreferences.layout}.css" library="paradise-layout" />
+        </h:body>
+    </f:view>
 </html>

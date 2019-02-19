@@ -23,23 +23,35 @@
         </style>
     </ui:define>
 
+    <ui:define name="barSearch">
+        <label for="topbar-search">
+            <i class="fa fa-search topbar-search-icon"></i>
+        </label>
+        <p:autoComplete id="topbar-search" minQueryLength="3" value="#{searchProductMB.item}" size="60" class="topbar-search" placeholder="Search by UPC or producto code" 
+                        completeMethod="#{searchProductMB.searchProduct}" converter="itemControllerConverter" var="it"
+                        itemValue="#{it}" itemLabel="#{it}" forceSelection="true" 
+                        requiredMessage="Se necesita un valor de busqueda">
+            <p:ajax event="itemSelect" listener="#{searchProductMB.onItemSelect}"/>
+        </p:autoComplete>
+    </ui:define>
+
     <ui:define name="subMenu">
         <p:panelGrid id="pnlFiltro" columns="1" 
                      styleClass="ui-panelgrid-blank form-group form-elements">
-            <p:outputLabel value="Marca" style="color: white;"/>
+            <p:outputLabel value="Marca"/>
             <p:selectOneMenu value="#{carritoMB.idMarca}">
                 <f:selectItem itemValue="0" itemLabel="Seleccione un valor"/>
-                <f:selectItems value="#{carritoMB.lstMarcas}" var="marca" itemValue="#{marca.idMarca}" itemLabel="#{marca.nombreMarca}"/>
+                <f:selectItems value="#{carritoMB.lstMarcas}" var="marca" itemValue="#{marca.idCategoria}" itemLabel="#{marca.nombreCategoria}"/>
                 <p:ajax update="cboModelo cboCategoria"/>
             </p:selectOneMenu>
-            <p:outputLabel value="Modelo" style="color: white;"/>
+            <p:outputLabel value="Modelo" />
             <p:selectOneMenu id="cboModelo" value="#{carritoMB.idModelo}">
                 <f:selectItem itemValue="0" itemLabel="Seleccione un valor"/>
-                <f:selectItems value="#{carritoMB.lstModelo}" var="modelo" itemValue="#{modelo.idModelo}" itemLabel="#{modelo.nombreModelo}"/>
+                <f:selectItems value="#{carritoMB.lstModelo}" var="modelo" itemValue="#{modelo.idCategoria}" itemLabel="#{modelo.nombreCategoria}"/>
                 <p:ajax update="cboCategoria"/>
             </p:selectOneMenu>
-            <p:outputLabel value="Categoria" style="color: white;"/>
-            <p:selectOneMenu id="cboCategoria" value="#{carritoMB.idCategoria}">
+            <p:outputLabel value="Categoria"/>
+            <p:selectOneMenu id="cboCategoria" value="#{carritoMB.idCategoria}" filterMatchMode="contains" filter="true">
                 <f:selectItem itemValue="0" itemLabel="Seleccione un valor"/>
                 <f:selectItems value="#{carritoMB.lstCategoria}" var="categoria" itemValue="#{categoria.idCategoria}" itemLabel="#{categoria.nombreCategoria}"/>
             </p:selectOneMenu>
@@ -55,31 +67,30 @@
         <div class="ui-g">
             <div class="ui-g-12">
                 <div class="card card-w-title">
-                    <p:dataGrid id="dgItems"  var="item" value="#{carritoMB.lstItems}" columns="4" layout="grid"
-                                rows="12" paginator="true" paginatorPosition="bottom"
-                                paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                rowsPerPageTemplate="6,12,16">
-
-                        <f:facet name="header">
-                            Resultado de búsqueda
-                        </f:facet>
+                    <p:dataGrid id="dgItems"  var="item" value="#{carritoMB.lstItems}" columns="5" layout="grid"
+                                rows="12" paginator="true" paginatorPosition="top"
+                                paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
 
                         <p:panel>
                             <h:panelGrid columns="1" style="width:100%; text-align: center;">
-                                <p:graphicImage value="/DynamicImageServlet?file=#{item.codigoProducto}/#{item.urlImagen}"/> 
+                                <p:link outcome="/app/shopping/viewProduct">
+                                    <f:param name="idItem" value="#{item.idItem}"/>
+                                    <p:graphicImage value="/DynamicImageServlet?file=#{item.codigoProducto}/#{item.urlImagen}" width="100px"/> 
+                                </p:link>
                             </h:panelGrid>
                             <h:panelGrid columns="1">
                                 <p:outputLabel value="#{item.upcCodigo}" style="font-weight: bold"/>
                                 <p:outputLabel value="#{item.nombreItem}"/>
                                 <p:spacer width="1"/>
-                                <p:outputLabel value="$ #{item.precioUnitario}"/>
+                                <p:outputLabel value="$ #{item.precioVenta}"/>
+                                <p:outputLabel value="#{item.cantidad} en Stock" style="color: #59b600;"/>
                             </h:panelGrid>
 
                             <f:facet name="footer">
                                 <p:outputPanel style="text-align: center;">
-                                    <p:inputNumber id="txtNumItem" value="#{carritoMB.numItems}" size="3" style="width: 40px;" placeholder="QTY" inputStyle="text-align: center;"/>
+                                    <p:inputNumber id="txtNumItem" value="#{carritoMB.numItems}" size="3" style="width: 40px;" placeholder="QTY" inputStyle="text-align: center;font-size: 16px;height: 19px;"/>
                                     <p:spacer width="5"/>
-                                    <p:commandButton value="Add" icon="fa fa-plus-circle" action="#{carritoMB.addItemToCar()}" update="aCarrito txtNumItem" style="width: 70px;">
+                                    <p:commandButton value="Add" iconPos="right" icon="fa fa-shopping-cart" action="#{carritoMB.addItemToCar()}" update="aCarrito txtNumItem" style="width: 70px;font-size: 16px;">
                                         <p:confirm header="Confirmation" message="Are you sure?" icon="fa fa-exclamation-triangle" />
                                         <f:setPropertyActionListener value="#{item}" target="#{carritoMB.itemSelected}" />
                                     </p:commandButton>
@@ -91,30 +102,6 @@
                 </div>
             </div>
         </div>
-
-        <p:dialog header="Item Info" id="dlgItemInfo" widgetVar="dlgItemInfo" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
-            <p:outputPanel id="itemInfo" style="text-align:center;">
-                <p:panelGrid  columns="2" rendered="#{not empty carritoMB.itemSelected}" columnClasses="label,value">
-                    <f:facet name="header">
-                        <p:galleria value="#{carritoMB.imagenesDeProducto}" var="image" panelWidth="500" panelHeight="313" showCaption="true">
-                            <p:graphicImage value="/DynamicImageServlet?file=#{carritoMB.itemSelected.codigoProducto}/#{image}" styleClass="content" alt="" title=""/>
-                        </p:galleria> 
-                    </f:facet>
-
-                    <h:outputText value="Codigo" />
-                    <h:outputText value="#{carritoMB.itemSelected.codigoProducto}" />
-
-                    <h:outputText value="Descripción" />
-                    <h:outputText value="#{carritoMB.itemSelected.descripcion}" escape="false" />
-
-                    <h:outputText value="Especificación:" />
-                    <h:outputText value="#{carritoMB.itemSelected.especificaciones}" escape="false"/>
-
-                    <h:outputText value="Peso" />
-                    <h:outputText value="$#{carritoMB.itemSelected.peso}" />
-                </p:panelGrid>
-            </p:outputPanel>
-        </p:dialog>
 
         <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
             <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-check" />

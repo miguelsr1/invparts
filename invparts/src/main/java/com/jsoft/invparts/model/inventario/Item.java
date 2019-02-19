@@ -23,13 +23,11 @@ public class Item implements Serializable, PersistenciaDao {
     public String descripcion;
     public String upcCodigo;
     public String codigoProducto;
-    public Short tamanio;
+    public String tamanio;
     public Double peso;
     public String especificaciones;
     public String urlImagen;
     public Integer idEstante;
-    public Double precioUnitario;
-    public Double precioCompra;
 
     private List<InformacionItem> lstInformacionItem = new ArrayList();
     private List<ProductoCategoria> lstCategorias = new ArrayList();
@@ -53,11 +51,11 @@ public class Item implements Serializable, PersistenciaDao {
         this.descripcion = descripcion;
     }
 
-    public Short getTamanio() {
+    public String getTamanio() {
         return tamanio;
     }
 
-    public void setTamanio(Short tamanio) {
+    public void setTamanio(String tamanio) {
         this.tamanio = tamanio;
     }
 
@@ -136,22 +134,22 @@ public class Item implements Serializable, PersistenciaDao {
 
     @Override
     public String generarInsertSQL() {
-        return "INSERT INTO item (nombre_item, descripcion, upc_codigo, codigo_producto, tamanio, peso, especificaciones, url_imagen, id_estante, precio_unitario, precio_compra) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+        return "INSERT INTO item (nombre_item, descripcion, upc_codigo, codigo_producto, tamanio, peso, especificaciones, url_imagen, id_estante) VALUES (?,?,?,?,?,?,?,?,?)";
     }
 
     @Override
     public Object[] getDatosInsert() {
-        return new Object[]{nombreItem, descripcion, upcCodigo, codigoProducto, tamanio, peso, especificaciones, urlImagen, idEstante, precioUnitario, precioCompra};
+        return new Object[]{nombreItem, descripcion, upcCodigo, codigoProducto, tamanio, peso, especificaciones, urlImagen, idEstante};
     }
 
     @Override
     public String generarUpdateSQL() {
-        return "UPDATE item SET nombre_item=?, descripcion=?, upc_codigo=?, codigo_producto=?, tamanio=?, peso=?, especificaciones=?, url_imagen=?, id_estante=?, precio_unitario=?, precio_compra=? WHERE id_item=?";
+        return "UPDATE item SET nombre_item=?, descripcion=?, upc_codigo=?, codigo_producto=?, tamanio=?, peso=?, especificaciones=?, url_imagen=?, id_estante=? WHERE id_item=?";
     }
 
     @Override
     public Object[] getDatosUpdate() {
-        return new Object[]{nombreItem, descripcion, upcCodigo, codigoProducto, tamanio, peso, especificaciones, urlImagen, idEstante, precioUnitario, precioCompra, idItem};
+        return new Object[]{nombreItem, descripcion, upcCodigo, codigoProducto, tamanio, peso, especificaciones, urlImagen, idEstante, idItem};
     }
 
     @Override
@@ -162,22 +160,6 @@ public class Item implements Serializable, PersistenciaDao {
     @Override
     public void setIdGenerado(Integer id) {
         idItem = id;
-    }
-
-    public Double getPrecioUnitario() {
-        return precioUnitario;
-    }
-
-    public void setPrecioUnitario(Double precioUnitario) {
-        this.precioUnitario = precioUnitario;
-    }
-
-    public Double getPrecioCompra() {
-        return precioCompra;
-    }
-
-    public void setPrecioCompra(Double precioCompra) {
-        this.precioCompra = precioCompra;
     }
 
     public List<ProductoCategoria> getLstCategorias() {

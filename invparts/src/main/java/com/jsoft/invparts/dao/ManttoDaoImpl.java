@@ -9,6 +9,7 @@ import com.jsoft.invparts.model.inventario.Categoria;
 import com.jsoft.invparts.model.inventario.Marca;
 import com.jsoft.invparts.model.inventario.Modelo;
 import com.jsoft.invparts.model.inventario.Sucursal;
+import com.jsoft.invparts.model.inventario.Ubicacion;
 import com.jsoft.invparts.model.inventario.Vendedor;
 import com.jsoft.invparts.model.inventario.dto.ProductoCategoriaDto;
 import com.jsoft.invparts.model.mapper.CategoriaRowMapper;
@@ -702,7 +703,18 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
 
     @Override
     public List<Categoria> getLstCategoriaByIdItem(Integer idItem) {
-        return getJdbcTemplate().query("select c.* from producto_categoria pc inner join categoria c on pc.id_categoria = c.id_categoria where pc.id_item = ?", new Object[]{idItem}, new BeanPropertyRowMapper(Categoria.class));
+        return getJdbcTemplate().query("select c.id_categoria, getpath(c.id_categoria) as nombre_categoria, c.padre_id_categoria from producto_categoria pc inner join categoria c on pc.id_categoria = c.id_categoria where pc.id_item = ?", new Object[]{idItem}, new BeanPropertyRowMapper(Categoria.class));
+    }
+
+    @Override
+    public List<Ubicacion> getLstUbicaciones() {
+        return getJdbcTemplate().query("SELECT * FROM ubicacion ORDER BY id_ubicacion", new BeanPropertyRowMapper(Ubicacion.class));
+    }
+
+    @Override
+    public Boolean eliminar(String nombreTbl, Integer id) {
+        int rows = getJdbcTemplate().update("DELETE FROM " + nombreTbl + " WHERE id_" + nombreTbl + " = ?", new Object[]{id});
+        return rows > 0;
     }
 
 }

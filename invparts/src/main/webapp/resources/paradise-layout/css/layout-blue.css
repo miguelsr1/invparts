@@ -486,7 +486,7 @@
   .dashboard .stats ul li .statsbar {
     width: 100%; } }
 .login-body {
-  background: url("#{resource['paradise-layout:images/login/bg-login.png']}");
+  background-color: #1a304b;
   background-size: cover;
   height: auto; }
   .login-body .login-panel {
@@ -852,22 +852,22 @@ body {
   top: 0;
   color: #ffffff;
   height: 70px;
-  padding: 12px 15px;
-  border-bottom: solid 1px #3984b8;
+  padding: 5px 15px;
+  border-bottom: solid 1px #255678;
   z-index: 100;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
-  background-color: #3984b8;
+  background-color: #255678;
   background-image: -webkit-gradient(linear, left top, right top, from(#3984b8), to(#3984b8));
   background-image: -webkit-linear-gradient(left, #3984b8, #3984b8);
-  background-image: -moz-linear-gradient(left, #3984b8, #3984b8);
+  background-image: -moz-linear-gradient(left, #255678, #3D8DC5);
   background-image: -ms-linear-gradient(left, #3984b8, #3984b8);
   background-image: -o-linear-gradient(left, #3984b8, #3984b8);
   background-image: linear-gradient(left, #3984b8, #3984b8);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#3984b8', endColorstr='#3984b8', gradientType='1'); }
   .layout-wrapper .topbar .topbar-logo img {
-    height: 44px;
+    height: 60px;
     vertical-align: middle; }
   .layout-wrapper .topbar #user-display {
     float: right;
@@ -1147,7 +1147,7 @@ body {
 @media (min-width: 641px) {
   .layout-wrapper.layout-menu-static .layout-menu-wrapper {
     padding-top: 15px;
-    left: 0; }
+    /*left: 0;*/ }
   .layout-wrapper.layout-menu-static .layout-content {
     margin-left: 240px; }
   .layout-wrapper.layout-menu-static .layout-footer {

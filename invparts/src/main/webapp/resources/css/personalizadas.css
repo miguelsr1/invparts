@@ -47,3 +47,8 @@
     font-size: 12px;
     border-radius: 100%;
 }
+
+.layout-main{
+    margin: auto;
+    max-width: 1260px;
+}

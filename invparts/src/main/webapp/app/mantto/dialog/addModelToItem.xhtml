@@ -24,9 +24,14 @@
                         <p:ajax listener="#{modeloMB.updateListaModelo()}" process="@this,cboMarca" update="cboModelo"/>
                     </p:selectOneMenu>
                     <p:outputLabel value="Modelo"/>
-                    <p:selectOneMenu id="cboModelo" value="#{modeloMB.model.idModelo}">
+                    <p:selectOneMenu id="cboModelo" value="#{modeloMB.clase.idModelo}">
                         <f:selectItem itemLabel="Seleccione un valor" itemValue="null"/>
                         <f:selectItems value="#{modeloMB.lstModelo}" var="modelo" itemValue="#{modelo.idModelo}" itemLabel="#{modelo.nombreModelo}"/>
+                    </p:selectOneMenu>
+                    <p:outputLabel value="Clase"/>
+                    <p:selectOneMenu id="cboModelo" value="#{modeloMB.clase.idUbicacion}">
+                        <f:selectItem itemLabel="Seleccione un valor" itemValue="null"/>
+                        <f:selectItems value="#{modeloMB.lstUbicaciones}" var="ubicacion" itemValue="#{ubicacion.idUbicacion}" itemLabel="#{ubicacion.descripcion}"/>
                     </p:selectOneMenu>
                 </p:panelGrid> 
 
