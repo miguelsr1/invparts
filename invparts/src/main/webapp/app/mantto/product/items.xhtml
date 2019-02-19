@@ -3,7 +3,7 @@
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
-                template="#{pageContext.servletContext.contextPath}/resources/template/template.xhtml"
+                template="#{pageContext.servletContext.contextPath}/resources/template/templateSinMenu.xhtml"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <ui:define name="head">
         <style>
@@ -29,7 +29,7 @@
                     <p:panel id="pnlDatos" header="Datos generales">
                         <p:panelGrid columns="2" columnClasses="ui-grid-col-2,ui-grid-col-10" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
                             <p:outputLabel value="UPC Código"/>
-                            <p:inputText value="#{itemMB.item.upcCodigo}"/>
+                            <p:inputText value="#{itemMB.item.upcCodigo}" onblur="findUpcCode();"/>
                             <p:outputLabel value="Codigo"/>
                             <p:inputText value="#{itemMB.item.codigoProducto}"/>
                             <p:outputLabel value="#{msj.nombreProducto}"/>
@@ -96,34 +96,9 @@
                                 </p:column>
                             </p:dataTable>
 
-                            <!--p:outputLabel value="Compatibilidad"/>
-                            <p:dataTable id="tblCompatibilidad" value="{itemMB.lstCompatibilidadDtos}" var="com" editable="true">
-                                <f:facet name="header">
-                                    <p:commandLink action="{itemMB.showModelo}">
-                                        <p:ajax event="dialogReturn" listener="{itemMB.addCompatibilidad}" update="tblCompatibilidad"/>
-                                        <p:outputLabel value="Add"/>
-                                        <i class="fa fa-plus"></i>
-                                    </p:commandLink>
-                                </f:facet>
-
-                                <p:column headerText="Modelo" style="text-align: center;">
-                                    <p:outputLabel value="{com.nombreModelo}" />
-                                </p:column>
-
-                                <p:column headerText="Compatibilidad primaria"  style="text-align: center;">
-                                    <p:selectBooleanCheckbox value="{com.compatibilidadPrimaria}" itemLabel="" />
-                                </p:column>
-                            </p:dataTable-->
-
                         </p:panelGrid>
                     </p:panel>
                     <br/>
-
-                    <!--p:panel visible="false">
-                        <p:commandButton id="btnAddCompa" value="Add" icon="fa fa-plus" action="{itemMB.showModelo}" style="width: 70px;">
-                            <p:ajax event="dialogReturn" listener="{itemMB.addCompatibilidad}" update="tblCompatibilidad"/>
-                        </p:commandButton>
-                    </p:panel-->
 
                     <p:dialog id="dlgItemInfo" widgetVar="dlgItemInfo" modal="true" closable="false" draggable="false">
                         <p:panelGrid id="pngInfoItem" columns="2" columnClasses="ui-grid-col-4,ui-grid-col-8" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
@@ -168,5 +143,7 @@
                 </div>
             </div>
         </div>
+        
+        <p:remoteCommand name="findUpcCode" actionListener="#{itemMB.buscarUpcCode()}"/>
     </ui:define>
 </ui:composition>

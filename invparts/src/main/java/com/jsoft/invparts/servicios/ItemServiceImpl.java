@@ -13,7 +13,6 @@ import com.jsoft.invparts.model.inventario.Entrada;
 import com.jsoft.invparts.model.inventario.Estante;
 import com.jsoft.invparts.model.inventario.InformacionItem;
 import com.jsoft.invparts.model.inventario.Item;
-import com.jsoft.invparts.model.inventario.Marca;
 import com.jsoft.invparts.model.inventario.Modelo;
 import com.jsoft.invparts.model.inventario.Sucursal;
 import com.jsoft.invparts.model.inventario.dto.CompatibilidadDto;
@@ -67,6 +66,11 @@ public class ItemServiceImpl implements ItemService {
     public Modelo getModeloByPk(Integer idModelo) {
         return itemDao.getModeloByPk(idModelo);
     }
+    
+    @Override
+    public ItemDto getItemDtoByPk(Integer idItem){
+        return itemDao.getItemDtoByPk(idItem);
+    }
 
     @Override
     public List<Categoria> getLstMarca() {
@@ -119,8 +123,8 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public List<Item> getLstItemsByUpcContains(String upcCode) {
-        return itemDao.getLstItemsByUpcContains(upcCode);
+    public List<Item> getLstItemsByUpcContains(String upcCode, Boolean anyCode) {
+        return itemDao.getLstItemsByUpcContains(upcCode, anyCode);
     }
 
     @Override

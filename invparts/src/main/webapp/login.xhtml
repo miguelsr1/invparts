@@ -57,9 +57,11 @@
                     <div class="ui-g-12 button-container">
                         <p:commandButton value="#{msj.butonIngreso}" styleClass="blue-btn raised-btn" action="#{autenticacionMB.validarUsuario}"/>
                     </div>
-
                     <h:outputStylesheet name="css/layout-#{guestPreferences.layout}.css" library="paradise-layout" />
                 </div>
+                <p:messages id="messages" showDetail="true" closable="true">
+                        <p:autoUpdate />
+                    </p:messages>
             </div>
         </h:form>
     </h:body>

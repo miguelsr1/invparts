@@ -10,7 +10,6 @@ import com.jsoft.invparts.model.inventario.Entrada;
 import com.jsoft.invparts.model.inventario.Estante;
 import com.jsoft.invparts.model.inventario.InformacionItem;
 import com.jsoft.invparts.model.inventario.Item;
-import com.jsoft.invparts.model.inventario.Marca;
 import com.jsoft.invparts.model.inventario.Modelo;
 import com.jsoft.invparts.model.inventario.Sucursal;
 import com.jsoft.invparts.model.inventario.dto.CompatibilidadDto;
@@ -28,6 +27,8 @@ public interface ItemService {
     public Item getItemByPk(Integer idItem);
 
     public Item getItemByCod(String cod);
+    
+    public ItemDto getItemDtoByPk(Integer idItem);
 
     public Modelo getModeloByPk(Integer idModelo);
 
@@ -57,7 +58,7 @@ public interface ItemService {
     
     public List<Categoria> getLstCategoriaByIdItem(Integer idItem);
     
-    public List<Item> getLstItemsByUpcContains(String upcCode);
+    public List<Item> getLstItemsByUpcContains(String upcCode, Boolean anyCode);
     
     public List<Empresa> getLstProveedor();
     

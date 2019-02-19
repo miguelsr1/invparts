@@ -129,10 +129,8 @@ public class MenuMB implements Serializable {
 
     }
 
-    public String logout() {
-        JsfUtil.removeVariableSession(login);
-        return "/login.xhtml";
-        //JsfUtil.redireccionar("/login.xhtml");
+    public void logout() {
+        JsfUtil.eliminarSesion();
     }
 
 }

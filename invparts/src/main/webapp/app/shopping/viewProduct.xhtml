@@ -1,0 +1,120 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                template="#{pageContext.servletContext.contextPath}/resources/template/templateSinMenu.xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:jsf="http://xmlns.jcp.org/jsf">
+    <ui:define name="head">
+        <style>
+
+        </style>
+    </ui:define>
+
+    <ui:define name="carrito">
+        <div jsf:id="aCarrito">
+            <p:graphicImage name="carrito.png" library="images" style="border: 0px;"/>
+            <span class="topbar-badge">#{carritoMB.numItemDeCarro}</span>
+        </div>
+    </ui:define>
+
+    <ui:define name="barSearch">
+        <label for="topbar-search">
+            <i class="fa fa-search topbar-search-icon"></i>
+        </label>
+        <p:autoComplete id="topbar-search" minQueryLength="3" value="#{searchProductMB.item}" size="60" class="topbar-search" placeholder="Search by UPC or producto code" 
+                        completeMethod="#{searchProductMB.searchProduct}" converter="itemControllerConverter" var="it"
+                        itemValue="#{it}" itemLabel="#{it}" forceSelection="true" 
+                        requiredMessage="Se necesita un valor de busqueda">
+            <p:ajax event="itemSelect" listener="#{searchProductMB.onItemSelect}"/>
+        </p:autoComplete>
+    </ui:define>
+
+    <ui:define name="content">
+        <div class="ui-g">
+            <div class="ui-g-12">
+                <div class="card card-w-title">
+                    <p:outputPanel>
+                        <p:panelGrid columns="2" columnClasses="ui-grid-col-7,ui-grid-col-5" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+                            <p:outputPanel>
+                                <p:outputLabel value="#{itemMB.itemDto.nombreItem}" style="font-size: 18px; color: #0066cc;"/>
+                                <br/>
+                                <br/>
+                                <div class="ui-g">
+                                    <div class="ui-g-2" style="border-top: 1px solid #e9e9e9; border-bottom: 1px solid #e9e9e9;"><p:outputLabel value="UPC code"/></div>
+                                    <div class="ui-g-10" style="border-top: 1px solid #e9e9e9; border-bottom: 1px solid #e9e9e9;"><p:outputLabel value="#{itemMB.itemDto.upcCodigo}"/></div>
+                                    <div class="ui-g-2" style="border-bottom: 1px solid #e9e9e9;"><p:outputLabel value="Code Product"/></div>
+                                    <div class="ui-g-10" style="border-bottom: 1px solid #e9e9e9;"><p:outputLabel value="#{itemMB.itemDto.codigoProducto}"/></div>
+                                    <div class="ui-g-2" style="border-bottom: 1px solid #e9e9e9;"><p:outputLabel value="Categorias"/></div>
+                                    <div class="ui-g-10" style="border-bottom: 1px solid #e9e9e9;"><p:outputLabel value=""/>
+                                        <ui:repeat value="#{itemMB.lstCategoriasPorProducto}" var="cat" varStatus="Categorias">
+                                            <p:outputLabel value="#{cat.nombreCategoria}"/><br/>
+                                        </ui:repeat>
+                                    </div>
+                                    <div class="ui-g-2" style="border-bottom: 1px solid #e9e9e9;"><p:outputLabel value="Descripción"/></div>
+                                    <div class="ui-g-10" style="border-bottom: 1px solid #e9e9e9;"><p:outputLabel value="#{itemMB.itemDto.descripcion}" escape="false"/></div>
+                                    <div class="ui-g-2" style="border-bottom: 1px solid #e9e9e9;"><p:outputLabel value="Disponibilidad"/></div>
+                                    <div class="ui-g-10" style="border-bottom: 1px solid #e9e9e9;"><p:outputLabel value="#{itemMB.itemDto.cantidad}"/></div>
+                                    <div class="ui-g-2" style="border-bottom: 1px solid #e9e9e9;"><p:outputLabel value="Ubicación"/></div>
+                                    <div class="ui-g-10" style="border-bottom: 1px solid #e9e9e9;"><p:outputLabel value="#{itemMB.itemDto.ubicacion}"/></div>
+                                    <div class="ui-g-2" style="border-bottom: 1px solid #e9e9e9;"><p:outputLabel value="Precio"/></div>
+                                    <div class="ui-g-10" style="border-bottom: 1px solid #e9e9e9;"><p:outputLabel value="${itemMB.itemDto.precioVenta}"/></div>
+                                    <div class="ui-g-2" style="border-bottom: 1px solid #e9e9e9;"><p:outputLabel value="Tamaño de unidad"/></div>
+                                    <div class="ui-g-10" style="border-bottom: 1px solid #e9e9e9;"><p:outputLabel value="#{itemMB.itemDto.tamanio}"/></div>
+                                    <div class="ui-g-2" style="border-bottom: 1px solid #e9e9e9;"><p:outputLabel value="Peso"/></div>
+                                    <div class="ui-g-10" style="border-bottom: 1px solid #e9e9e9;"><p:outputLabel value="#{itemMB.itemDto.peso}"/></div>
+                                </div>
+
+                            </p:outputPanel>
+                            <p:outputPanel>
+                                <p:dataGrid id="dgFotos" var="img" value="#{itemMB.imagenesDeProducto}" columns="3" layout="grid">
+                                    <p:graphicImage value="/DynamicImageServlet?file=#{itemMB.item.codigoProducto}/#{img}" styleClass="content" width="100px" height="100px"/>
+                                </p:dataGrid>
+                            </p:outputPanel>
+
+                            <f:facet name="footer">
+                                <p:outputPanel>
+                                    <p:inputNumber id="txtNumItem" value="#{carritoMB.numItems}" size="3" style="width: 70px;" placeholder="QTY" inputStyle="text-align: center;font-size: 16px;height: 32px;"/>
+                                    <p:spacer width="5"/>
+                                    <p:commandButton value="Add" iconPos="right" icon="fa fa-shopping-cart" action="#{carritoMB.addItemToCar()}" style="width: 70px;font-size: 16px;">
+                                        <p:confirm header="Confirmation" message="Are you sure?" icon="fa fa-exclamation-triangle" />
+                                        <f:setPropertyActionListener value="#{item}" target="#{carritoMB.itemSelected}" />
+                                    </p:commandButton>
+                                </p:outputPanel>
+                            </f:facet>
+                        </p:panelGrid>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <p:outputPanel>
+                            <p:outputLabel value="Otras características" style="font-size: 18px; color: #0066cc;"/>
+                            <br/>
+                            <br/>
+                            <p:dataTable value="#{itemMB.lstInfoItems}" var="infoItem" id="tblInfoItem" rowKey="#{infoItem.idInformacionItem}" editable="true" style="max-width: 700px;">
+                                <p:column headerText="Etiqueta">
+                                    <p:cellEditor>
+                                        <f:facet name="output"><h:outputText value="#{infoItem.label}" /></f:facet>
+                                        <f:facet name="input"><p:inputText value="#{infoItem.label}" style="width:100%" label="Label"/></f:facet>
+                                    </p:cellEditor>
+                                </p:column>
+
+                                <p:column headerText="Valor" width="300">
+                                    <p:cellEditor>
+                                        <f:facet name="output"><h:outputText value="#{infoItem.value}" /></f:facet>
+                                        <f:facet name="input"><p:inputText value="#{infoItem.value}" style="width:100%" label="Label"/></f:facet>
+                                    </p:cellEditor>
+                                </p:column>
+                            </p:dataTable>
+                        </p:outputPanel>
+                    </p:outputPanel>
+                </div>
+            </div>
+        </div>
+
+        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+            <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
+            <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-times" />
+        </p:confirmDialog>
+    </ui:define>
+</ui:composition>

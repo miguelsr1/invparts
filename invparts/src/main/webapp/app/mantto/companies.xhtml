@@ -4,7 +4,18 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 template="#{pageContext.servletContext.contextPath}/resources/template/template.xhtml"
-                xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:pv="http://primefaces.org/paradise">
+
+    <ui:define name="subMenu">
+        <pv:menu>
+            <p:menuitem id="pm_dashboard" value="Dashboard" icon="fa fa-home" outcome="/app/principal.xhtml"/>
+            <p:menuitem value="Persona" outcome="/app/mantto/people.xhtml" icon="fa fa-id-badge"/>
+            <p:menuitem value="Empresas" outcome="/app/mantto/companies.xhtml" icon="fa fa-address-card"/>
+            <p:menuitem value="Sucursal" outcome="/app/mantto/branchOffice.xhtml" icon="fa fa-building"/>
+        </pv:menu>
+    </ui:define>
+
 
     <ui:define name="content">
         <div class="ui-g">
@@ -40,7 +51,7 @@
                             </p:selectOneMenu>
                         </p:panelGrid>
                     </p:panel>
-                    
+
                     <br/>
                     <br/>
 

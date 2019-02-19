@@ -10,21 +10,7 @@
         <div class="nano">
             <div class="nano-content sidebar-scroll-content">
                 <div class="layout-menu-container">
-                    <h:form id="menuform">
-                        <div style="text-align: center;">
-                            <p:selectOneMenu id="cboLocale" value="#{localeMB.localeCode}" onchange="submit();" valueChangeListener="#{localeMB.localeCodeChanged}">
-                                <f:selectItems value="#{localeMB.lenguajes}"/>
-                            </p:selectOneMenu>
-                        </div> 
-                        <div class="mobile-search">
-                            <i class="fa fa-fw fa-search topbar-search-icon"></i>
-                            <input type="text" class="topbar-search" placeholder="Type your search here"/>
-                        </div>
-
-                        <pv:menu>
-                            <p:menuitem id="pm_dashboard" value="Dashboard" icon="fa fa-home" outcome="/app/menu" />
-                        </pv:menu>
-                        
+                    <h:form id="menuform">                        
                         <ui:insert name="subMenu"/>
                     </h:form>
                 </div>

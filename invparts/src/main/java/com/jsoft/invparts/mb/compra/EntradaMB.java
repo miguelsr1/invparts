@@ -18,6 +18,7 @@ import java.util.ResourceBundle;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import org.primefaces.PrimeFaces;
 import org.primefaces.event.SelectEvent;
 
 /**
@@ -81,7 +82,7 @@ public class EntradaMB implements Serializable {
 
     //==============================================================
     public List<Item> searchUpc(String query) {
-        return itemService.getLstItemsByUpcContains(query);
+        return itemService.getLstItemsByUpcContains(query, false);
     }
 
     public void onItemSelect(SelectEvent se) {
@@ -90,7 +91,7 @@ public class EntradaMB implements Serializable {
 
     public void addItemToOrder() {
         if (item == null || item.getIdItem() == null) {
-            JsfUtil.addWarningMessage("Debe de seleccionar un producto valido");
+            PrimeFaces.current().executeScript("PF('dlgCrearItem').show()");
         } else {
             DetalleEntradaDto det = new DetalleEntradaDto();
 

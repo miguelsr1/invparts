@@ -11,6 +11,7 @@ import com.jsoft.invparts.model.inventario.InformacionItem;
 import com.jsoft.invparts.model.inventario.Item;
 import com.jsoft.invparts.model.inventario.Modelo;
 import com.jsoft.invparts.model.inventario.ProductoCategoria;
+import com.jsoft.invparts.model.inventario.dto.ItemDto;
 import com.jsoft.invparts.servicios.ItemService;
 import com.jsoft.invparts.servicios.ManttoService;
 import com.jsoft.invparts.util.JsfUtil;
@@ -57,6 +58,7 @@ public class ItemMB implements Serializable {
     private List<String> imagenesDeProducto = new ArrayList();
 
     private Item item = new Item();
+    private ItemDto itemDto = new ItemDto();
     private InformacionItem infoItem = new InformacionItem();
     private Modelo modelo = new Modelo();
     private List<InformacionItem> lstInfoItems = new ArrayList();
@@ -72,7 +74,8 @@ public class ItemMB implements Serializable {
     public void init() {
         Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
         if (params.containsKey("idItem")) {
-            item = itemService.getItemByPk(Integer.parseInt(params.get("idItem")));
+            itemDto = itemService.getItemDtoByPk(Integer.parseInt(params.get("idItem")));
+            item = itemDto;
         } else {
             item = new Item();
         }
@@ -83,6 +86,14 @@ public class ItemMB implements Serializable {
         if (item.getIdItem() != null) {
             cargarFotosInit();
         }
+    }
+
+    public ItemDto getItemDto() {
+        return itemDto;
+    }
+
+    public void setItemDto(ItemDto itemDto) {
+        this.itemDto = itemDto;
     }
 
     public List<Categoria> getLstCategoriasPorProducto() {
@@ -176,15 +187,20 @@ public class ItemMB implements Serializable {
     }
 
     public void guardar() {
-        for (Categoria categoria : lstCategorias) {
-            item.getLstCategorias().add(new ProductoCategoria(categoria.getIdCategoria()));
+
+        if (itemService.getItemByCod(item.getUpcCodigo()) == null) {
+            for (Categoria categoria : lstCategorias) {
+                item.getLstCategorias().add(new ProductoCategoria(categoria.getIdCategoria()));
+            }
+
+            item.setLstInformacionItem(lstInfoItems);
+
+            itemService.guardar(item);
+
+            JsfUtil.addSuccessMessage("Registros almacenados satisfactoriamente");
+        }else{
+            JsfUtil.addWarningMessage("Ya existe un producto con el código ingresado. Cambielo antes de guardar");
         }
-
-        item.setLstInformacionItem(lstInfoItems);
-
-        itemService.guardar(item);
-
-        JsfUtil.addSuccessMessage("Registros almacenados satisfactoriamente");
     }
 
     public void nuevo() {
@@ -318,5 +334,13 @@ public class ItemMB implements Serializable {
 
     public List<Categoria> completeCategoriaContains(String query) {
         return manttoService.getLstCategoriaByLikeNombre(query, item.getIdItem());
+    }
+
+    public void buscarUpcCode() {
+        Item itemTemp = itemService.getItemByCod(item.getUpcCodigo());
+        if (itemTemp != null) {
+            JsfUtil.addWarningMessage("Ya existe un producto con el código ingresado.");
+        }
+
     }
 }

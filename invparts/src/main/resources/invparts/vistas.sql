@@ -15,10 +15,13 @@ from
 create or replace view vw_find_items_by_model_and_category as
 select distinct
 	it.*,
+	CONCAT(est.nombre_estante, ', ', suc.nombre_sucursal) ubicacion,
 	pc.id_categoria,
-        IFNULL(de.cantidad,0) as cantidad,
+	IFNULL(de.cantidad,0) as cantidad,
 	IFNULL(de.precio_venta,0) as precio_venta
 from item it
+	inner join estante est on est.id_estante = it.id_estante
+	inner join sucursal suc on suc.id_sucursal = est.id_sucursal
 	inner join producto_categoria pc on pc.id_item = it.id_item
 	left outer join detalle_entrada de    on de.id_item = it.id_item;
 

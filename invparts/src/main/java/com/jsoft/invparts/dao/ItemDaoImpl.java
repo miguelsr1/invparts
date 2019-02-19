@@ -9,7 +9,6 @@ import com.jsoft.invparts.model.inventario.Categoria;
 import com.jsoft.invparts.model.inventario.Entrada;
 import com.jsoft.invparts.model.inventario.InformacionItem;
 import com.jsoft.invparts.model.inventario.Item;
-import com.jsoft.invparts.model.inventario.Marca;
 import com.jsoft.invparts.model.inventario.Modelo;
 import com.jsoft.invparts.model.inventario.ProductoCategoria;
 import com.jsoft.invparts.model.inventario.dto.CompatibilidadDto;
@@ -47,12 +46,17 @@ public class ItemDaoImpl extends XJdbcTemplate implements ItemDao {
         if (codigo.isEmpty()) {
             return null;
         }
-        List<Item> lstItems = getJdbcTemplate().query("SELECT * FROM Item WHERE upc_codigo=" + codigo, new BeanPropertyRowMapper(Item.class));
+        List<Item> lstItems = getJdbcTemplate().query("SELECT * FROM Item WHERE upc_codigo='" + codigo + "'", new BeanPropertyRowMapper(Item.class));
         if (!lstItems.isEmpty()) {
-            return (Item) getJdbcTemplate().queryForObject("SELECT * FROM Item WHERE upc_codigo=" + codigo, new BeanPropertyRowMapper(Item.class));
+            return (Item) getJdbcTemplate().queryForObject("SELECT * FROM Item WHERE upc_codigo='" + codigo + "'", new BeanPropertyRowMapper(Item.class));
         } else {
             return null;
         }
+    }
+
+    @Override
+    public ItemDto getItemDtoByPk(Integer idItem) {
+        return (ItemDto) getJdbcTemplate().queryForObject("SELECT * from vw_find_items_by_model_and_category WHERE id_item = " + idItem + "  LIMIT 1", new BeanPropertyRowMapper(ItemDto.class));
     }
 
     @Override
@@ -100,8 +104,12 @@ public class ItemDaoImpl extends XJdbcTemplate implements ItemDao {
     }
 
     @Override
-    public List<Item> getLstItemsByUpcContains(String upcCode) {
-        return getJdbcTemplate().query("SELECT * FROM item where upc_codigo like '%" + upcCode + "%'", new BeanPropertyRowMapper(Item.class));
+    public List<Item> getLstItemsByUpcContains(String upcCode, Boolean anyCode) {
+        if (anyCode) {
+            return getJdbcTemplate().query("SELECT * FROM item where upc_codigo like '%" + upcCode + "%' or codigo_producto like '%" + upcCode + "%' ", new BeanPropertyRowMapper(Item.class));
+        } else {
+            return getJdbcTemplate().query("SELECT * FROM item where upc_codigo like '%" + upcCode + "%'", new BeanPropertyRowMapper(Item.class));
+        }
     }
 
     @Override
