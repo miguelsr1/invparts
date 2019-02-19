@@ -9,9 +9,7 @@ import com.jsoft.invparts.model.inventario.Categoria;
 import com.jsoft.invparts.model.inventario.Entrada;
 import com.jsoft.invparts.model.inventario.InformacionItem;
 import com.jsoft.invparts.model.inventario.Item;
-import com.jsoft.invparts.model.inventario.Modelo;
 import com.jsoft.invparts.model.inventario.ProductoCategoria;
-import com.jsoft.invparts.model.inventario.dto.CompatibilidadDto;
 import com.jsoft.invparts.model.inventario.dto.DetalleEntradaDto;
 import com.jsoft.invparts.model.inventario.dto.ItemDto;
 import com.jsoft.invparts.util.XJdbcTemplate;
@@ -77,25 +75,6 @@ public class ItemDaoImpl extends XJdbcTemplate implements ItemDao {
     @Override
     public List<ItemDto> getLstItemsByCategory(Integer idCategory) {
         return getJdbcTemplate().query("SELECT * from vw_find_items_by_model_and_category WHERE id_categoria = " + idCategory, new BeanPropertyRowMapper(ItemDto.class));
-    }
-
-    @Override
-    public void guardarCompatibilidad(CompatibilidadDto compatibilidad) {
-        if (compatibilidad.getIdCompatibilidad() == null) {
-            getJdbcTemplate().update("INSERT INTO compatibilidad (id_item, id_modelo, tipo_compatibilidad) VALUES (?,?,?)", compatibilidad.getIdItem(), compatibilidad.getIdModelo(), (short) (compatibilidad.getCompatibilidadPrimaria() ? 1 : 0));
-        } else {
-            getJdbcTemplate().update("UPDATE compatibilidad SET id_item = ?, id_modelo = ?, tipo_compatibilidad = ? WHERE id_compatibilidad = ?", compatibilidad.getIdItem(), compatibilidad.getIdModelo(), (short) (compatibilidad.getCompatibilidadPrimaria() ? 1 : 0), compatibilidad.getIdCompatibilidad());
-        }
-    }
-
-    @Override
-    public Modelo getModeloByPk(Integer idModelo) {
-        return (Modelo) getJdbcTemplate().queryForObject("SELECT * FROM Modelo WHERE id_modelo=" + idModelo, new BeanPropertyRowMapper(Modelo.class));
-    }
-
-    @Override
-    public List<CompatibilidadDto> getLstCompatibilidadByItem(Integer idItem) {
-        return getJdbcTemplate().query("SELECT * from vw_compatibilidad_dto WHERE id_item =" + idItem, new BeanPropertyRowMapper(CompatibilidadDto.class));
     }
 
     @Override

@@ -6,9 +6,6 @@
 package com.jsoft.invparts.mb.compra;
 
 import com.jsoft.invparts.model.inventario.Categoria;
-import com.jsoft.invparts.model.inventario.Item;
-import com.jsoft.invparts.model.inventario.Marca;
-import com.jsoft.invparts.model.inventario.Modelo;
 import com.jsoft.invparts.model.inventario.dto.CarritoDto;
 import com.jsoft.invparts.model.inventario.dto.ItemDto;
 import com.jsoft.invparts.servicios.ItemService;

@@ -6,10 +6,7 @@
 package com.jsoft.invparts.dao;
 
 import com.jsoft.invparts.model.inventario.Categoria;
-import com.jsoft.invparts.model.inventario.Marca;
-import com.jsoft.invparts.model.inventario.Modelo;
 import com.jsoft.invparts.model.inventario.Sucursal;
-import com.jsoft.invparts.model.inventario.Ubicacion;
 import com.jsoft.invparts.model.inventario.Vendedor;
 import com.jsoft.invparts.model.inventario.dto.ProductoCategoriaDto;
 import com.jsoft.invparts.model.seguridad.Empresa;
@@ -42,33 +39,28 @@ public interface ManttoDao {
     public List<Empresa> listEmpresa(Empresa emp, Short idTipoEmpresa);
 
     public List<Empresa> listEmpresaUsu(Empresa emp);
-    
+
     public List<OpcionMenu> listOpcMenu(OpcionMenu opc);
-    
+
     public List<OpcionMenu> listOpcMenuByUsuAndModulo(String usuario, Integer idModulo);
 
-    public List<OpcionMenu> listOpcMenuMod(Integer idApp,Integer idModPer);
-     
+    public List<OpcionMenu> listOpcMenuMod(Integer idApp, Integer idModPer);
+
     public DefaultMenuModel crearArbolMenu(List<OpcionMenu> lstOpcionMenu);
-     
+
     public List<Usuario> listUsuario();
 
     public List<Perfil> listPerfil(Perfil per);
 
-   public List<ModuloPerfil> listModPerfil(ModuloPerfil per);
+    public List<ModuloPerfil> listModPerfil(ModuloPerfil per);
 
     public List<Privilegio> listPrivilegio(Privilegio pri);
 
-    
     public List<Modulo> listModulo(Modulo mod);
 
     public List<Vendedor> listVendedor(Vendedor ven);
 
     public List<Sucursal> listSucursal(Sucursal suc, Integer idEmpresa);
-
-    public List<Modelo> listModelo(Modelo mod);
-
-    public List<Marca> listMarca(Marca mar);
 
     public String nombreTipoEmpresa(Integer id);
 
@@ -77,15 +69,14 @@ public interface ManttoDao {
     public String findNombreModulo(Integer id);
 
     public Usuario findUserByLogin(String login);
-        
-    public Integer findIdEmpByLogin(String login);  
-    
-    public Integer findIdModPerByLogin(String login,Integer emp);  
-    
-    
+
+    public Integer findIdEmpByLogin(String login);
+
+    public Integer findIdModPerByLogin(String login, Integer emp);
+
     public Boolean getUsuarioByUsu(String usuario);
-    
-    public Boolean getUsuarioByClave(String usuario,String clave);
+
+    public Boolean getUsuarioByClave(String usuario, String clave);
 
     public Boolean isExistEmailPerByEmail(String eMail);
 
@@ -102,16 +93,14 @@ public interface ManttoDao {
     public Boolean removerCategoria(Integer idCategoria);
 
     public List<Categoria> getLstCategoriaByLikeNombre(String nombre, Integer idProducto);
-    
+
     public List<Categoria> getLstCategoriaByIdItem(Integer idItem);
 
     public String findNombreMarca(Integer id);
 
     public List<ProductoCategoriaDto> getLstCategoriasByProducto(Integer idProducto);
-    
+
     public List<Modulo> getlstModulos(String usuario);
-    
-    public List<Ubicacion> getLstUbicaciones();
-    
+
     public Boolean eliminar(String nombreTbl, Integer id);
 }

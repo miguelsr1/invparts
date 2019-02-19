@@ -7,10 +7,7 @@ package com.jsoft.invparts.servicios;
 
 import com.jsoft.invparts.dao.PersistenciaDao;
 import com.jsoft.invparts.model.inventario.Categoria;
-import com.jsoft.invparts.model.inventario.Marca;
-import com.jsoft.invparts.model.inventario.Modelo;
 import com.jsoft.invparts.model.inventario.Sucursal;
-import com.jsoft.invparts.model.inventario.Ubicacion;
 import com.jsoft.invparts.model.inventario.Vendedor;
 import com.jsoft.invparts.model.inventario.dto.ProductoCategoriaDto;
 import com.jsoft.invparts.model.seguridad.Empresa;
@@ -61,10 +58,6 @@ public interface ManttoService {
 
     public String nombreModulo(Integer id);
 
-    public List<Modelo> listModelo(Modelo mod);
-
-    public List<Marca> listMarca(Marca mar);
-
     public Boolean getUsuarioByUsu(String usuario);
 
     public Usuario findUserByLogin(String login);
@@ -100,8 +93,6 @@ public interface ManttoService {
     public List<ProductoCategoriaDto> getLstCategoriasByProducto(Integer idProducto);
     
     public DefaultMenuModel crearArbolMenu(List<OpcionMenu> lstOpcionMenu);
-        
-    public List<Ubicacion> getLstUbicaciones();
 
     public Boolean eliminar(String nombreTbl, Integer id);
 }

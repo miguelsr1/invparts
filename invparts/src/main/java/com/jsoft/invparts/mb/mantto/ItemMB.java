@@ -9,7 +9,6 @@ import com.jsoft.invparts.model.inventario.Categoria;
 import com.jsoft.invparts.model.inventario.Estante;
 import com.jsoft.invparts.model.inventario.InformacionItem;
 import com.jsoft.invparts.model.inventario.Item;
-import com.jsoft.invparts.model.inventario.Modelo;
 import com.jsoft.invparts.model.inventario.ProductoCategoria;
 import com.jsoft.invparts.model.inventario.dto.ItemDto;
 import com.jsoft.invparts.servicios.ItemService;
@@ -32,7 +31,6 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import org.primefaces.PrimeFaces;
 import org.primefaces.event.FileUploadEvent;
-import org.primefaces.event.SelectEvent;
 import org.primefaces.model.UploadedFile;
 
 /**
@@ -60,7 +58,6 @@ public class ItemMB implements Serializable {
     private Item item = new Item();
     private ItemDto itemDto = new ItemDto();
     private InformacionItem infoItem = new InformacionItem();
-    private Modelo modelo = new Modelo();
     private List<InformacionItem> lstInfoItems = new ArrayList();
     private List<Categoria> lstCategorias = new ArrayList();
 
@@ -136,10 +133,6 @@ public class ItemMB implements Serializable {
         if (idModelo != null) {
             this.idModelo = idModelo;
         }
-    }
-
-    public Modelo getModelo() {
-        return modelo;
     }
 
     public ItemService getItemService() {
@@ -248,14 +241,6 @@ public class ItemMB implements Serializable {
             PrimeFaces.current().dialog().openDynamic("/app/mantto/dialog/addFotography", options, params);
         } else {
             JsfUtil.addWarningMessage("Debe de guardar primero el item");
-        }
-    }
-
-    public void onModeloSelect(SelectEvent evt) {
-        if (evt.getObject() != null) {
-            idModelo = (Integer) evt.getObject();
-
-            modelo = itemService.getModeloByPk(idModelo);
         }
     }
 

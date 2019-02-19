@@ -13,9 +13,7 @@ import com.jsoft.invparts.model.inventario.Entrada;
 import com.jsoft.invparts.model.inventario.Estante;
 import com.jsoft.invparts.model.inventario.InformacionItem;
 import com.jsoft.invparts.model.inventario.Item;
-import com.jsoft.invparts.model.inventario.Modelo;
 import com.jsoft.invparts.model.inventario.Sucursal;
-import com.jsoft.invparts.model.inventario.dto.CompatibilidadDto;
 import com.jsoft.invparts.model.inventario.dto.DetalleEntradaDto;
 import com.jsoft.invparts.model.inventario.dto.ItemDto;
 import com.jsoft.invparts.model.seguridad.Empresa;
@@ -61,11 +59,6 @@ public class ItemServiceImpl implements ItemService {
     public Item getItemByPk(Integer idItem) {
         return itemDao.getItemByPk(idItem);
     }
-
-    @Override
-    public Modelo getModeloByPk(Integer idModelo) {
-        return itemDao.getModeloByPk(idModelo);
-    }
     
     @Override
     public ItemDto getItemDtoByPk(Integer idItem){
@@ -90,16 +83,6 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public List<ItemDto> getLstItemsByCategory(Integer idCategory) {
         return itemDao.getLstItemsByCategory(idCategory);
-    }
-
-    @Override
-    public void guardarCompatibilidad(CompatibilidadDto compatibilidad) {
-        itemDao.guardarCompatibilidad(compatibilidad);
-    }
-
-    @Override
-    public List<CompatibilidadDto> getLstCompatibilidadByItem(Integer idItem) {
-        return itemDao.getLstCompatibilidadByItem(idItem);
     }
 
     @Override

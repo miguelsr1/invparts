@@ -10,9 +10,7 @@ import com.jsoft.invparts.model.inventario.Entrada;
 import com.jsoft.invparts.model.inventario.Estante;
 import com.jsoft.invparts.model.inventario.InformacionItem;
 import com.jsoft.invparts.model.inventario.Item;
-import com.jsoft.invparts.model.inventario.Modelo;
 import com.jsoft.invparts.model.inventario.Sucursal;
-import com.jsoft.invparts.model.inventario.dto.CompatibilidadDto;
 import com.jsoft.invparts.model.inventario.dto.DetalleEntradaDto;
 import com.jsoft.invparts.model.inventario.dto.ItemDto;
 import com.jsoft.invparts.model.seguridad.Empresa;
@@ -30,11 +28,7 @@ public interface ItemService {
     
     public ItemDto getItemDtoByPk(Integer idItem);
 
-    public Modelo getModeloByPk(Integer idModelo);
-
     public void guardar(Item item);
-
-    public void guardarCompatibilidad(CompatibilidadDto compatibilidad);
 
     public List<Empresa> getLstClienteOrProvByIdEmpresa(Empresa idEmpresa, Integer idTipoEmpresa);
 
@@ -49,8 +43,6 @@ public interface ItemService {
     public List<Categoria> getLstCategoriaByModelo(Integer idModelo);
 
     public List<ItemDto> getLstItemsByCategory(Integer idCategory);
-
-    public List<CompatibilidadDto> getLstCompatibilidadByItem(Integer idItem);
 
     public List<InformacionItem> getLstInformacionItemByIdItem(Integer idItem);
     

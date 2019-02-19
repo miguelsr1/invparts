@@ -15,10 +15,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import com.jsoft.invparts.dao.ManttoDao;
 import com.jsoft.invparts.model.inventario.Categoria;
-import com.jsoft.invparts.model.inventario.Marca;
-import com.jsoft.invparts.model.inventario.Modelo;
 import com.jsoft.invparts.model.inventario.Sucursal;
-import com.jsoft.invparts.model.inventario.Ubicacion;
 import com.jsoft.invparts.model.inventario.Vendedor;
 import com.jsoft.invparts.model.inventario.dto.ProductoCategoriaDto;
 import com.jsoft.invparts.model.seguridad.Modulo;
@@ -78,8 +75,8 @@ public class ManttoServiceImpl implements ManttoService {
     }
 
     @Override
-    public List<OpcionMenu> listOpcMenuMod(Integer idMod,Integer idModPer) {
-        return dao.listOpcMenuMod(idMod,idModPer);
+    public List<OpcionMenu> listOpcMenuMod(Integer idMod, Integer idModPer) {
+        return dao.listOpcMenuMod(idMod, idModPer);
     }
 
     @Override
@@ -188,16 +185,6 @@ public class ManttoServiceImpl implements ManttoService {
     }
 
     @Override
-    public List<Modelo> listModelo(Modelo mod) {
-        return dao.listModelo(mod);
-    }
-
-    @Override
-    public List<Marca> listMarca(Marca mar) {
-        return dao.listMarca(mar);
-    }
-
-    @Override
     public Boolean removerCategoria(Integer idCategoria) {
         return dao.removerCategoria(idCategoria);
     }
@@ -218,13 +205,8 @@ public class ManttoServiceImpl implements ManttoService {
     }
 
     @Override
-    public DefaultMenuModel crearArbolMenu(List<OpcionMenu> lstOpcionMenu){
+    public DefaultMenuModel crearArbolMenu(List<OpcionMenu> lstOpcionMenu) {
         return dao.crearArbolMenu(lstOpcionMenu);
-    }
-
-    @Override
-    public List<Ubicacion> getLstUbicaciones() {
-        return dao.getLstUbicaciones();
     }
 
     @Override

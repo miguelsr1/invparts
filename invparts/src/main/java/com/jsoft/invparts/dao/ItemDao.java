@@ -9,8 +9,6 @@ import com.jsoft.invparts.model.inventario.Categoria;
 import com.jsoft.invparts.model.inventario.Entrada;
 import com.jsoft.invparts.model.inventario.InformacionItem;
 import com.jsoft.invparts.model.inventario.Item;
-import com.jsoft.invparts.model.inventario.Modelo;
-import com.jsoft.invparts.model.inventario.dto.CompatibilidadDto;
 import com.jsoft.invparts.model.inventario.dto.DetalleEntradaDto;
 import com.jsoft.invparts.model.inventario.dto.ItemDto;
 import java.util.List;
@@ -27,11 +25,7 @@ public interface ItemDao {
     
     public ItemDto getItemDtoByPk(Integer idItem);
 
-    public Modelo getModeloByPk(Integer idModelo);
-
     public void guardar(Item item);
-
-    public void guardarCompatibilidad(CompatibilidadDto compatibilidad);
 
     public List<Categoria> getLstMarca();
 
@@ -40,8 +34,6 @@ public interface ItemDao {
     public List<Categoria> getLstCategoriaByModelo(Integer idModelo);
 
     public List<ItemDto> getLstItemsByCategory(Integer idCategory);
-
-    public List<CompatibilidadDto> getLstCompatibilidadByItem(Integer idItem);
 
     public List<InformacionItem> getLstInformacionItemByIdItem(Integer idItem);
     
