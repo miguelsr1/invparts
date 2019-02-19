@@ -7,13 +7,11 @@
     xmlns:pv="http://primefaces.org/paradise"
     template="#{pageContext.servletContext.contextPath}/resources/template/template.xhtml">
 
+
     <ui:define name="subMenu">
-        <pv:menu>
-            <p:menuitem id="pm_dashboard" value="Dashboard" icon="fa fa-home"/>
-            <p:menuitem value="Persona" outcome="/app/mantto/people.xhtml" icon="fa fa-id-badge"/>
-            <p:menuitem value="Empresas" outcome="/app/mantto/companies.xhtml" icon="fa fa-user"/>
-            <p:menuitem value="Sucursal" outcome="/app/mantto/branchOffice.xhtml" icon="fa fa-building"/>
-        </pv:menu>
+        <h:form>
+            <pv:menu model="#{menuMB.model}"/>
+        </h:form>
     </ui:define>
 
     <ui:define name="content">

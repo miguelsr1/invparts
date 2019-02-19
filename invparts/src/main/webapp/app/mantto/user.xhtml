@@ -8,12 +8,9 @@
                 xmlns:pv="http://primefaces.org/paradise">
 
     <ui:define name="subMenu">
-        <pv:menu>
-            <p:menuitem id="pm_dashboard" value="Dashboard" icon="fa fa-home"/>
-            <p:menuitem value="Persona" outcome="/app/mantto/people.xhtml" icon="fa fa-id-badge"/>
-            <p:menuitem value="Empresas" outcome="/app/mantto/companies.xhtml" icon="fa fa-user"/>
-            <p:menuitem value="Sucursal" outcome="/app/mantto/branchOffice.xhtml" icon="fa fa-building"/>
-        </pv:menu>
+        <h:form>
+            <pv:menu model="#{menuMB.model}"/>
+        </h:form>
     </ui:define>
 
     <ui:define name="content">
@@ -28,30 +25,17 @@
                                  styleClass="ui-panelgrid-blank form-group form-elements">
                         <p:outputLabel value="#{msj.usuario}"/>
                         <p:inputText value="#{userMB.user.usuario}" style="width: 100px;"/>
-                        <p:outputLabel value="#{msj.nombreEmpresa}"/>
-                        <p:inputText value="#{userMB.emp.nombreEmpresa}" style="width: 250px;"/>
-                        <p:outputLabel value="#{msj.numeroTelefono}"/>
-                        <p:inputText value="#{userMB.emp.telefonoEmpresa}" style="width: 250px;"/>
-                        <p:outputLabel value="#{msj.eMail}"/>
-                        <p:inputText value="#{userMB.emp.correoEmpresa}" style="width: 250px;"/>
+                      
                     </p:panelGrid>
 
                     <br/>
-                    <p:dataTable id="tblDatos" value="#{userMB.lstEmpresa}" var="emp" rowIndexVar="rowId" rowKey="#{emp.idEmpresa}"
-                                 selectionMode="single" selection="#{userMB.emp}">
+                    <p:dataTable id="tblDatos" value="#{userMB.lstUsers}" var="emp" rowIndexVar="rowId" rowKey="#{emp.idPersona}"
+                                 selectionMode="single" selection="#{userMB.user}">
                         <p:ajax event="rowSelect" update="pngDatos"/>
                         <p:column headerText="#Id" width="70" styleClass="colCenter">
-                            <p:outputLabel value="#{emp.idEmpresa}"/>
+                            <p:outputLabel value="#{emp.usuario}"/>
                         </p:column>
-                        <p:column headerText="#{msj.nombreEmpresa}">
-                            <p:outputLabel value="#{emp.nombreEmpresa}"/>
-                        </p:column>
-                        <p:column headerText="#{msj.numeroTelefono}">
-                            <p:outputLabel value="#{emp.telefonoEmpresa}"/>
-                        </p:column>
-                        <p:column headerText="#{msj.eMail}">
-                            <p:outputLabel value="#{emp.correoEmpresa}"/>
-                        </p:column>
+                        
                     </p:dataTable>
                 </div>
             </div>

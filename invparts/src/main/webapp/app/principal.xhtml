@@ -46,32 +46,15 @@
                             <div>
                                 <div class="ui-g features-content">
 
-                                    <div class="ui-g-12 ui-md-6 feature-left">
-                                        <p:commandLink ajax="false" action="menu.xhtml?faces-redirect=true" style="text-decoration: none;">
-                                            <p:graphicImage name="admin.png" library="images" height="72px" width="72px"/>
-                                            <f:setPropertyActionListener target="#{menuMB.idModulo}" value="1" />
-                                        </p:commandLink>
-                                        <h3>Admintración</h3>
-                                        <p>Mantenimiento de todos los catalogos disponibles</p>
-                                    </div>
-
-                                    <div class="ui-g-12 ui-md-6 feature-right">
-                                        <p:commandLink ajax="false" action="/app/mantto/product/home.xhtml?faces-redirect=true" style="text-decoration: none;">
-                                            <p:graphicImage name="inventario.png" library="images" height="72px" width="72px"/>
-                                            <f:setPropertyActionListener target="#{menuMB.idModulo}" value="3" />
-                                        </p:commandLink>
-                                        <h3>Inventario</h3>
-                                        <p>Ingreso de nuevos productos y entradas de inventario.</p>
-                                    </div>
-                                    
-                                    <div class="ui-g-12 ui-md-6 feature-left">
-                                        <p:commandLink ajax="false" action="/app/shopping/searchItm.xhtml?faces-redirect=true" style="text-decoration: none;">
-                                            <p:graphicImage name="venta.png" library="images" height="72px" width="72px"/>
-                                            <f:setPropertyActionListener target="#{menuMB.idModulo}" value="2" />
-                                        </p:commandLink>
-                                        <h3>Ventas</h3>
-                                        <p>Ingreso de ventas.</p>
-                                    </div>
+                                    <ui:repeat value="#{menuMB.lstModulo}" var="modulo">
+                                        <div class="ui-g-12 ui-md-6 feature-left">
+                                            <p:commandLink ajax="false" action="#{menuMB.obtenerMenu}" style="text-decoration: none;">
+                                                <p:graphicImage name="#{modulo.iconoModulo}" library="images" height="72px" width="72px"/>
+                                                <f:setPropertyActionListener target="#{menuMB.idModulo}" value="#{modulo.idModulo}" />
+                                            </p:commandLink>
+                                            <h3>#{modulo.nombreModulo}</h3>
+                                        </div>
+                                    </ui:repeat>
                                 </div>
                             </div>
                         </div>
