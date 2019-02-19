@@ -220,5 +220,17 @@ public class ManttoServiceImpl implements ManttoService {
     @Override
     public DefaultMenuModel crearArbolMenu(List<OpcionMenu> lstOpcionMenu){
         return dao.crearArbolMenu(lstOpcionMenu);
+    public void crearArbolMenu(List<OpcionMenu> lstOpcionMenu) {
+        dao.crearArbolMenu(lstOpcionMenu);
+    }
+
+    @Override
+    public List<Ubicacion> getLstUbicaciones() {
+        return dao.getLstUbicaciones();
+    }
+
+    @Override
+    public Boolean eliminar(String nombreTbl, Integer id) {
+        return dao.eliminar(nombreTbl, id);
     }
 }
