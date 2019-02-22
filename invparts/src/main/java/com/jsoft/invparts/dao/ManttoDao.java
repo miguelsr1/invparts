@@ -100,7 +100,7 @@ public interface ManttoDao {
 
     public List<ProductoCategoriaDto> getLstCategoriasByProducto(Integer idProducto);
 
-    public List<Modulo> getlstModulos(String usuario);
+    public List<Modulo> getlstModulos(String usuario, Integer idEmpresa, Integer idPerfil);
 
     public Boolean eliminar(String nombreTbl, Integer id);
 }

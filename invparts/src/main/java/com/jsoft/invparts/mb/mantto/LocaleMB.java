@@ -53,4 +53,13 @@ public class LocaleMB implements Serializable {
             }
         }
     }
+    
+//    public String localeCodeChanged(String locale) {
+//        for (Map.Entry<String, Object> entry : COUNTRIES.entrySet()) {
+//            if (entry.getValue().toString().equals(locale)) {
+//                FacesContext.getCurrentInstance().getViewRoot().setLocale((Locale) entry.getValue());
+//            }
+//        }
+//        return "#";
+//    }
 }

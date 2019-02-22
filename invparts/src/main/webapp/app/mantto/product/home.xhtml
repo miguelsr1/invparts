@@ -43,7 +43,7 @@
                                 <p:submenu label="Items" icon="fa fa-sitemap">
                                     <p:menuitem value="New" icon="fa fa-plus" url="items.xhtml"/>
                                     <p:menuitem value="Edit" icon="fa fa-pencil" onclick="PF('dlgFindItem').show();"/>
-                                    <p:menuitem value="Stock Entry" icon="fa fa-cubes" url="addStock.xhtml"/>
+                                    <p:menuitem value="Stock Entry" icon="fa fa-cubes" action="#{breadCrumbMB.addElemento('Stock Entry', null, '/app/mantto/product/addStock.xhtml')}"/>
                                 </p:submenu>
                             </p:menubar>
                         </h:form>

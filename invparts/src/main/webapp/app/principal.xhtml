@@ -26,6 +26,16 @@
                     font-size: 14px;
                 }
             </style>
+
+            <script type="text/javascript" >
+                function deshabilitaRetroceso() {
+                    window.location.hash = "no-back-button";
+                    window.location.hash = "Again-No-back-button" //chrome
+                    window.onhashchange = function () {
+                        window.location.hash = "no-back-button";
+                    }
+                }
+            </script>
         </h:head>
 
         <h:body styleClass="landing-body">

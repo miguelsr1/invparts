@@ -20,9 +20,6 @@ import com.jsoft.invparts.model.seguridad.Privilegio;
 import com.jsoft.invparts.model.seguridad.Usuario;
 import com.jsoft.invparts.util.JsfUtil;
 import com.jsoft.invparts.util.XJdbcTemplate;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -33,7 +30,6 @@ import org.primefaces.model.menu.DefaultSubMenu;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -69,20 +65,7 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
             sql += per.getWhere();
         }
 
-        List<Persona> listPer = getJdbcTemplate().query(sql, new RowMapper<Persona>() {
-
-            @Override
-            public Persona mapRow(ResultSet rs, int rowNumber) throws SQLException {
-                Persona per = new Persona();
-                per.setIdPersona(rs.getInt("id_persona"));
-                per.setPrimerNombre(rs.getString("primer_nombre"));
-                per.setSegundoNombre(rs.getString("segundo_nombre"));
-                per.setCorreoElectronico(rs.getString("correo_electronico"));
-                per.setNumeroTelefono(rs.getString("numero_telefono"));
-                return per;
-            }
-
-        });
+        List<Persona> listPer = getJdbcTemplate().query(sql, new BeanPropertyRowMapper(Persona.class));
         return listPer;
     }
 
@@ -94,18 +77,7 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
             sql += pri.getWhere();
         }
 
-        List<Privilegio> listPer = getJdbcTemplate().query(sql, new RowMapper<Privilegio>() {
-
-            @Override
-            public Privilegio mapRow(ResultSet rs, int rowNumber) throws SQLException {
-                Privilegio per = new Privilegio();
-                per.setIdPrivilegio(rs.getInt("id_privilegio"));
-                per.setIdModuloPerfil(rs.getInt("id_modulo_perfil"));
-                per.setIdOpcionMenu(rs.getInt("id_opcion_menu"));
-                return per;
-            }
-
-        });
+        List<Privilegio> listPer = getJdbcTemplate().query(sql, new BeanPropertyRowMapper(Privilegio.class));
         return listPer;
     }
 
@@ -117,17 +89,7 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
             sql += per.getWhere();
         }
 
-        List<Perfil> listPer = getJdbcTemplate().query(sql, new RowMapper<Perfil>() {
-
-            @Override
-            public Perfil mapRow(ResultSet rs, int rowNumber) throws SQLException {
-                Perfil per = new Perfil();
-                per.setIdPerfil(rs.getInt("id_perfil"));
-                per.setNombrePerfil(rs.getString("nombre_perfil"));
-                return per;
-            }
-
-        });
+        List<Perfil> listPer = getJdbcTemplate().query(sql, new BeanPropertyRowMapper(Perfil.class));
         return listPer;
     }
 
@@ -143,20 +105,7 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
             }
         }
 
-        List<Empresa> listEmp = getJdbcTemplate().query(sql, new RowMapper<Empresa>() {
-
-            @Override
-            public Empresa mapRow(ResultSet rs, int rowNumber) throws SQLException {
-                Empresa emp = new Empresa();
-                emp.setIdEmpresa(rs.getInt("id_empresa"));
-                emp.setNombreEmpresa(rs.getString("nombre_empresa"));
-                emp.setCorreoEmpresa(rs.getString("correo_empresa"));
-                emp.setTelefonoEmpresa(rs.getString("telefono_empresa"));
-                emp.setIdTipoEmpresa(rs.getInt("id_tipo_empresa"));
-                return emp;
-            }
-
-        });
+        List<Empresa> listEmp = getJdbcTemplate().query(sql, new BeanPropertyRowMapper(Empresa.class));
         return listEmp;
     }
 
@@ -168,20 +117,7 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
             sql += emp.getWhere();
         }
 
-        List<Empresa> listEmp = getJdbcTemplate().query(sql, new RowMapper<Empresa>() {
-
-            @Override
-            public Empresa mapRow(ResultSet rs, int rowNumber) throws SQLException {
-                Empresa emp = new Empresa();
-                emp.setIdEmpresa(rs.getInt("id_empresa"));
-                emp.setNombreEmpresa(rs.getString("nombre_empresa"));
-                emp.setCorreoEmpresa(rs.getString("correo_empresa"));
-                emp.setTelefonoEmpresa(rs.getString("telefono_empresa"));
-                emp.setIdTipoEmpresa(rs.getInt("id_tipo_empresa"));
-                return emp;
-            }
-
-        });
+        List<Empresa> listEmp = getJdbcTemplate().query(sql, new BeanPropertyRowMapper(Empresa.class));
         return listEmp;
     }
 
@@ -193,23 +129,7 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
             sql += opc.getWhere();
         }
 
-        List<OpcionMenu> listOpc = getJdbcTemplate().query(sql, new RowMapper<OpcionMenu>() {
-
-            @Override
-            public OpcionMenu mapRow(ResultSet rs, int rowNumber) throws SQLException {
-                OpcionMenu opc = new OpcionMenu();
-                opc.setIdOpcionMenu(rs.getInt("id_opcion_menu"));
-                opc.setNombreOpcion(rs.getString("nombre_Opcion"));
-                opc.setIconoOpcion(rs.getString("icono_Opcion"));
-                opc.setUrlOpcion(rs.getString("url_opcion"));
-                opc.setOpcionActiva(rs.getInt("opcion_activa"));
-                opc.setOrdenOpcion(rs.getInt("orden_opcion"));
-                opc.setIdModulo(rs.getInt("id_modulo"));
-                opc.setOpcIdOpcionMenu(rs.getInt("opc_id_opcion_menu"));
-                return opc;
-            }
-
-        });
+        List<OpcionMenu> listOpc = getJdbcTemplate().query(sql, new BeanPropertyRowMapper(OpcionMenu.class));
         return listOpc;
     }
 
@@ -218,45 +138,13 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
         String sql = "SELECT * FROM Opcion_Menu WHERE id_modulo=" + idMod + " and opcion_activa=1 and id_opcion_menu in (select id_opcion_menu from privilegio where id_modulo_perfil=" + idModPer + ")";
 
         List<OpcionMenu> listOpc = getJdbcTemplate().query(sql, new BeanPropertyRowMapper(OpcionMenu.class));
-//        {
-//
-//            @Override
-//            public OpcionMenu mapRow(ResultSet rs, int rowNumber) throws SQLException {
-//                OpcionMenu opc = new OpcionMenu();
-//                opc.setIdOpcionMenu(rs.getInt("id_opcion_menu"));
-//                opc.setNombreOpcion(rs.getString("nombre_Opcion"));
-//                opc.setIconoOpcion(rs.getString("icono_Opcion"));
-//                opc.setUrlOpcion(rs.getString("url_opcion"));
-//                opc.setOpcionActiva(rs.getInt("opcion_activa"));
-//                opc.setOrdenOpcion(rs.getInt("orden_opcion"));
-//                opc.setIdModulo(rs.getInt("id_modulo"));
-//                opc.setOpcionIdOpcionMenu(rs.getInt("opc_id_opcion_menu"));
-//                return opc;
-//            }
-//
-//        });
         return listOpc;
     }
 
     @Override
     public List<Usuario> listUsuario() {
         String sql = "SELECT * from usuario";
-        List<Usuario> listUser = getJdbcTemplate().query(sql, new RowMapper<Usuario>() {
-
-            @Override
-            public Usuario mapRow(ResultSet rs, int rowNumber) throws SQLException {
-                Usuario usu = new Usuario();
-                usu.setUsuario(rs.getString("usuario"));
-                usu.setIdPersona(rs.getInt("id_empresa"));
-                usu.setClaveAcceso(rs.getString("clave_acceso"));
-                usu.setUsuarioActivo(rs.getObject("usuario_activo", Short.class));
-                usu.setCambiarClave(rs.getObject("cambiar_clave", Short.class));
-                usu.setFechaCaducidad(rs.getObject("fecha_caducidad", Date.class));
-                usu.setIntentosFallidos(rs.getObject("intentos_fallidos", Short.class));
-                return usu;
-            }
-
-        });
+        List<Usuario> listUser = getJdbcTemplate().query(sql, new BeanPropertyRowMapper(Usuario.class));
         return listUser;
     }
 
@@ -268,18 +156,7 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
             sql += ven.getWhere();
         }
 
-        List<Vendedor> listSeller = getJdbcTemplate().query(sql, new RowMapper<Vendedor>() {
-
-            @Override
-            public Vendedor mapRow(ResultSet rs, int rowNumber) throws SQLException {
-                Vendedor ven = new Vendedor();
-                ven.setIdVendedor(rs.getInt("id_vendedor"));
-                ven.setNombreVendedor(rs.getString("nombre_Vendedor"));
-                ven.setApellidoVendedor(rs.getString("apellido_Vendedor"));
-                return ven;
-            }
-
-        });
+        List<Vendedor> listSeller = getJdbcTemplate().query(sql, new BeanPropertyRowMapper(Vendedor.class));
         return listSeller;
     }
 
@@ -294,19 +171,7 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
             }
         }
 
-        List<Sucursal> listBranch = getJdbcTemplate().query(sql, new RowMapper<Sucursal>() {
-
-            @Override
-            public Sucursal mapRow(ResultSet rs, int rowNumber) throws SQLException {
-                Sucursal suc = new Sucursal();
-                suc.setIdSucursal(rs.getInt("id_sucursal"));
-                suc.setNombreSucursal(rs.getString("nombre_sucursal"));
-                suc.setDireccionSucursal(rs.getString("direccion_sucursal"));
-                suc.setTelefonoSucursal(rs.getString("telefono_sucursal"));
-                return suc;
-            }
-
-        });
+        List<Sucursal> listBranch = getJdbcTemplate().query(sql, new BeanPropertyRowMapper(Sucursal.class));
         return listBranch;
     }
 
@@ -318,18 +183,7 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
             sql += mod.getWhere();
         }
 
-        List<Modulo> listMod = getJdbcTemplate().query(sql, new RowMapper<Modulo>() {
-
-            @Override
-            public Modulo mapRow(ResultSet rs, int rowNumber) throws SQLException {
-                Modulo mod = new Modulo();
-                mod.setIdModulo(rs.getInt("id_modulo"));
-                mod.setNombreModulo(rs.getString("nombre_modulo"));
-                mod.setIconoModulo(rs.getString("icono_modulo"));
-                return mod;
-            }
-
-        });
+        List<Modulo> listMod = getJdbcTemplate().query(sql, new BeanPropertyRowMapper(Modulo.class));
         return listMod;
     }
 
@@ -341,19 +195,7 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
             sql += mod.getWhere();
         }
 
-        List<ModuloPerfil> listMod = getJdbcTemplate().query(sql, new RowMapper<ModuloPerfil>() {
-
-            @Override
-            public ModuloPerfil mapRow(ResultSet rs, int rowNumber) throws SQLException {
-                ModuloPerfil mod = new ModuloPerfil();
-                mod.setIdModulo(rs.getInt("id_modulo_perfil"));
-                mod.setIdModulo(rs.getInt("id_modulo"));
-                mod.setIdPerfil(rs.getInt("id_perfil"));
-                mod.setPerfilActivo(rs.getInt("perfil_activo"));
-                return mod;
-            }
-
-        });
+        List<ModuloPerfil> listMod = getJdbcTemplate().query(sql, new BeanPropertyRowMapper(ModuloPerfil.class));
         return listMod;
     }
 
@@ -483,19 +325,7 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
     public List<ProductoCategoriaDto> getLstCategoriasByProducto(Integer idProducto) {
         String sql = env.getProperty("lstCategoriasByIdProducto");
 
-        List<ProductoCategoriaDto> lstCat = getJdbcTemplate().query(sql, new Object[]{idProducto}, new RowMapper<ProductoCategoriaDto>() {
-
-            @Override
-            public ProductoCategoriaDto mapRow(ResultSet rs, int rowNumber) throws SQLException {
-                ProductoCategoriaDto proCatDto = new ProductoCategoriaDto();
-                proCatDto.setIdItem(rs.getInt("id_producto"));
-                proCatDto.setIdCategoria(rs.getInt("id_categoria"));
-                proCatDto.setNombreCategoria(rs.getString("nombre_categoria"));
-
-                return proCatDto;
-            }
-
-        });
+        List<ProductoCategoriaDto> lstCat = getJdbcTemplate().query(sql, new Object[]{idProducto}, new BeanPropertyRowMapper(ProductoCategoriaDto.class));
         return lstCat;
     }
 
@@ -532,7 +362,15 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
 
     @Override
     public Integer findIdModPerByLogin(String login, Integer emp) {
-        String sql = "SELECT id_modulo_perfil FROM usuario_Empresa WHERE usuario = ? and id_empresa=?";
+        String sql = "select distinct per.id_perfil \n"
+                + "from \n"
+                + "	usuario us\n"
+                + "	inner join usuario_empresa usemp on us.usuario = usemp.usuario\n"
+                + "	inner join modulo_perfil modp	on usemp.id_modulo_perfil = modp.id_modulo_perfil\n"
+                + "	inner join perfil per on per.id_perfil = modp.id_perfil\n"
+                + "where \n"
+                + "	us.usuario = ? and\n"
+                + "	usemp.id_empresa = ?";
 
         Integer idEmp = getJdbcTemplate().queryForObject(sql, new Object[]{login, emp}, Integer.class);
 
@@ -540,23 +378,18 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
     }
 
     @Override
-    public List<Modulo> getlstModulos(String login) {
-        String sql = "select * from modulo "
-                + " where id_modulo in (select mp.id_modulo from usuario_empresa ue inner join modulo_perfil mp on mp.id_modulo_perfil=ue.id_modulo_perfil "
-                + " where ue.usuario='" + login + "');";
+    public List<Modulo> getlstModulos(String login, Integer idEmpresa, Integer idPerfil) {
+        String sql = "select modulo.*\n"
+                + "from \n"
+                + "	usuario_empresa usemp \n"
+                + "	inner join modulo_perfil modp	on usemp.id_modulo_perfil = modp.id_modulo_perfil\n"
+                + "	inner join modulo on modulo.id_modulo = modp.id_modulo\n"
+                + "where \n"
+                + "	usemp.usuario = ? and\n"
+                + "	usemp.id_empresa = ? and\n"
+                + "	modp.id_perfil = ?";
 
-        List<Modulo> listMod = getJdbcTemplate().query(sql, new RowMapper<Modulo>() {
-
-            @Override
-            public Modulo mapRow(ResultSet rs, int rowNumber) throws SQLException {
-                Modulo modulos = new Modulo();
-                modulos.setIdModulo(rs.getInt("id_modulo"));
-                modulos.setNombreModulo(rs.getString("nombre_Modulo"));
-                modulos.setIconoModulo(rs.getString("icono_Modulo"));
-                return modulos;
-            }
-
-        });
+        List<Modulo> listMod = getJdbcTemplate().query(sql, new Object[]{login, idEmpresa, idPerfil}, new BeanPropertyRowMapper(Modulo.class));
         return listMod;
 
     }
@@ -596,7 +429,6 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
                 obj = subMenu;
             }
             menu.addElement((DefaultSubMenu) obj);
-            
 
             return menu;
         } catch (Exception ex) {
@@ -614,7 +446,7 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
         for (int j = 0; j < resultado.size(); j++) {
             opcionM = resultado.get(j);
 
-            if (Integer.parseInt(opPadre.getId().replace("sub", "")) ==  opcionM.getOpcIdOpcionMenu()) { //Hijo del padre
+            if (Integer.parseInt(opPadre.getId().replace("sub", "")) == opcionM.getOpcIdOpcionMenu()) { //Hijo del padre
                 subMenu = new DefaultSubMenu();
                 subMenu.setLabel(opcionM.getOrdenOpcion().toString() + ". " + opcionM.getNombreOpcion());
                 subMenu.setId("sub" + opcionM.getIdOpcionMenu().toString());

@@ -39,7 +39,7 @@ public class MenuMB implements Serializable {
     private Integer idApp;
     private List<Modulo> lstModulo = new ArrayList<>();
     private DefaultMenuModel model;
-    private Integer moduloPer;
+    private Integer idPerfilUsuario;
 
     @ManagedProperty("#{manttoService}")
     private ManttoService manttoService;
@@ -58,8 +58,8 @@ public class MenuMB implements Serializable {
         if (JsfUtil.getVariableSession("USU_SESSION") != null) {
             Usuario p = (Usuario) JsfUtil.getVariableSession("USU_SESSION");
             login = p.getUsuario();
-            moduloPer = Integer.parseInt(JsfUtil.getVariableSession("MODULO_PERFIL").toString());
-            lstModulo = manttoService.getlstModulos(login);
+            idPerfilUsuario = Integer.parseInt(JsfUtil.getVariableSession("MODULO_PERFIL").toString());
+            lstModulo = manttoService.getlstModulos(login, Integer.parseInt(JsfUtil.getVariableSession("EMP_SESSION").toString()), idPerfilUsuario);
         }
     }
 
@@ -104,11 +104,11 @@ public class MenuMB implements Serializable {
     }
 
     public Integer getModuloPer() {
-        return moduloPer;
+        return idPerfilUsuario;
     }
 
     public void setModuloPer(Integer moduloPer) {
-        this.moduloPer = moduloPer;
+        this.idPerfilUsuario = moduloPer;
     }
 
     public List<Modulo> getLstModulo() {
@@ -136,7 +136,7 @@ public class MenuMB implements Serializable {
     }
 
     public String obtenerMenu() {
-        lstOpcMenu = manttoService.listOpcMenuMod(Integer.parseInt(idModulo), moduloPer);
+        lstOpcMenu = manttoService.listOpcMenuMod(Integer.parseInt(idModulo), idPerfilUsuario);
         model = manttoService.crearArbolMenu(lstOpcMenu);
 
         return "menu.xhtml?faces-redirect=true";

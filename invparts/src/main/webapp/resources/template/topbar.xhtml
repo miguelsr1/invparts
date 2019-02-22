@@ -12,16 +12,27 @@
             <p:graphicImage name="logo.PNG" style="border: 0px;" library="images" />
         </h:link>
 
-        <a href="#" id="menu-button">
+        <!--a href="#" id="menu-button">
             <i class="fa fa-bars"></i>
-        </a>
+        </a-->
 
-        <a href="#" id="user-display">
-            <ui:insert name="carrito"/>
-        </a>
+        <ui:insert name="menuSplit"/>
+
+
+        <!--div style="margin-right: 100px; top: 36px; float: right;">
+            <h:commandLink onclick="return true;"  action="{localeMB.localeCodeChanged}">
+                Es
+            </h:commandLink> || 
+            <p:commandLink update="@this" action="{localeMB.localeCodeChanged}">
+                En
+            </p:commandLink>
+        </div-->
+
+        <ui:insert name="carrito"/>
+
 
         <ui:insert name="barSearch"/>
-        
+
 
         <ul id="topbar-menu" class="fadeInDown animated">
             <li>

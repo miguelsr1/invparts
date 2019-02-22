@@ -30,7 +30,7 @@ public class AutenticacionMB implements Serializable {
     private String login;
     private String clave;
     private String usuario;
-    private Integer modPer;
+    private Integer idPerfilUsuario;
   
     private Usuario user = new Usuario();
 
@@ -76,11 +76,11 @@ public class AutenticacionMB implements Serializable {
     }
 
     public Integer getModPer() {
-        return modPer;
+        return idPerfilUsuario;
     }
 
     public void setModPer(Integer modPer) {
-        this.modPer = modPer;
+        this.idPerfilUsuario = modPer;
     }
 
     public Usuario getUser() {
@@ -124,22 +124,22 @@ public class AutenticacionMB implements Serializable {
     }
 
     public String validarUsuario() {
-        Integer emp;
+        Integer idEmpresa;
         String url;
 
         if (manttoService.getUsuarioByUsu(login)) {
             if (manttoService.getUsuarioByClave(login, clave)) {
                 url = "/app/principal.xhtml?faces-redirect=true";
                 //obtener empresa 
-                emp = manttoService.findIdEmpByLogin(login);
-                modPer= manttoService.findIdModPerByLogin(login,emp);
+                idEmpresa = manttoService.findIdEmpByLogin(login);
+                //Obtener el perfil del usuario y empresa logeado
+                idPerfilUsuario= manttoService.findIdModPerByLogin(login,idEmpresa);
 
                 user = manttoService.findUserByLogin(login);
-                lstModulo = manttoService.getlstModulos(login);
 
                 JsfUtil.addVariableSession("USU_SESSION", user);
-                JsfUtil.addVariableSession("MODULO_PERFIL", modPer);
-                JsfUtil.addVariableSession("EMP_SESSION", emp);
+                JsfUtil.addVariableSession("MODULO_PERFIL", idPerfilUsuario);
+                JsfUtil.addVariableSession("EMP_SESSION", idEmpresa);
                 JsfUtil.addVariableSession("PERSONA_SESSION", user.getIdPersona());
 
                 return url;
@@ -156,6 +156,5 @@ public class AutenticacionMB implements Serializable {
     public String logout() {
         JsfUtil.removeVariableSession(login);
         return "/login.xhtml";
-        //JsfUtil.redireccionar("/login.xhtml");
     }
 }

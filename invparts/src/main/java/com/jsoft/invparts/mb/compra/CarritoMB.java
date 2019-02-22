@@ -135,7 +135,7 @@ public class CarritoMB implements Serializable {
     }
 
     public String getNumItemDeCarro() {
-        return getLstItemsCarrito().isEmpty() ? "" : String.valueOf(getLstItemsCarrito().size());
+        return getLstItemsCarrito().isEmpty() ? "0" : String.valueOf(getLstItemsCarrito().size());
     }
 
     public void limpiarFiltros() {
@@ -162,9 +162,12 @@ public class CarritoMB implements Serializable {
     }
 
     public void addItemToCar() {
+        addItemToCar(itemSelected);
+    }
+
+    public void addItemToCar(ItemDto idItem) {
         CarritoDto carritoItem = new CarritoDto();
-        carritoItem.setNumero(numItems);
-        carritoItem.setIdItem(itemSelected.getIdItem());
+        carritoItem.setItemDto(idItem);
 
         lstItemsCarrito.add(carritoItem);
         numItems = null;

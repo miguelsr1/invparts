@@ -105,8 +105,8 @@ public class ManttoServiceImpl implements ManttoService {
     }
 
     @Override
-    public List<Modulo> getlstModulos(String usuario) {
-        return dao.getlstModulos(usuario);
+    public List<Modulo> getlstModulos(String usuario, Integer idEmpresa, Integer idPerfil) {
+        return dao.getlstModulos(usuario, idEmpresa, idPerfil);
     }
 
     @Override

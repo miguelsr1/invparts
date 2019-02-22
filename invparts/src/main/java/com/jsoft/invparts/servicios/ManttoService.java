@@ -82,7 +82,7 @@ public interface ManttoService {
 
     public List<Categoria> lstCategoria(Categoria categoria);
 
-    public List<Modulo> getlstModulos(String usuario);
+    public List<Modulo> getlstModulos(String usuario, Integer idEmpresa, Integer idPerfil);
 
     public List<Categoria> lstSubCategoria(Categoria categoria);
 

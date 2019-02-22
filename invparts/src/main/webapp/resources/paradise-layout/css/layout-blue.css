@@ -859,13 +859,13 @@ body {
   -moz-box-sizing: border-box;
   box-sizing: border-box;
   background-color: #255678;
-  background-image: -webkit-gradient(linear, left top, right top, from(#3984b8), to(#3984b8));
-  background-image: -webkit-linear-gradient(left, #3984b8, #3984b8);
-  background-image: -moz-linear-gradient(left, #255678, #3D8DC5);
-  background-image: -ms-linear-gradient(left, #3984b8, #3984b8);
-  background-image: -o-linear-gradient(left, #3984b8, #3984b8);
-  background-image: linear-gradient(left, #3984b8, #3984b8);
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#3984b8', endColorstr='#3984b8', gradientType='1'); }
+  background-image: -webkit-gradient(linear, left top, right top, from(#1a304b), to(#3984b8));
+  background-image: -webkit-linear-gradient(left, #1a304b, #3984b8);
+  background-image: -moz-linear-gradient(left, #1a304b, #3984b8);
+  background-image: -ms-linear-gradient(left, #1a304b, #3984b8);
+  background-image: -o-linear-gradient(left, #1a304b, #3984b8);
+  background-image: linear-gradient(left, #1a304b, #3984b8);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#1a304b', endColorstr='#3984b8', gradientType='1'); }
   .layout-wrapper .topbar .topbar-logo img {
     height: 60px;
     vertical-align: middle; }
@@ -963,7 +963,7 @@ body {
         display: inline-block;
         vertical-align: middle; }
       .layout-wrapper .topbar #topbar-menu > li a .topbar-badge {
-        float: right;
+        /*float: right;*/
         background-color: #36ae2c;
         padding: 2px 8px;
         display: block;
@@ -1043,7 +1043,7 @@ body {
       .layout-wrapper .layout-menu-wrapper .layout-menu li > a:hover {
         background-color: #F6F9FB; }
         .layout-wrapper .layout-menu-wrapper .layout-menu li > a:hover .menu-badge {
-          color:   #ffffff; }
+          color: #ffffff; }
     .layout-wrapper .layout-menu-wrapper .layout-menu li.active-menuitem > a {
       border-bottom: 0 none;
       background-color: #F6F9FB;

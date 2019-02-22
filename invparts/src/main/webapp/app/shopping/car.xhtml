@@ -1,0 +1,84 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                template="#{pageContext.servletContext.contextPath}/resources/template/templateSinMenu.xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:jsf="http://xmlns.jcp.org/jsf">
+    <ui:define name="head">
+        <style>
+            .colImg{
+                width: 120px;
+            }
+            .colDescripcion{
+                width: 330px;
+            }
+            .colPrecio{
+                width: 200px;
+            }
+        </style>
+    </ui:define>
+
+    <ui:define name="carrito">
+        <a href="#" id="user-display">
+            <div jsf:id="aCarrito" style="font-size: 14px;">
+                <p:outputLabel value="Mi carrito"/>
+                <i class="fa fa-cart-arrow-down" aria-hidden="true"></i> 
+                <h:outputText value="  "/>
+                <p:outputLabel value="(#{carritoMB.numItemDeCarro})" style="font-weight: bold;" class="topbar-badge"/>
+            </div>
+        </a>
+    </ui:define>
+
+    <ui:define name="barSearch">
+        <label for="topbar-search">
+            <i class="fa fa-search topbar-search-icon"></i>
+        </label>
+        <p:autoComplete id="topbar-search" minQueryLength="3" value="#{searchProductMB.item}" size="60" class="topbar-search" placeholder="Search by UPC or producto code" 
+                        completeMethod="#{searchProductMB.searchProduct}" converter="itemControllerConverter" var="it"
+                        itemValue="#{it}" itemLabel="#{it}" forceSelection="true" 
+                        requiredMessage="Se necesita un valor de busqueda">
+            <p:ajax event="itemSelect" listener="#{searchProductMB.onItemSelect}"/>
+        </p:autoComplete>
+    </ui:define>
+
+    <ui:define name="content">
+        <div class="ui-g">
+            <div class="ui-g-12">
+                <div class="card card-w-title">
+                    <p:outputPanel>
+                        <p:dataGrid var="carrito" columns="1" layout="grid" value="#{carritoMB.lstItemsCarrito}">
+                            <p:outputPanel>
+                                <h:panelGrid columns="3" columnClasses="colImg,colDescripcion,colPrecio">
+                                    <p:graphicImage value="/DynamicImageServlet?file=#{carrito.itemDto.codigoProducto}/#{carrito.itemDto.urlImagen}" styleClass="content" width="100px" height="100px"/>
+
+                                    <p:outputPanel>
+                                        <h:panelGrid columns="1">
+                                            <p:outputLabel value="#{carrito.itemDto.nombreItem}" style="font-size: 18px; color: #0066cc;"/>
+                                            <p:outputLabel value="UPC code: #{carrito.itemDto.upcCodigo}"/>
+                                            <p:outputLabel value="#{carrito.itemDto.descripcion}" escape="false"/>
+                                        </h:panelGrid>
+                                    </p:outputPanel>
+
+                                    <p:outputPanel>
+                                        <h:panelGrid columns="1">
+                                            <p:outputLabel value="Unicación: #{carrito.itemDto.ubicacion}"/>
+                                            <p:outputLabel value="Cantidad: #{carrito.itemDto.cantidad}"/>
+                                            <p:outputLabel value="$ ${carrito.itemDto.precioVenta}"/>
+                                        </h:panelGrid>
+                                    </p:outputPanel> 
+                                </h:panelGrid>
+                            </p:outputPanel>
+                        </p:dataGrid>
+                    </p:outputPanel>
+                </div>
+            </div>
+        </div>
+
+        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+            <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
+            <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-times" />
+        </p:confirmDialog>
+    </ui:define>
+</ui:composition>

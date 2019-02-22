@@ -12,6 +12,7 @@ package com.jsoft.invparts.model.inventario.dto;
 public class CarritoDto {
     private Integer numero;
     private Integer idItem;
+    private ItemDto itemDto;
 
     public CarritoDto() {
     }
@@ -30,6 +31,14 @@ public class CarritoDto {
 
     public void setIdItem(Integer idItem) {
         this.idItem = idItem;
+    }
+
+    public ItemDto getItemDto() {
+        return itemDto;
+    }
+
+    public void setItemDto(ItemDto itemDto) {
+        this.itemDto = itemDto;
     }
     
 }

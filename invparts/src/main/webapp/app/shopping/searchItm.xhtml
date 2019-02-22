@@ -7,10 +7,14 @@
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:jsf="http://xmlns.jcp.org/jsf">
     <ui:define name="carrito">
-        <div jsf:id="aCarrito">
-            <p:graphicImage name="carrito.png" library="images" style="border: 0px;"/>
-            <span class="topbar-badge">#{carritoMB.numItemDeCarro}</span>
-        </div>
+        <p:commandLink action="car.xhtml" id="user-display"> 
+            <div jsf:id="aCarrito" style="font-size: 14px;">
+                <h:outputText value="Mi carrito"/>
+                <i class="fa fa-cart-arrow-down" aria-hidden="true"></i> 
+                <h:outputText value="  "/>
+                <h:outputText value="(#{carritoMB.numItemDeCarro})" style="font-weight: bold;" class="topbar-badge"/>
+            </div>
+        </p:commandLink>
     </ui:define>
 
     <ui:define name="head">
