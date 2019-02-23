@@ -9,6 +9,7 @@ import com.jsoft.invparts.model.inventario.Categoria;
 import com.jsoft.invparts.model.inventario.dto.CarritoDto;
 import com.jsoft.invparts.model.inventario.dto.ItemDto;
 import com.jsoft.invparts.servicios.ItemService;
+import com.jsoft.invparts.util.JsfUtil;
 import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -35,6 +36,10 @@ public class CarritoMB implements Serializable {
     private Integer idMarca;
     private Integer idModelo;
     private Integer idCategoria;
+    private Integer totalItem;
+    private Double montoTotal;
+    private Double tax;
+
     private ItemDto itemSelected;
     private List<String> imagenesDeProducto = new ArrayList();
     private List<ItemDto> lstItems = new ArrayList();
@@ -138,6 +143,37 @@ public class CarritoMB implements Serializable {
         return getLstItemsCarrito().isEmpty() ? "0" : String.valueOf(getLstItemsCarrito().size());
     }
 
+    public Integer getTotalItem() {
+        return totalItem;
+    }
+
+    public Double getMontoTotal() {
+        return montoTotal;
+    }
+
+    public Double getTax() {
+        return tax;
+    }
+
+    //========================================================================================================
+    public void calcularTotales() {
+        totalItem = 0;
+        for (CarritoDto carritoDto : lstItemsCarrito) {
+            totalItem += carritoDto.getNumero();
+        }
+
+        montoTotal = 0d;
+        for (CarritoDto carritoDto : lstItemsCarrito) {
+            montoTotal += carritoDto.getNumero() * carritoDto.getItemDto().getPrecioVenta();
+        }
+
+        tax = 0d;
+
+        if (montoTotal > 0d) {
+            tax = montoTotal * 0.06;
+        }
+    }
+
     public void limpiarFiltros() {
         idCategoria = 0;
         idModelo = 0;
@@ -166,10 +202,24 @@ public class CarritoMB implements Serializable {
     }
 
     public void addItemToCar(ItemDto idItem) {
-        CarritoDto carritoItem = new CarritoDto();
-        carritoItem.setItemDto(idItem);
+        if (numItems != null && numItems > 0) {
+            if (numItems > idItem.getCantidad()) {
+                JsfUtil.addWarningMessage("La cantidad ingresada sobrepasa la disponibilidad actual.");
+            } else {
+                CarritoDto carritoItem = new CarritoDto();
+                carritoItem.setItemDto(idItem);
+                carritoItem.setNumero(numItems);
 
-        lstItemsCarrito.add(carritoItem);
-        numItems = null;
+                lstItemsCarrito.add(carritoItem);
+                numItems = null;
+            }
+        }else{
+            JsfUtil.addWarningMessage("Debe de ingresar un número válido.");
+        }
+    }
+
+    public void removerItemDelCarro(CarritoDto carritoDto) {
+        lstItemsCarrito.remove(carritoDto);
+        calcularTotales();
     }
 }

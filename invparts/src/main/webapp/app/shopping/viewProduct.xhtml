@@ -13,7 +13,7 @@
     </ui:define>
 
     <ui:define name="carrito">
-        <p:commandLink action="car.xhtml" id="user-display"> 
+        <p:commandLink action="car.xhtml?faces-redirect=true" id="user-display"> 
             <div jsf:id="aCarrito" style="font-size: 14px;">
                 <h:outputText value="Mi carrito"/>
                 <i class="fa fa-cart-arrow-down" aria-hidden="true"></i> 
@@ -79,7 +79,7 @@
 
                             <f:facet name="footer">
                                 <p:outputPanel>
-                                    <p:inputNumber id="txtNumItem" value="#{carritoMB.numItems}" size="3" style="width: 70px;" placeholder="QTY" inputStyle="text-align: center;font-size: 16px;height: 32px;"/>
+                                    <p:inputNumber id="txtNumItem" value="#{carritoMB.numItems}" size="3" style="width: 70px;" placeholder="QTY" decimalPlaces="0" inputStyle="text-align: center;font-size: 16px;height: 32px;"/>
                                     <p:spacer width="5"/>
                                     <p:commandButton value="Add" iconPos="right" icon="fa fa-shopping-cart" action="#{carritoMB.addItemToCar(itemMB.item)}" update="aCarrito txtNumItem" style="width: 70px;font-size: 16px;">
                                         <p:confirm header="Confirmation" message="Are you sure?" icon="fa fa-exclamation-triangle" />

@@ -5,11 +5,16 @@
  */
 package com.jsoft.invparts.model.inventario.dto;
 
+import java.io.Serializable;
+
 /**
  *
  * @author DesarrolloPc
  */
-public class CarritoDto {
+public class CarritoDto implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+    
     private Integer numero;
     private Integer idItem;
     private ItemDto itemDto;
@@ -40,5 +45,5 @@ public class CarritoDto {
     public void setItemDto(ItemDto itemDto) {
         this.itemDto = itemDto;
     }
-    
+
 }

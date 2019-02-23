@@ -17,6 +17,58 @@
             .colPrecio{
                 width: 200px;
             }
+
+            .ui-dataview-list-container {
+                list-style-type: none;
+                margin: 0;
+                padding: 0;
+            }
+            .ui-dataview-row {
+                border-bottom: 1px solid #A8A8A8;
+                padding: 25px 10px;
+                border-bottom-color: var(--input-border-color, #A8A8A8);
+            }
+
+            .ui-dataview-list .ui-dataview-row {
+                border: 0 none;
+            }
+
+            .ui-dataview-content {
+                padding: .571em 1em;
+                /*border: 1px solid #c8c8c8;*/
+                background-color: #fff;
+                color: #333;
+                padding: .571em 1em;
+            }
+
+            .ui-dataview-header {
+                background-color: #f4f4f4 !important;
+                color: #333;
+                /*border: 1px solid #c8c8c8;*/
+                padding: .571em 1em .571em 1em;
+                font-weight: 700;
+                border-bottom: 0 none;
+            }
+            body .ui-panel .ui-panel-titlebar {
+                border: 0 none;
+                border-bottom: 1px solid #c7cdd1;
+                padding: 14px 14px;
+                -moz-border-radius-topleft: 2px;
+                -webkit-border-top-left-radius: 2px;
+                border-top-left-radius: 2px;
+                -moz-border-radius-topright: 2px;
+                -webkit-border-top-right-radius: 2px;
+                border-top-right-radius: 2px;
+                -moz-border-radius-bottomleft: 0px;
+                -webkit-border-bottom-left-radius: 0px;
+                border-bottom-left-radius: 0px;
+                -moz-border-radius-bottomright: 0px;
+                -webkit-border-bottom-right-radius: 0px;
+                border-bottom-right-radius: 0px;
+            }            
+            .customHeader th{
+                background-color: #f4f4f4 !important;
+            }
         </style>
     </ui:define>
 
@@ -44,34 +96,110 @@
     </ui:define>
 
     <ui:define name="content">
-        <div class="ui-g">
+        <p:breadCrumb>
+            <p:menuitem value="Home" url="/app/principal.xhtml"/>
+            <p:menuitem value="Shopping" url="home.xhtml"/>
+            <p:menuitem value="View car" url="#"/>
+        </p:breadCrumb>
+        
+        <f:metadata>
+            <f:viewAction action="#{carritoMB.calcularTotales()}"/>
+        </f:metadata>
+
+        <div class="ui-g dashboard">
             <div class="ui-g-12">
-                <div class="card card-w-title">
-                    <p:outputPanel>
-                        <p:dataGrid var="carrito" columns="1" layout="grid" value="#{carritoMB.lstItemsCarrito}">
-                            <p:outputPanel>
-                                <h:panelGrid columns="3" columnClasses="colImg,colDescripcion,colPrecio">
-                                    <p:graphicImage value="/DynamicImageServlet?file=#{carrito.itemDto.codigoProducto}/#{carrito.itemDto.urlImagen}" styleClass="content" width="100px" height="100px"/>
+                <div class="ui-g-12 ui-lg-8">
+                    <p:panel id="pnlDetalleCompra" styleClass="customHeader">
+                        <f:facet name="header">
+                            <i class="fa fa-cart-arrow-down" style="font-size: 22px"></i>
+                            <span class="project-title" style="font-size: 16px;"> Lista de productos</span>
+                            <span class="project-detail" style="font-size: 14px; float: right !important;">Resumen de compra</span>
+                        </f:facet>
 
-                                    <p:outputPanel>
-                                        <h:panelGrid columns="1">
-                                            <p:outputLabel value="#{carrito.itemDto.nombreItem}" style="font-size: 18px; color: #0066cc;"/>
-                                            <p:outputLabel value="UPC code: #{carrito.itemDto.upcCodigo}"/>
-                                            <p:outputLabel value="#{carrito.itemDto.descripcion}" escape="false"/>
-                                        </h:panelGrid>
-                                    </p:outputPanel>
+                        <div class="ui-dataview-content">
+                            <ul class="ui-dataview-list-container">
+                                <ui:repeat var="carrito" value="#{carritoMB.lstItemsCarrito}">
+                                    <li class="ui-dataview-row">
+                                        <h:panelGrid columns="3" columnClasses="colImg,colDescripcion,colPrecio">
+                                            <p:graphicImage value="/DynamicImageServlet?file=#{carrito.itemDto.codigoProducto}/#{carrito.itemDto.urlImagen}" styleClass="content" width="100px" height="100px"/>
 
-                                    <p:outputPanel>
-                                        <h:panelGrid columns="1">
-                                            <p:outputLabel value="Unicación: #{carrito.itemDto.ubicacion}"/>
-                                            <p:outputLabel value="Cantidad: #{carrito.itemDto.cantidad}"/>
-                                            <p:outputLabel value="$ ${carrito.itemDto.precioVenta}"/>
+                                            <p:outputPanel>
+                                                <h:panelGrid columns="1">
+                                                    <p:outputLabel value="#{carrito.itemDto.nombreItem}" style="font-size: 18px; color: #0066cc;"/>
+                                                    <p:outputLabel value="UPC code: #{carrito.itemDto.upcCodigo}"/>
+                                                    <p:outputLabel value="#{carrito.itemDto.descripcion}" escape="false"/>
+                                                </h:panelGrid>
+                                            </p:outputPanel>
+
+                                            <p:outputPanel>
+                                                <h:panelGrid columns="1">
+                                                    <p:outputLabel value="Unicación: #{carrito.itemDto.ubicacion}"/>
+                                                    <p:outputLabel value="Cantidad: #{carrito.numero}"/>
+                                                    <p:outputLabel value="P.U. $ ${carrito.itemDto.precioVenta}"/>
+                                                </h:panelGrid>
+                                            </p:outputPanel> 
                                         </h:panelGrid>
-                                    </p:outputPanel> 
-                                </h:panelGrid>
-                            </p:outputPanel>
-                        </p:dataGrid>
-                    </p:outputPanel>
+
+                                        <span style="float: right; color: #0066cc;">
+                                            <p:outputLabel id="lnkRemoverDetalle">
+                                                <p:commandLink action="#{carritoMB.removerItemDelCarro(carrito)}" update="pnlDetalleCompra pnlMontoTotal">
+                                                    <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                                    <p:outputLabel style="margin-left: 10px;" value="Eliminar"/>
+                                                </p:commandLink>
+                                            </p:outputLabel>
+
+                                            <p:blockUI block="pnlDetalleCompra" trigger="lnkRemoverDetalle"/>
+                                        </span>
+                                    </li>
+                                </ui:repeat>
+
+
+                            </ul>
+                        </div>
+                    </p:panel>
+                </div>
+                <div class="ui-g-12 ui-lg-4 contacts">
+                    <p:panel id="pnlMontoTotal">
+                        <f:facet name="header">
+                            <i class="fa fa-usd fa-fw" style="font-size: 22px"></i>
+                            <span class="project-title" style="font-size: 16px;">Monto total (US$)</span>
+                        </f:facet>
+
+                        <ul>
+                            <li class="clearfix">
+                                <div class="contact-info">
+                                    <span class="name">Total de Items (${carritoMB.totalItem})</span>
+                                </div>
+                                <div class="contact-actions">
+                                    <span>$ <p:outputLabel value="${carritoMB.montoTotal}"><f:convertNumber pattern="#,##0.00"/></p:outputLabel></span>
+                                </div>
+                            </li>
+                            <li class="clearfix">
+                                <div class="contact-info">
+                                    <span class="name">Tax (6%)</span>
+                                </div>
+                                <div class="contact-actions">
+                                    <span>$ <p:outputLabel value="${carritoMB.tax}"><f:convertNumber pattern="#,##0.00"/></p:outputLabel></span>
+                                </div>
+                            </li>
+                            <li class="clearfix">
+                                <div class="contact-info">
+                                    <span class="name">Descuentos</span>
+                                </div>
+                                <div class="contact-actions">
+                                    <span>0.00</span>
+                                </div>
+                            </li>
+                            <li class="clearfix">
+                                <div class="contact-info">
+                                    <span class="name" style="font-size: 20px !important;">Gran Total</span>
+                                </div>
+                                <div class="contact-actions">
+                                    <span class="connection-status online" style="font-size: 20px !important;">$ <p:outputLabel value="${carritoMB.montoTotal + carritoMB.tax}"><f:convertNumber pattern="#,##0.00"/></p:outputLabel></span>
+                                </div>
+                            </li>
+                        </ul>
+                    </p:panel>
                 </div>
             </div>
         </div>

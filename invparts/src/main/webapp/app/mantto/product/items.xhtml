@@ -14,6 +14,12 @@
         </style>
     </ui:define>
     <ui:define name="content">
+        <p:breadCrumb>
+            <p:menuitem value="Home" url="/app/principal.xhtml"/>
+            <p:menuitem value="Productos" url="/app/mantto/product/home.xhtml"/>
+            <p:menuitem value="Items" url="#"/>
+        </p:breadCrumb>
+        
         <f:metadata>
             <f:viewAction action="#{fotosItemMB.limpiar}"/>
         </f:metadata>

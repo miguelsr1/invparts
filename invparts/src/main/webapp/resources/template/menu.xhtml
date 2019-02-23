@@ -12,7 +12,7 @@
                 <div class="layout-menu-container">
                     <h:form id="menuform">
                         <div style="text-align: center;">
-                            <p:selectOneMenu id="cboLocale" value="#{localeMB.localeCode}" onchange="submit();" valueChangeListener="#{localeMB.localeCodeChanged}">
+                            <p:selectOneMenu id="cboLocale" value="#{localeMB.localeCode}" onchange="submit();" valueChangeListener="#{localeMB.localeCodeChanged}" rendered="false">
                                 <f:selectItems value="#{localeMB.lenguajes}"/>
                             </p:selectOneMenu>
                         </div> 

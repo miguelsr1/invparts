@@ -6,8 +6,9 @@
                 template="#{pageContext.servletContext.contextPath}/resources/template/template.xhtml"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:jsf="http://xmlns.jcp.org/jsf">
+
     <ui:define name="carrito">
-        <p:commandLink action="car.xhtml" id="user-display"> 
+        <p:commandLink action="car.xhtml?faces-redirect=true" id="user-display"> 
             <div jsf:id="aCarrito" style="font-size: 14px;">
                 <h:outputText value="Mi carrito"/>
                 <i class="fa fa-cart-arrow-down" aria-hidden="true"></i> 
@@ -64,6 +65,12 @@
     </ui:define>
 
     <ui:define name="content">
+        <p:breadCrumb>
+            <p:menuitem value="Home" url="/app/principal.xhtml"/>
+            <p:menuitem value="Shopping" url="home.xhtml"/>
+            <p:menuitem value="Search item" url="#"/>
+        </p:breadCrumb>
+
         <f:metadata>
             <f:viewAction action="#{carritoMB.limpiarFiltros}"/>
         </f:metadata>
@@ -92,9 +99,9 @@
 
                             <f:facet name="footer">
                                 <p:outputPanel style="text-align: center;">
-                                    <p:inputNumber id="txtNumItem" value="#{carritoMB.numItems}" size="3" style="width: 40px;" placeholder="QTY" inputStyle="text-align: center;font-size: 16px;height: 19px;"/>
+                                    <p:inputNumber id="txtNumItem" value="#{carritoMB.numItems}" size="3" style="width: 40px;" placeholder="QTY" decimalPlaces="0" inputStyle="text-align: center;font-size: 16px;height: 19px;" disabled="#{item.cantidad eq 0}"/>
                                     <p:spacer width="5"/>
-                                    <p:commandButton value="Add" iconPos="right" icon="fa fa-shopping-cart" action="#{carritoMB.addItemToCar()}" update="aCarrito txtNumItem" style="width: 70px;font-size: 16px;">
+                                    <p:commandButton value="Add" iconPos="right" icon="fa fa-shopping-cart" action="#{carritoMB.addItemToCar()}" update="aCarrito txtNumItem" style="width: 70px;font-size: 16px;" disabled="#{item.cantidad eq 0}">
                                         <p:confirm header="Confirmation" message="Are you sure?" icon="fa fa-exclamation-triangle" />
                                         <f:setPropertyActionListener value="#{item}" target="#{carritoMB.itemSelected}" />
                                     </p:commandButton>

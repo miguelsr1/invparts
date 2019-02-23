@@ -289,8 +289,7 @@
     margin-top: 4px; }
 .dashboard .contacts {
   overflow: hidden; }
-  .dashboard .contacts > .ui-panel {
-    min-height: 340px; }
+
   .dashboard .contacts .ui-panel-content {
     padding: 0px !important; }
   .dashboard .contacts ul {
@@ -320,7 +319,7 @@
         .dashboard .contacts ul li .contact-info .name {
           display: block;
           margin-top: 4px;
-          font-size: 14px; }
+          font-size: 16px; }
         .dashboard .contacts ul li .contact-info .location {
           margin-top: 4px;
           display: block;
@@ -328,7 +327,7 @@
           color: #b5b5b5; }
       .dashboard .contacts ul li .contact-actions {
         float: right;
-        padding-top: 12px; }
+        font-size: 16px; }
         .dashboard .contacts ul li .contact-actions .connection-status {
           color: #ffffff;
           padding: 2px 3px;
