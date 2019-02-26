@@ -34,7 +34,7 @@ public class EmpresaDaoImpl extends XJdbcTemplate implements EmpresaDao {
 
     @Override
     public List<Sucursal> getLstSucursalByIdEmpresa(Integer idEmpresa, Sucursal idSucursal) {
-        String sql = "SELECT * from Sucursal ";
+        String sql = "SELECT * from sucursal ";
         if (idSucursal != null) {
             if (idEmpresa != null) {
                 sql += "where id_empresa = " + idEmpresa;
@@ -48,7 +48,7 @@ public class EmpresaDaoImpl extends XJdbcTemplate implements EmpresaDao {
 
     @Override
     public List<Estante> getLstEstantesByIdSucursal(Integer idSucursal) {
-        String sql = "SELECT * from Estante ";
+        String sql = "SELECT * from estante ";
         if (idSucursal != null) {
             sql += "where id_sucursal = " + idSucursal;
         }

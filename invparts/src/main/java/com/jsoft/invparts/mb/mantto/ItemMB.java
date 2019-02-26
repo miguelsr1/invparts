@@ -32,6 +32,10 @@ import javax.faces.context.FacesContext;
 import org.primefaces.PrimeFaces;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
+import org.primefaces.model.menu.DefaultMenuItem;
+import org.primefaces.model.menu.DefaultMenuModel;
+import org.primefaces.model.menu.MenuItem;
+import org.primefaces.model.menu.MenuModel;
 
 /**
  *
@@ -63,6 +67,7 @@ public class ItemMB implements Serializable {
 
     private File folderImg = null;
     private UploadedFile fileUpd;
+    private List<MenuModel> lstCategoriaLink;
 
     public ItemMB() {
     }
@@ -83,6 +88,23 @@ public class ItemMB implements Serializable {
         if (item.getIdItem() != null) {
             cargarFotosInit();
         }
+        lstCategoriaLink = new ArrayList();
+        
+        
+        for (Categoria cat : lstCategorias) {
+            MenuModel menu = new DefaultMenuModel();
+            
+            String[] nombres = cat.getNombreCategoria().split(">");
+            
+            for (String nombre : nombres) {
+                MenuItem mi = new DefaultMenuItem(nombre);
+                menu.addElement(mi);
+            }
+            
+            lstCategoriaLink.add(menu);
+        }
+        
+        
     }
 
     public ItemDto getItemDto() {
@@ -326,6 +348,9 @@ public class ItemMB implements Serializable {
         if (itemTemp != null) {
             JsfUtil.addWarningMessage("Ya existe un producto con el código ingresado.");
         }
-
+    }
+    
+    public MenuModel categoriaMenu(Integer i){
+        return lstCategoriaLink.get(i);
     }
 }

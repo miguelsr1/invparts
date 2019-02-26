@@ -71,7 +71,7 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
 
     @Override
     public List<Privilegio> listPrivilegio(Privilegio pri) {
-        String sql = "SELECT * from Privilegio";
+        String sql = "SELECT * from privilegio";
 
         if (pri != null) {
             sql += pri.getWhere();
@@ -123,7 +123,7 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
 
     @Override
     public List<OpcionMenu> listOpcMenu(OpcionMenu opc) {
-        String sql = "SELECT * from Opcion_Menu where opcion_activa=1";
+        String sql = "SELECT * from opcion_menu where opcion_activa=1";
 
         if (opc != null) {
             sql += opc.getWhere();
@@ -135,7 +135,7 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
 
     @Override
     public List<OpcionMenu> listOpcMenuMod(Integer idMod, Integer idModPer) {
-        String sql = "SELECT * FROM Opcion_Menu WHERE id_modulo=" + idMod + " and opcion_activa=1 and id_opcion_menu in (select id_opcion_menu from privilegio where id_modulo_perfil=" + idModPer + ")";
+        String sql = "SELECT * FROM opcion_menu WHERE id_modulo=" + idMod + " and opcion_activa=1 and id_opcion_menu in (select id_opcion_menu from privilegio where id_modulo_perfil=" + idModPer + ")";
 
         List<OpcionMenu> listOpc = getJdbcTemplate().query(sql, new BeanPropertyRowMapper(OpcionMenu.class));
         return listOpc;
@@ -150,7 +150,7 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
 
     @Override
     public List<Vendedor> listVendedor(Vendedor ven) {
-        String sql = "SELECT * from Vendedor";
+        String sql = "SELECT * from vendedor";
 
         if (ven != null) {
             sql += ven.getWhere();
@@ -162,7 +162,7 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
 
     @Override
     public List<Sucursal> listSucursal(Sucursal suc, Integer idEmpresa) {
-        String sql = "SELECT * from Sucursal ";
+        String sql = "SELECT * from sucursal ";
         if (suc != null) {
             if (idEmpresa != null) {
                 sql += "where id_empresa = " + idEmpresa;
@@ -177,7 +177,7 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
 
     @Override
     public List<Modulo> listModulo(Modulo mod) {
-        String sql = "SELECT * from Modulo";
+        String sql = "SELECT * from modulo";
 
         if (mod != null) {
             sql += mod.getWhere();
@@ -189,7 +189,7 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
 
     @Override
     public List<ModuloPerfil> listModPerfil(ModuloPerfil mod) {
-        String sql = "SELECT * from Modulo_perfil";
+        String sql = "SELECT * from modulo_perfil";
 
         if (mod != null) {
             sql += mod.getWhere();
@@ -314,7 +314,7 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
 
     @Override
     public String findNombreMarca(Integer id) {
-        String sql = "SELECT NOMBRE_MARCA FROM MARCA WHERE ID_MARCA=?";
+        String sql = "SELECT nombre_marca FROM marca WHERE id_marca=?";
 
         String name = getJdbcTemplate().queryForObject(sql, new Object[]{id}, String.class);
 
@@ -353,7 +353,7 @@ public class ManttoDaoImpl extends XJdbcTemplate implements ManttoDao {
 
     @Override
     public Integer findIdEmpByLogin(String login) {
-        String sql = "SELECT DISTINCT id_empresa FROM usuario_Empresa WHERE usuario = ?";
+        String sql = "SELECT DISTINCT id_empresa FROM usuario_empresa WHERE usuario = ?";
 
         Integer idEmp = getJdbcTemplate().queryForObject(sql, new Object[]{login}, Integer.class);
 

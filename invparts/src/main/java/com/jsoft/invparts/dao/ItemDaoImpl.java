@@ -36,7 +36,7 @@ public class ItemDaoImpl extends XJdbcTemplate implements ItemDao {
 
     @Override
     public Item getItemByPk(Integer idItem) {
-        return (Item) getJdbcTemplate().queryForObject("SELECT * FROM Item WHERE id_item=" + idItem, new BeanPropertyRowMapper(Item.class));
+        return (Item) getJdbcTemplate().queryForObject("SELECT * FROM item WHERE id_item=" + idItem, new BeanPropertyRowMapper(Item.class));
     }
 
     @Override
@@ -44,9 +44,9 @@ public class ItemDaoImpl extends XJdbcTemplate implements ItemDao {
         if (codigo.isEmpty()) {
             return null;
         }
-        List<Item> lstItems = getJdbcTemplate().query("SELECT * FROM Item WHERE upc_codigo='" + codigo + "'", new BeanPropertyRowMapper(Item.class));
+        List<Item> lstItems = getJdbcTemplate().query("SELECT * FROM item WHERE upc_codigo='" + codigo + "'", new BeanPropertyRowMapper(Item.class));
         if (!lstItems.isEmpty()) {
-            return (Item) getJdbcTemplate().queryForObject("SELECT * FROM Item WHERE upc_codigo='" + codigo + "'", new BeanPropertyRowMapper(Item.class));
+            return (Item) getJdbcTemplate().queryForObject("SELECT * FROM item WHERE upc_codigo='" + codigo + "'", new BeanPropertyRowMapper(Item.class));
         } else {
             return null;
         }
